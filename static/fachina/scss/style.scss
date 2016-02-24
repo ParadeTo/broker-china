@@ -1,0 +1,22 @@
+﻿
+// 合并样式
+
+// common files
+@import "common/base";
+@import "common/functions";
+@import "common/variable";
+@import "common/grid";
+@import "common/icons";
+@import "common/button";
+@import "common/dialog";
+@import "common/loading";
+@import "common/widget";
+@import "common/animate";
+
+// modules files
+@import "channel/index";
+@import "channel/home";
+@import "channel/trade";
+@import "channel/ranking";
+@import "channel/account";
+@import "channel/single";

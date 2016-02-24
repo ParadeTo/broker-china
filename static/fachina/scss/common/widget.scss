@@ -1,0 +1,42 @@
+﻿@charset "UTF-8";
+
+//增减框
+.quantity-form {
+  display: inline-block;
+  font-size: 0;
+  .minus-btn,
+  .plus-btn {
+    display: inline-block;
+    width: pxToRem(40px);
+    height: pxToRem(40px);
+    line-height: pxToRem(40px);
+    text-align: center;
+    font-size: pxToRem(30px);
+    color: #262932;
+    background: #c1c8e4;
+    vertical-align: middle;
+    &.active {
+      background: #a1a7c0;
+    }
+  }
+  .minus-btn {
+    border-top-left-radius: pxToRem(2px);
+    border-bottom-left-radius: pxToRem(2px);
+  }
+  .plus-btn {
+    border-top-right-radius: pxToRem(2px);
+    border-bottom-right-radius: pxToRem(2px);
+  }
+  input {
+    width: pxToRem(100px);
+    height: pxToRem(40px);
+    background-color: #262932;
+    border: pxToRem(1px) solid #c1c8e4;
+    border-left: 0 none;
+    border-right: 0 none;
+    font-size: pxToRem(18px);
+    vertical-align: middle;
+    text-align: center;
+    color: #ff5a00;
+  }
+}

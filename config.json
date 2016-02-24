@@ -1,0 +1,20 @@
+{
+  "src":
+  {
+    "html": "html/fachina",
+    "sass": "static/fachina/scss",
+    "js": "static/fachina/js",
+    "libs": "static/common/js",
+    "images": "static/fachina/images",
+    "fonts": "static/fachina/fonts"
+  },
+  "dist":
+  {
+    "html": "dist/html/fachina",
+    "sass": "dist/static/fachina/css",
+    "js": "dist/static/fachina/js",
+    "libs": "dist/static/common/js",
+    "images": "dist/static/fachina/images",
+    "fonts": "dist/static/fachina/fonts"
+  }
+}
