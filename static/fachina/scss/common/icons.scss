@@ -1,1 +1,42 @@
 ﻿@charset "UTF-8";
+
+
+.icon-rank {
+  display: inline-block;
+  width: pxToRem(16px);
+  height: pxToRem(16px);
+  line-height: pxToRem(16px);
+  font-style: normal;
+  font-size: pxToRem(12px);
+  text-align: center;
+  color: $black;
+  border-radius: 50%;
+  background: #e7e7e7;
+
+  &.rank-1 {
+    position: relative;
+    background: $red;
+    color: $white;
+
+    em {
+      display: block;
+      position: absolute;
+      top: pxToRem(-8px);
+      left: pxToRem(1px);
+      width: pxToRem(14px);
+      height: pxToRem(10px);
+      background: url(../images/icon_crown.png) no-repeat center 0;
+      background-size: 100% 100%;
+    }
+  }
+
+  &.rank-2 {
+    background: $orange;
+    color: $white;
+  }
+
+  &.rank-3 {
+    background: $yellow;
+    color: $white;
+  }
+}

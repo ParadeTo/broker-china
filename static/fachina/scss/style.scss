@@ -5,6 +5,7 @@
 @import "common/base";
 @import "common/functions";
 @import "common/variable";
+@import "common/mixins";
 @import "common/grid";
 @import "common/icons";
 @import "common/button";
@@ -12,6 +13,7 @@
 @import "common/loading";
 @import "common/widget";
 @import "common/animate";
+@import "common/layout";
 
 // modules files
 @import "channel/index";

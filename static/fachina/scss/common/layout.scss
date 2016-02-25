@@ -1,0 +1,66 @@
+﻿@charset "UTF-8";
+
+body {
+  background: $bg-color;
+}
+
+//布局
+.ui-container,
+.ui-box {
+  display: block;
+
+  &.bg-white {
+    background: $white;
+  }
+}
+
+.ui-box {
+  border-top: 0.5px solid $border-color;
+  border-bottom: 0.5px solid $border-color;
+}
+
+.ui-box + .ui-box {
+  margin-top: pxToRem(10px);
+}
+
+.ui-more {
+  padding: pxToRem(2px) 0;
+  text-align: center;
+
+  a {
+    font-size: pxToRem(12px);
+    color: $light;
+
+    &.active {
+
+    }
+
+    em {
+      font-style: normal;
+    }
+  }
+}
+
+.ui-gotop {
+  position: fixed;
+  bottom: pxToRem(10px);
+  right: pxToRem(10px);
+  width: pxToRem(44px);
+  height: pxToRem(44px);
+  font-size: 0;
+  overflow: hidden;
+  background: url(../images/icon_gotop.png) no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+
+
+.text-red {
+  color: $red;
+}

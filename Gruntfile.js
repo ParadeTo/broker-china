@@ -183,7 +183,7 @@ module.exports = function(grunt) {
           'static/**/*.jpg',
           'static/**/*.png'
         ],
-        tasks: ['copy']
+        tasks: ['copy', 'includereplace']
       },
       livereload: {
         options: {

@@ -1,4 +1,11 @@
 ﻿@charset "UTF-8";
 
-
  // 栅格
+.ui-row {
+  @include clearfix();
+
+  .ui-col {
+    display: block;
+    float: left;
+  }
+}
