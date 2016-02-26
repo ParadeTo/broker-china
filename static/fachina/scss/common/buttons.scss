@@ -1,0 +1,59 @@
+﻿@charset "UTF-8";
+
+// 按钮样式
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  @include button-size(pxToRem(4px), pxToRem(10px), pxToRem(12px), pxToRem(4px));
+
+  &.active {
+    background-image: none;
+    outline: 0;
+  }
+
+  &.disabled {
+    opacity: .65;
+  }
+}
+
+a.btn.disabled {
+  pointer-events: none;
+}
+
+.btn-red {
+  @include button-variant($white, $bg-red, $bg-red);
+}
+.btn-blue {
+  @include button-variant($white, $bg-blue, $bg-blue);
+}
+.btn-white{
+  @include button-variant($gray, $white, $border-color);
+}
+.btn-gray {
+  @include button-variant($gray, $bg-color, $border-color);
+}
+
+// like a link
+.btn-link {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  color: $light;
+  @include button-size(pxToRem(4px), pxToRem(10px), pxToRem(12px), pxToRem(4px));
+
+  &.active {
+    background-color: transparent;
+  }
+}

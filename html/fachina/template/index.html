@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-  @@include('_meta.html')
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
+  <title>券商中国</title>
+  <meta name="description" content=""/>
+  <meta name="apple-mobile-web-app-title" content="券商中国"/>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="stylesheet" href="../../../static/fachina/css/style.css?ver=20160224"/>
 </head>
 <body>
 
   <!-- header -->
-  @@include('_header.html')
+  <header>
+
+    <!-- 搜索 -->
+    <div class="ui-box ui-row index-head">
+      <div class="ui-col user-status status-1"></div>
+      <div class="ui-col search-box">
+        <ul class="ui-row">
+          <li class="ui-col">
+            <input type="text" class="form-control" placeholder="输入投顾／机构">
+          </li>
+          <li class="ui-col">
+            <button class="btn btn-white" type="button">搜索</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- banner -->
+    <div class="index-banner">
+      <!-- 广告 -->
+      <div class="container index-advert"></div>
+
+      <!-- 赛事信息 -->
+      <div class="index-event-info">
+        <h2 class="season">第一季</h2>
+        <span class="date">3月1日-4月30日</span>
+        <div class="main">
+          <div class="status">
+            距离结束<span>10</span>天
+          </div>
+          <div class="number">
+            累计投票：<span>53,253,600</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 赛事直播 -->
+    <dl class="ui-row index-scroll">
+      <dt class="ui-col">赛事直播</dt>
+      <dd class="ui-col">
+        <span>季逾800位投顾参展，鹿死谁手，谁主沉浮谁主沉浮谁主沉浮</span>
+      </dd>
+    </dl>
+  </header>
 
   <!-- main -->
   <main>
@@ -31,7 +83,7 @@
 
       <!-- 奖金图片 -->
       <div class="prize">
-        <img src="../../static/fachina/images/pic_prize_banner.jpg">
+        <img src="../../../static/fachina/images/pic_prize_banner.jpg">
       </div>
 
       <div class="text-box">
@@ -40,7 +92,7 @@
       </div>
 
       <div class="btn-box">
-        <a href="javascript:;" class="index-join-event J-touch">我要参赛</a>
+        <a href="javascript:;" class="index-join-event">我要参赛</a>
       </div>
 
       <div class="text-box m-t-10">
@@ -48,7 +100,7 @@
       </div>
 
       <div class="btn-box">
-        <a href="javascript:;" class="index-invite-event J-touch">邀请好友参赛</a>
+        <a href="javascript:;" class="index-invite-event">邀请好友参赛</a>
       </div>
 
       <div class="panel">
@@ -133,7 +185,7 @@
                 <td>
                   <div class="user-info-box">
                     <div class="user-img">
-                      <img src="../../static/fachina/images/pic_demo_user.jpg">
+                      <img src="../../../static/fachina/images/pic_demo_user.jpg">
                     </div>
                     <dl class="user-info">
                       <dt>小妞</dt>
@@ -161,7 +213,7 @@
                 <td>
                   <div class="user-info-box">
                     <div class="user-img">
-                      <img src="../../static/fachina/images/pic_demo_user.jpg">
+                      <img src="../../../static/fachina/images/pic_demo_user.jpg">
                     </div>
                     <dl class="user-info">
                       <dt>小妞</dt>
@@ -187,7 +239,7 @@
                 <td>
                   <div class="user-info-box">
                     <div class="user-img">
-                      <img src="../../static/fachina/images/pic_demo_user.jpg">
+                      <img src="../../../static/fachina/images/pic_demo_user.jpg">
                     </div>
                     <dl class="user-info">
                       <dt>小妞</dt>
@@ -213,7 +265,7 @@
                 <td>
                   <div class="user-info-box">
                     <div class="user-img">
-                      <img src="../../static/fachina/images/pic_demo_user.jpg">
+                      <img src="../../../static/fachina/images/pic_demo_user.jpg">
                     </div>
                     <dl class="user-info">
                       <dt>小妞</dt>
@@ -310,13 +362,33 @@
   </main>
 
   <!-- footer -->
-  @@include('_footer.html')
+  <footer>
+    <div class="ui-box foot">
+      <div class="foot-text">
+        用户必读<a href="#">《一起牛投顾服务使用协议》</a>
+      </div>
+      <div class="foot-text">
+        免责声明：一起牛平台仅提供服务对接功能，所有投顾的咨询建议，仅供参考提供：用户须作出投资决策，风险自担。
+      </div>
+      <div class="foot-text last-child">
+        客服热线（工作日 9:00-18:00）
+      </div>
+      <div class="foot-phone">
+        <a href="#">0755-26412766</a>
+        <i></i>
+        <a href="#">0755-26412766</a>
+        <i></i>
+        <a href="#">yiqiniu-com</a>
+      </div>
+    </div>
+    <div class="foot-copyright">
+      Copyright © 2014-2016 齐牛金融 版权所有 All Rights Reserved
+    </div>
+  </footer>
 
-  <!-- widget -->
-  @@include('_common.html')
-
-  <!-- script -->
-  @@include('_script.html')
-  <script src="../../static/fachina/js/index.js?ver=20160226"></script>
+  <!-- gotop -->
+  <div class="ui-gotop">
+    <a href="javascript:;" class="ui-gotop">Top</a>
+  </div>
 </body>
 </html>

@@ -4,6 +4,90 @@ body {
   background: $bg-color;
 }
 
+// 对齐方式
+.left {
+  text-align: left !important;
+}
+.center {
+  text-align: center !important;
+}
+.right {
+  text-align: right !important;
+}
+
+// 字体颜色
+.text-red {
+  color: $red;
+}
+.text-blue {
+  color: $blue;
+}
+.text-green {
+  color: $green;
+}
+
+// 间距修复
+.m-t-2 {
+  margin-top: pxToRem(2px);
+}
+.m-t-4 {
+  margin-top: pxToRem(4px);
+}
+.m-t-6 {
+  margin-top: pxToRem(6px);
+}
+.m-t-8 {
+  margin-top: pxToRem(8px);
+}
+.m-t-10 {
+  margin-top: pxToRem(10px);
+}
+.m-r-2 {
+  margin-right: pxToRem(2px);
+}
+.m-r-4 {
+  margin-right: pxToRem(4px);
+}
+.m-r-6 {
+  margin-right: pxToRem(6px);
+}
+.m-r-8 {
+  margin-right: pxToRem(8px);
+}
+.m-r-10 {
+  margin-right: pxToRem(10px);
+}
+.m-b-2 {
+  margin-bottom: pxToRem(2px);
+}
+.m-b-4 {
+  margin-bottom: pxToRem(4px);
+}
+.m-b-6 {
+  margin-bottom: pxToRem(6px);
+}
+.m-b-8 {
+  margin-bottom: pxToRem(8px);
+}
+.m-b-10 {
+  margin-bottom: pxToRem(10px);
+}
+.m-l-2 {
+  margin-left: pxToRem(2px);
+}
+.m-l-4 {
+  margin-left: pxToRem(4px);
+}
+.m-l-6 {
+  margin-left: pxToRem(6px);
+}
+.m-l-8 {
+  margin-left: pxToRem(8px);
+}
+.m-l-10 {
+  margin-left: pxToRem(10px);
+}
+
 //布局
 .ui-container,
 .ui-box {
@@ -15,8 +99,8 @@ body {
 }
 
 .ui-box {
-  border-top: 0.5px solid $border-color;
-  border-bottom: 0.5px solid $border-color;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
 }
 
 .ui-box + .ui-box {
@@ -51,16 +135,4 @@ body {
   overflow: hidden;
   background: url(../images/icon_gotop.png) no-repeat center center;
   background-size: 100% 100%;
-}
-
-.center {
-  text-align: center;
-}
-.right {
-  text-align: right;
-}
-
-
-.text-red {
-  color: $red;
 }

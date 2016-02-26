@@ -172,10 +172,14 @@
 
     /*AJAX请求封装，data需传递对象*/
     ajax : function(url,data,callback,error){
+
+      var params = {};
+      params['params'] = data;
+
       $.ajax({
         type: "POST",
         url : url,
-        data: JSON.stringify(data),
+        data: JSON.stringify(params),
         dataType:"json",
         contentType:"application/json",
         success: callback,
@@ -360,7 +364,7 @@
     },
 
     //提示类弹窗
-    niuAlert : function(text, time) {
+    alert : function(text, time) {
 
       if(typeof time === 'undefined' || typeof time !== 'number'){
         time = 2000;
@@ -368,12 +372,12 @@
 
       var _html = [];
 
-      _html.push('<div class="niu-alert">');
-      _html.push('<div class="niu-alert-main">' + text + '</div>');
+      _html.push('<div class="ui-alert">');
+      _html.push('<div class="ui-alert-main">' + text + '</div>');
       _html.push('</div>');
 
       $('body').append(_html.join(''));
-      $(".niu-alert").fadeIn();
+      $(".ui-alert").show();
 
       setTimeout(function() {
         $('.niu-alert').remove();
@@ -410,12 +414,22 @@
 
       $('body').empty().append(_html.join(''));
       $('title').text('请求错误');
+    },
+
+    //触摸事件
+    touchEvent: function() {
+      $(document).on('touchstart', '.J-touch', function() {
+        $(this).addClass('active');
+      }).on('touchend', '.J-touch', function() {
+        $(this).removeClass('active');
+      });
     }
   };
 
   $(function() {
 
     J_app.fontSize();
+    J_app.touchEvent();
   });
 
   //抛出对象

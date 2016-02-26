@@ -38,18 +38,19 @@
 
   input {
     padding: 0 pxToRem(5px);
-    width: pxToRem(200px);
+    width: pxToRem(198px);
     height: pxToRem(40px);
     line-height: pxToRem(40px);
-    border: 0.5px solid $border-color;
+    border: 1px solid $border-color;
     font-size: pxToRem(14px);
   }
 
   button {
-    width: pxToRem(50px);
+    width: pxToRem(56px);
     height: pxToRem(40px);
-    margin-left: pxToRem(2px);
-    border: 0.5px solid $border-color;
+    margin-left: pxToRem(5px);
+    font-size: pxToRem(14px);
+    border: 1px solid $border-color;
   }
 }
 
@@ -145,7 +146,7 @@
 }
 
 .navbar {
-  border-top: 0.5px solid $border-color;
+  border-top: 1px solid $border-color;
 
   .ui-col {
     width: 25%;
@@ -187,7 +188,7 @@
 .index-ranking {
 
   .module-title {
-    border-bottom: 0.5px solid $border-color;
+    border-bottom: 1px solid $border-color;
   }
 }
 
@@ -198,7 +199,7 @@
     width: 33.333333%;
     font-size: pxToRem(14px);
     text-align: center;
-    border: 0.5px solid $border-color;
+    border: 1px solid $border-color;
 
     a {
       display: inline-block;
@@ -258,7 +259,7 @@
 .index-viewpoint {
 
   .module-title {
-    border-bottom: 0.5px solid $border-color;
+    border-bottom: 1px solid $border-color;
   }
 }
 
@@ -266,7 +267,7 @@
 
   .list-item {
     padding: pxToRem(10px) pxToRem(10px) pxToRem(10px) pxToRem(32px);
-    border-bottom: 0.5px solid $border-color;
+    border-bottom: 1px solid $border-color;
 
     .icon-good {
       display: block;
@@ -426,12 +427,13 @@
 .index-td-btn {
   display: inline-block;
   position: relative;
+  padding-top: pxToRem(4px);
   width: pxToRem(56px);
 
   .total-number {
     display: block;
     position: absolute;
-    top: pxToRem(-8px);
+    top: pxToRem(-6px);
     left: 0;
     width: 100%;
     font-size: pxToRem(8px);
@@ -487,5 +489,35 @@
       font-size: pxToRem(10px);
       color: $light;
     }
+  }
+}
+
+.index-join-event,
+.index-invite-event {
+  display: block;
+  margin: 0 auto;
+  width: pxToRem(250px);
+  height: pxToRem(38px);
+  background-image: url(../images/icon_btn_group.png);
+  background-repeat: no-repeat;
+  background-size: pxToRem(250px) auto;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.index-join-event {
+  background-position: 0 0;
+
+  &.active {
+    background-position: 0 pxToRem(-38px);
+  }
+}
+
+.index-invite-event {
+  background-position: 0 pxToRem(-76px);
+
+  &.active {
+    background-position: 0 pxToRem(-114px);
   }
 }

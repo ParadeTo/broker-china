@@ -1,0 +1,28 @@
+﻿@charset "UTF-8";
+
+// 按钮样式
+.form-control {
+  display: block;
+  width: 100%;
+  padding: pxToRem(5px);
+  font-size: pxToRem(14px);
+  line-height: 1;
+  color: $black;
+  background-color: none;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid $border-color;
+  border-radius: pxToRem(4px);
+  box-shadow: none;
+
+  &:focus,
+  &.focus {
+    border-color: $blue;
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: $bg-color;
+    opacity: 1;
+  }
+}
