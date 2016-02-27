@@ -140,7 +140,9 @@
 
     span {
       display: block;
-      text-overflow:ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }
@@ -201,13 +203,18 @@
     text-align: center;
     border: 1px solid $border-color;
 
+    .nav-link,
     a {
       display: inline-block;
       padding: pxToRem(10px) 0;
       color: $gray;
       border-bottom: pxToRem(2px) solid $white;
+    }
 
-      &.active {
+    &.active {
+
+      .nav-link,
+      a {
         color: $red;
         border-bottom: pxToRem(2px) solid $red;
       }
@@ -230,7 +237,7 @@
 }
 
 .index-ranking-content {
-  min-height: pxToRem(200px);
+  display: none;
 
   table {
     width: 100%;
@@ -238,6 +245,10 @@
 
   tr {
     border: 1px solid $border-color;
+
+    &:last-child {
+      border: 0 none;
+    }
   }
 
   th {
@@ -268,6 +279,10 @@
   .list-item {
     padding: pxToRem(10px) pxToRem(10px) pxToRem(10px) pxToRem(32px);
     border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border-bottom: 0 none;
+    }
 
     .icon-good {
       display: block;
@@ -312,6 +327,7 @@
 }
 
 .index-link-more {
+  border-top: 1px solid $border-color;
   padding: pxToRem(10px) 0;
 }
 
@@ -390,7 +406,7 @@
     border-left: pxToRem(2px) solid $red;
   }
 
-  .link-more {
+  .ui-more {
     width: pxToRem(80px);
     font-size: pxToRem(12px);
     text-align: right;

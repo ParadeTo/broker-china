@@ -6,7 +6,8 @@
     "js": "static/fachina/js",
     "libs": "static/common/js",
     "images": "static/fachina/images",
-    "fonts": "static/fachina/fonts"
+    "fonts": "static/fachina/fonts",
+    "tpls": "static/fachina/js/tpls"
   },
   "dist":
   {
