@@ -65,6 +65,10 @@ module.exports = function(grunt) {
     includereplace: {
       dist: {
         options: {
+          globals: {
+            // 全局版本号，自动取时间
+            pageVersion: '<%= grunt.template.today("yymmddhh") %>'
+          },
           includesDir: 'html/fachina/common'
         },
         files: [{
