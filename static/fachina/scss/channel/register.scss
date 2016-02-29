@@ -1,16 +1,8 @@
 ﻿@charset "UTF-8";
-
-// 登录
 // 圆角半径
 $radius: 3px;
-
-// 点击按钮背景
-.active {
-
-}
-
-// 登录页头部
-.login-header {
+// 注册页头部
+.register-header {
   height: pxToRem(43px);
   background-color: #d83e3a;
   img {
@@ -18,7 +10,7 @@ $radius: 3px;
     width: pxToRem(43px);
     float:left;
   }
-  .login-header-title {
+  .register-header-title {
     float:left;
     height: pxToRem(43px);
     width: pxToRem(234px);
@@ -29,8 +21,8 @@ $radius: 3px;
   }
 }
 
-// 登录页主体
-.login-body {
+// 注册页主体
+.register-body {
   padding-left: pxToRem(12px);
   padding-right: pxToRem(12px);
   padding-top: pxToRem(36px);
@@ -44,24 +36,20 @@ $radius: 3px;
     font-size: pxToRem(11px);
     margin-bottom: pxToRem(37px);
   }
-  .login-body-input {
-    border: solid #dbdbdb 1px;
+  input {
+    height: pxToRem(44px);
+    width:100%;
     border-radius: pxToRem($radius);
-    background-color: #fff;
+    border: solid #dbdbdb 1px;
+  }
+  .register-body-identify {
     width: pxToRem(296px);
     height: pxToRem(46px);
     margin-top: pxToRem(10px);
-    img {
-      float:left;
-      width: pxToRem(35px);
-      height: pxToRem(44px);
-    }
+    margin-bottom: pxToRem(10px);
     input {
-      font-size: pxToRem(14px);
       float:left;
-      color: #999999;
-      width: pxToRem(259px);
-      height:pxToRem(44px);
+      width: pxToRem(172px);
     }
   }
   // 验证提示
@@ -75,7 +63,7 @@ $radius: 3px;
     }
   }
   // 登录、注册跳转
-  #login-btn-login {
+  #register-btn-login {
     display: block;
     background-color: #d83e3a;
     color: #fff;
@@ -87,7 +75,7 @@ $radius: 3px;
     line-height: pxToRem(44px);
     margin-bottom: pxToRem(12px);
   }
-  #login-btn-register {
+  #register-btn-register {
     text-decoration: underline;
     color: #d83e3a;
     font-size: pxToRem(14px);
