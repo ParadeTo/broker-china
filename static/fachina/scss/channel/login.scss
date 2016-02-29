@@ -1,0 +1,83 @@
+﻿@charset "UTF-8";
+
+// 登录、注册、报名参赛
+// 圆角半径
+$radius: 3px;
+// 登录页头部
+.login-header {
+  height: pxToRem(43px);
+  background-color: #d83e3a;
+  img {
+    height: pxToRem(43px);
+    width: pxToRem(43px);
+    float:left;
+  }
+  .login-header-title {
+    float:left;
+    height: pxToRem(43px);
+    width: pxToRem(234px);
+    line-height: pxToRem(43px);
+    text-align: center;
+    color: #fff;
+    font-size: pxToRem(16px);
+  }
+}
+
+// 登录页主体
+.login-body {
+  padding-left: pxToRem(12px);
+  padding-right: pxToRem(12px);
+  padding-top: pxToRem(36px);
+  text-align: center;
+  span {
+    color: #d83e3a;
+    font-size: pxToRem(16px);
+  }
+  p {
+    color: #999999;
+    font-size: pxToRem(11px);
+    margin-bottom: pxToRem(37px);
+  }
+  .login-body-input {
+    border: solid #dbdbdb 1px;
+    border-radius: pxToRem($radius);
+    background-color: #fff;
+    width: pxToRem(296px);
+    height: pxToRem(46px);
+    margin-top: pxToRem(10px);
+    img {
+      float:left;
+      width: pxToRem(35px);
+      height: pxToRem(44px);
+    }
+    input {
+      font-size: pxToRem(14px);
+      float:left;
+      color: #999999;
+      width: pxToRem(259px);
+      height:pxToRem(44px);
+    }
+  }
+  // 验证提示
+  #validError {
+    height: pxToRem(30px);
+  }
+  // 登录、注册跳转
+  #login-btn-login {
+    display: block;
+    background-color: #d83e3a;
+    color: #fff;
+    font-size: pxToRem(16px);
+    text-align: center;
+    width: 100%;
+    height: pxToRem(44px);
+    border-radius: pxToRem($radius);
+    line-height: pxToRem(44px);
+    margin-bottom: pxToRem(12px);
+  }
+  #login-btn-register {
+    text-decoration: underline;
+    color: #d83e3a;
+    font-size: pxToRem(14px);
+  }
+}
