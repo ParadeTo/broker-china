@@ -88,6 +88,13 @@ body {
   margin-left: pxToRem(10px);
 }
 
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+
 //布局
 .ui-container,
 .ui-box {
@@ -112,6 +119,9 @@ body {
   text-align: center;
 
   a {
+    display: block;
+    width: 100%;
+    height: 100%;
     font-size: pxToRem(12px);
     color: $light;
 
@@ -135,4 +145,11 @@ body {
   overflow: hidden;
   background: url(../images/icon_gotop.png) no-repeat center center;
   background-size: 100% 100%;
+}
+.ui-load-fail {
+  padding: pxToRem(10px) 0;
+  line-height: (12px);
+  font-size: pxToRem(12px);
+  text-align: center;
+  color: $light;
 }

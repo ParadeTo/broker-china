@@ -2,6 +2,9 @@
 module.exports = function(grunt) {
   'use strict';
 
+  // 引入安装的grunt插件
+  require('load-grunt-tasks')(grunt);
+
   // 构建配置任务
   grunt.initConfig({
 
@@ -73,6 +76,20 @@ module.exports = function(grunt) {
       }
     },
 
+    // 模板预编译
+    tmod: {
+      template: {
+        src: '<%= cfg.src.tpls %>/**/*.tpl',
+        dest: '<%= cfg.dist.js %>/template.js',
+        options: {
+          base: '<%= cfg.src.tpls %>',
+          helpers: '<%= cfg.src.tpls %>/templateHelper.js',
+          cache: true,
+          combo: true
+        }
+      }
+    },
+
     // Js语法检查
     jshint: {
       options: {
@@ -97,7 +114,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: '<%= cfg.src.js %>',
-            src: ['**/*.js', '!**/*.min.js'],
+            src: ['**/*.js', '!**/*.min.js', '!tpls/**/*.js'],
             dest: '<%= cfg.dist.js %>'
           }
         ]
@@ -172,6 +189,10 @@ module.exports = function(grunt) {
         files: ['static/fachina/scss/**/*.scss'],
         tasks: ['sass', 'cssmin']
       },
+      tomd: {
+        files: ['<%= cfg.src.tpls %>/**/*.tpl'],
+        tasks: ['tmod']
+      },
       uglify: {
         files: ['static/fachina/**/*.js'],
         tasks: ['uglify']
@@ -194,19 +215,8 @@ module.exports = function(grunt) {
     }
   });
 
-  // 加载Grunt插件
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-include-replace');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-
   // 执行Grunt任务
   grunt.registerTask('default',
-    ['clean:dist', 'sass', 'cssmin', 'includereplace', 'jshint', 'uglify', 'copy', 'connect', 'watch']
+    ['clean:dist', 'sass', 'cssmin', 'includereplace', 'tmod', 'jshint', 'uglify', 'copy', 'connect', 'watch']
   );
 };
