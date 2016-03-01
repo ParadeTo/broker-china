@@ -15,13 +15,6 @@ function validPhone(phone) {
 
 // 初始化
 loginHandler.init = function() {
-  // 回到首页和back
-  $("#login-back").click(function() {
-    window.history.back();
-  });
-  $("#login-home").click(function() {
-    window.location.href = "index.html";
-  });
   // 输入手机和密码时删除验证提示
   $('#login-body-phone').focus(function() {
     $("#validError").html("");

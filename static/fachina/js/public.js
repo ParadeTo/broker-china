@@ -116,6 +116,18 @@
     /*接口*/
     api: apis,
 
+    /*头部固定栏跳转*/
+    fixedHeaderSkip: function() {
+      // back
+      $("#fixed-header-back").click(function() {
+        window.history.back();
+      });
+      // 回到首页
+      $("#fixed-header-home").click(function() {
+        window.location.href = "index.html";
+      });
+    },
+
     /*使用rem初始化页面,自执行*/
     fontSize: function() {
 
@@ -490,6 +502,7 @@
   })(jQuery)
 
   $(function() {
+    J_app.fixedHeaderSkip();
     J_app.fontSize();
     J_app.touchEvent();
   });

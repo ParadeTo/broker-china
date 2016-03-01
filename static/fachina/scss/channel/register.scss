@@ -1,31 +1,12 @@
 ﻿@charset "UTF-8";
 // 圆角半径
 $radius: 3px;
-// 注册页头部
-.register-header {
-  height: pxToRem(43px);
-  background-color: #d83e3a;
-  img {
-    height: pxToRem(43px);
-    width: pxToRem(43px);
-    float:left;
-  }
-  .register-header-title {
-    float:left;
-    height: pxToRem(43px);
-    width: pxToRem(234px);
-    line-height: pxToRem(43px);
-    text-align: center;
-    color: #fff;
-    font-size: pxToRem(16px);
-  }
-}
 
 // 注册页主体
 .register-body {
   padding-left: pxToRem(12px);
   padding-right: pxToRem(12px);
-  padding-top: pxToRem(36px);
+  padding-top: pxToRem(79px);
   text-align: center;
   span {
     color: #d83e3a;
@@ -40,7 +21,9 @@ $radius: 3px;
     height: pxToRem(44px);
     width:100%;
     border-radius: pxToRem($radius);
-    border: solid #dbdbdb 1px;
+    border: solid #dbdbdb pxToRem(1px);
+    padding-left: pxToRem(10px);
+    -webkit-appearance: none;
   }
   .register-body-identify {
     width: pxToRem(296px);
@@ -51,10 +34,24 @@ $radius: 3px;
       float:left;
       width: pxToRem(172px);
     }
+    button {
+      float:right;
+      width: pxToRem(112px);
+      height: pxToRem(44px);
+      background-color: #d83e3a;
+      color: #fff;
+      line-height: pxToRem(44px);
+      text-align: center;
+      border-radius: pxToRem($radius);
+    }
+    .locked {
+      color: #d83e3a;
+      background-color: #ccc;
+    }
   }
   // 验证提示
   #validError {
-    height: pxToRem(40px);
+    height: pxToRem(25px);
     font-size: pxToRem(14px);
     margin-top: pxToRem(5px);
     text-align: left;
@@ -63,7 +60,7 @@ $radius: 3px;
     }
   }
   // 登录、注册跳转
-  #register-btn-login {
+  #register-btn-register {
     display: block;
     background-color: #d83e3a;
     color: #fff;
@@ -73,9 +70,9 @@ $radius: 3px;
     height: pxToRem(44px);
     border-radius: pxToRem($radius);
     line-height: pxToRem(44px);
-    margin-bottom: pxToRem(12px);
+    margin-bottom: pxToRem(7px);
   }
-  #register-btn-register {
+  #register-btn-login {
     text-decoration: underline;
     color: #d83e3a;
     font-size: pxToRem(14px);

@@ -1,0 +1,16 @@
+﻿@charset "UTF-8";
+
+// 观点
+.viewpoint-item {
+  margin-top: pxToRem(53px);
+  padding: pxToRem(12px);
+  width: pxToRem(320px);
+  background-color: #fff;
+  .viewpoint-adviser {
+    img {
+      width: pxToRem(36px);
+      height: pxToRem(36px);
+    }
+  }
+}
+

@@ -4,36 +4,11 @@
 // 圆角半径
 $radius: 3px;
 
-// 点击按钮背景
-.active {
-
-}
-
-// 登录页头部
-.login-header {
-  height: pxToRem(43px);
-  background-color: #d83e3a;
-  img {
-    height: pxToRem(43px);
-    width: pxToRem(43px);
-    float:left;
-  }
-  .login-header-title {
-    float:left;
-    height: pxToRem(43px);
-    width: pxToRem(234px);
-    line-height: pxToRem(43px);
-    text-align: center;
-    color: #fff;
-    font-size: pxToRem(16px);
-  }
-}
-
 // 登录页主体
 .login-body {
   padding-left: pxToRem(12px);
   padding-right: pxToRem(12px);
-  padding-top: pxToRem(36px);
+  padding-top: pxToRem(79px);
   text-align: center;
   span {
     color: #d83e3a;

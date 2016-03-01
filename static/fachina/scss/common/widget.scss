@@ -40,3 +40,25 @@
     color: #ff5a00;
   }
 }
+
+// 头部固定栏
+.fixed-header {
+  position: fixed;
+  top: 0px;
+  height: pxToRem(43px);
+  background-color: #d83e3a;
+  img {
+    height: pxToRem(43px);
+    width: pxToRem(43px);
+    float:left;
+  }
+  .fixed-header-title {
+    float:left;
+    height: pxToRem(43px);
+    width: pxToRem(234px);
+    line-height: pxToRem(43px);
+    text-align: center;
+    color: #fff;
+    font-size: pxToRem(16px);
+  }
+}
