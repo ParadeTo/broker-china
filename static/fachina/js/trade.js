@@ -1,15 +1,42 @@
 /*
- * 个人中心
+ * 模拟交易
  * author： qinxingjun
  */
 
-var homeHandler = window.homeHandler || {};
+var tradeHandler = window.tradeHandler || {};
 
 // 初始化
-homeHandler.init = function() {
+tradeHandler.init = function() {
 
+  $('#tradeTab').muTabs($('#tradeContent'),function(){
+    console.log('你点击了我');
+  });
+
+  // 请求观点列表
+  //tradeHandler.loadEventDetail();
 };
 
+// 获取赛事信息
+tradeHandler.loadEventDetail = function() {
+  var params = {};
+
+  J_app.ajax(J_app.api.eventDetail, params, function(data){
+
+    var detailHtml;
+
+    if(data.code === 0){
+      detailHtml = template('index/eventDetail', data);
+    } else{
+      detailHtml = template('common/error', data);
+    }
+
+    $('#indexBanner').append(detailHtml);
+  });
+};
+
+
+
 $(function() {
-  homeHandler.init();
+
+  tradeHandler.init();
 });

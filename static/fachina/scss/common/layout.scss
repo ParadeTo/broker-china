@@ -25,6 +25,12 @@ body {
 .text-green {
   color: $green;
 }
+.text-gray {
+  color: $gray;
+}
+.text-light {
+  color: $light;
+}
 
 // 间距修复
 .m-t-2 {
@@ -155,20 +161,86 @@ body {
 }
 
 .ui-header {
-  padding-left: pxToRem(50px);
-  padding-right: pxToRem(50px);
+  padding-left: pxToRem(48px);
+  padding-right: pxToRem(48px);
   height: pxToRem(43px);
   background-color: $bg-red;
+  @include clearfix();
 
   .ui-header-left {
+    float: left;
+    margin-left: pxToRem(-48px);
+    width: pxToRem(43px);
+    height: pxToRem(43px);
+    overflow: hidden;
 
+    &.ui-back {
+      background: $bg-red url(../images/icon_header.png) no-repeat;
+      background-position: 0 0;
+      background-size: 100% auto;
+      font-size: 0;
+
+      &.active {
+        background-color: $bg-red-active;
+      }
+    }
   }
 
   .ui-header-title {
-
+    float: left;
+    width: 100%;
+    line-height: pxToRem(43px);
+    font-size: pxToRem(14px);
+    text-align: center;
+    color: $white;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .ui-header-right {
+    float: right;
+    margin-right: pxToRem(-48px);
+    width: pxToRem(43px);
+    height: pxToRem(43px);
+    overflow: hidden;
 
+    &.ui-home {
+      background: $bg-red url(../images/icon_header.png) no-repeat;
+      background-position: 0 pxToRem(-86px);
+      background-size: 100% auto;
+      font-size: 0;
+
+      &.active {
+        background-color: $bg-red-active;
+      }
+    }
+
+    &.ui-refresh {
+      background: $bg-red url(../images/icon_header.png) no-repeat;
+      background-position: 0 pxToRem(-43px);
+      background-size: 100% auto;
+      font-size: 0;
+
+      &.active {
+        background-color: $bg-red-active;
+      }
+    }
   }
+}
+
+.font-8 {
+  font-size: pxToRem(8px);
+}
+.font-10 {
+  font-size: pxToRem(10px);
+}
+.font-12 {
+  font-size: pxToRem(12px);
+}
+.font-14 {
+  font-size: pxToRem(14px);
+}
+.font-16 {
+  font-size: pxToRem(16px);
 }

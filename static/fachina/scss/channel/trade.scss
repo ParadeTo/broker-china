@@ -1,4 +1,62 @@
 ﻿@charset "UTF-8";
 
 // 交易
+.trade-tabs {
+  border: 1px solid $border-color;
+  .ui-col {
+    width: 25%;
+    font-size: pxToRem(14px);
+    text-align: center;
 
+    .nav-link,
+    a {
+      display: inline-block;
+      padding: pxToRem(10px) 0;
+      color: $gray;
+    }
+
+    &.active {
+      .nav-link,
+      a {
+        color: $red;
+        border-bottom: pxToRem(2px) solid $red;
+      }
+    }
+  }
+}
+
+.trade-tabs-content {
+  display: none;
+
+  table {
+    width: 100%;
+  }
+
+  tr {
+    border: 1px solid $border-color;
+  }
+
+  thead tr {
+    border-top: 0 none;
+  }
+
+  th {
+    padding: pxToRem(6px) 0;
+    background: $bg-color;
+    font-size: pxToRem(12px);
+    text-align: center;
+    color: $gray;
+  }
+
+  td {
+    padding: pxToRem(6px) 0;
+    font-size: pxToRem(12px);
+    text-align: center;
+    color: $black;
+    background: $white;
+
+    span {
+      display: block;
+    }
+  }
+}

@@ -40,3 +40,24 @@
     color: $white;
   }
 }
+
+.icon-buy,
+.icon-sell {
+  display: inline-block;
+  width: pxToRem(20px);
+  height: pxToRem(20px);
+  line-height: pxToRem(20px);
+  font-style: normal;
+  font-size: pxToRem(12px);
+  text-align: center;
+  color: $white;
+  border-radius: pxToRem(2px);
+}
+
+.icon-buy {
+  background: $bg-red;
+}
+
+.icon-sell {
+  background: $bg-blue;
+}
