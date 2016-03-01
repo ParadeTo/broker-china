@@ -153,3 +153,22 @@ body {
   text-align: center;
   color: $light;
 }
+
+.ui-header {
+  padding-left: pxToRem(50px);
+  padding-right: pxToRem(50px);
+  height: pxToRem(43px);
+  background-color: $bg-red;
+
+  .ui-header-left {
+
+  }
+
+  .ui-header-title {
+
+  }
+
+  .ui-header-right {
+
+  }
+}

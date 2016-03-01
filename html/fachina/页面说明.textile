@@ -1,0 +1,9 @@
+agreement.html      ：协议
+enroll.html         ：报名参赛
+home.html           ：个人中心
+index.html          ：大赛首页
+login.html          ：登录
+ranking.html        ：排行榜
+register.html       ：注册
+rules.html          ：规则
+trade.html          : 交易
