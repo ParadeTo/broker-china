@@ -13,10 +13,61 @@ indexHandler.init = function() {
   $('#rankTab').muTabs($('#rankContent'),indexHandler.loadRankList);
 
   // 请求观点列表
+  indexHandler.loadEventDetail();
+  indexHandler.loadEventRadio();
   indexHandler.loadViewpointList();
   indexHandler.loadRankList();
   indexHandler.voteActive();
+  indexHandler.joinActive();
+  indexHandler.inviteActive();
+};
+// 获取赛事信息
+indexHandler.loadEventDetail = function() {
+  var params = {};
 
+  J_app.ajax(J_app.api.eventDetail, params, function(data){
+
+    var detailHtml;
+
+    if(data.code === 0){
+      detailHtml = template('index/eventDetail', data);
+    } else{
+      detailHtml = template('common/error', data);
+    }
+
+    $('#indexBanner').append(detailHtml);
+  });
+};
+
+// 获取赛事直播
+indexHandler.loadEventRadio = function() {
+
+  var params = {};
+
+  params['type'] = 'C';
+  params['count'] = 10;
+  params['readId'] = 0;
+
+  J_app.ajax(J_app.api.noteList, params, function(data){
+
+    var listData = {},
+        listHtml;
+
+    listData['urlHost'] = J_app.host;
+
+    if(data.code === 0){
+      if(data.result){
+        $.extend(listData, data.result);
+      }
+      listHtml = template('index/eventRadio', listData);
+    } else{
+      listHtml = template('common/error', data);
+    }
+
+    $('#eventRadio').empty().append(listHtml);
+  },function(){
+    $('#eventRadio').empty().append(template('common/loadFail'));
+  });
 };
 
 // 获取榜单
@@ -89,45 +140,68 @@ indexHandler.loadViewpointList = function() {
   });
 };
 
+// 报名参赛
+indexHandler.joinActive = function() {
+
+  $('#joinEvent').on('click', function(){
+    J_app.checkSign(function(){
+      window.location.href = './enroll.html';
+    })
+  });
+};
+
+// 转发邀请
+indexHandler.inviteActive = function() {
+
+  $('#inviteEvent').on('click', function(){
+    J_app.checkSign(function(){
+      console.log('弹出分享提示');
+    })
+  });
+};
+
 // 投票
 indexHandler.voteActive = function() {
 
   $(document).on('click', '.J-vote', function() {
 
+    var _this = $(this);
 
-    var _this = $(this),
-        numberBox = _this.parent().find('.total-number');
-        number = parseInt(numberBox.html());
+    J_app.checkSign(function(){
+
+      var numberBox = _this.parent().find('.total-number'),
+        number = parseInt(numberBox.html()),
         params = {};
 
-    if(_this.hasClass('J-locked')){
-      return;
-    }
-    _this.addClass('J-locked');
-
-    params['joinId'] = _this.data('id');
-
-    J_app.ajax(J_app.api.joinList, params, function(data){
-
-      _this.removeClass('J-locked');
-
-      if(data.code === 0){
-
-        J_app.alert('投票成功！');
-
-        numberBox.html(++number);
-
-        if(data.result.voteCount === 1){
-          _this.html('再投一票');
-        } else{
-          _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
-        }
-      } else{
-        J_app.alert(data.message);
+      if(_this.hasClass('J-locked')){
+        return;
       }
-    },function(){
-      J_app.alert('请求失败！');
-      _this.removeClass('J-locked');
+      _this.addClass('J-locked');
+
+      params['joinId'] = _this.data('id');
+
+      J_app.ajax(J_app.api.joinList, params, function(data){
+
+        _this.removeClass('J-locked');
+
+        if(data.code === 0){
+
+          J_app.alert('投票成功！');
+
+          numberBox.html(++number);
+
+          if(data.result.voteCount === 1){
+            _this.html('再投一票');
+          } else{
+            _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
+          }
+        } else{
+          J_app.alert(data.message);
+        }
+      },function(){
+        J_app.alert('请求失败！');
+        _this.removeClass('J-locked');
+      });
     });
   });
 };

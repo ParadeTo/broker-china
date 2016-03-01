@@ -107,6 +107,10 @@
     getQuot: (development ? devHost : host) + "/mktinfo_api/get_quot"
   };
 
+  var links = {
+    register: host + (development ? '/html/' : '/webstatic/') + 'fachina/register.html'
+  };
+
   // 抛出对象
   var J_app = {
 
@@ -145,6 +149,10 @@
       page.changePage();
       window.addEventListener("resize",function(){page.changePage();},false);
     },
+
+    // 页面跳转
+    link : links,
+
 
     /*获取url中的参数*/
     getUrlParam : function(name) {
@@ -428,13 +436,14 @@
       $('title').text('请求错误');
     },
 
-    //触摸事件
-    touchEvent: function() {
-      $(document).on('touchstart', '.J-touch', function() {
-        $(this).addClass('active');
-      }).on('touchend', '.J-touch', function() {
-        $(this).removeClass('active');
-      });
+    // 判断是否登录公用方法
+    checkSign: function(callback) {
+
+      if(!$.cookie("fachinaId")){
+        window.location.href = J_app.link.register;
+      } else{
+        callback();
+      }
     }
   };
 
@@ -499,13 +508,40 @@
         })
       });
     };
-  })(jQuery)
+  })(jQuery);
+
+  // 使用rem初始化页面,自执行
+  (function(){
+    var page = this;
+    var html = document.getElementsByTagName("html")[0];
+    page.width = 320;
+    page.fontSize = 100;
+    page.widthProportion = function(){
+       var p = (html.offsetWidth)/page.width;
+       return p>2?2:p<1?1:p;
+    };
+    page.changePage = function(){
+        html.setAttribute("style","font-size:" + page.widthProportion() * page.fontSize + "px !important");
+    };
+    page.changePage();
+    window.addEventListener("resize",function(){page.changePage();},false);
+  })();
 
   $(function() {
     J_app.fixedHeaderSkip();
     J_app.fontSize();
     J_app.touchEvent();
   });
+
+  // 全局按钮触摸事件
+  (function($){
+    $(document).on('touchstart', '.J-touch', function() {
+      $(this).addClass('active');
+    }).on('touchend', '.J-touch', function() {
+      $(this).removeClass('active');
+    });
+  })(jQuery);
+
 
   //抛出对象
   factory && (global.J_app = J_app);
