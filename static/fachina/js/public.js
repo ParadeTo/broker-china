@@ -505,6 +505,18 @@
     });
   })(jQuery);
 
+  //头部固定栏跳转*/
+  (function($) {
+    // back
+    $("#fixed-header-back").click(function() {
+      window.history.back();
+    });
+    // 回到首页
+    $("#fixed-header-home").click(function() {
+      window.location.href = "index.html";
+    });
+  })(jQuery);
+
   //抛出对象
   factory && (global.J_app = J_app);
 });
