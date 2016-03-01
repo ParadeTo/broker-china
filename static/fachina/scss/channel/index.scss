@@ -138,8 +138,9 @@
     font-size: pxToRem(12px);
     overflow: hidden;
 
-    span {
+    a {
       display: block;
+      color: $black;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
