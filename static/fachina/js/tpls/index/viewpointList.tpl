@@ -1,20 +1,27 @@
 {{each data as item}}
-  <li class="list-item">
-    <em class="icon-good">精</em>
-    <a href="{{ urlHost }}/webstatic/viewpoint/index.html?viewpointId={{ item.viewpointId}}">
-      <h4>{{ item.title }}</h4>
-      <dl class="ui-row">
-        <dt class="ui-col">
-          {{ item.uName }}&nbsp;
-          {{ if item.adviserType}}
-            {{ item.adviserType }}&nbsp;
-          {{/if}}
-          {{ if item.adviserOrg}}
-            （{{ item.adviserOrg }}）
-          {{/if}}
-        </dt>
-        <dd class="ui-col">阅读&nbsp;{{ item.readNum }}</dd>
-      </dl>
+  <div class="viewpoint-item">
+    <div class="viewpoint-adviser">
+      <img src="{{ item.uImg }}" alt=""/>
+      <h4>#{{ item.uName }}投顾精选#</h4>
+      <span>{{ item.adviserType }}</span>
+    </div>
+    <a class="viewpoint-content" href="{{ item.url }}">
+      <div class="viewpoint-top">
+        <span>精</span>
+        <h4>{{ item.title }}</h4>
+      </div>
+      <div class="viewpoint-middle">
+        <p>{{ item.summary }}</p>
+        {{ if item.firstImg }}
+        <div class="first-img">
+          <img src="{{ item.firstImg }}" alt=""/>
+        </div>
+        {{ /if }}
+      </div>
+      <div class="viewpoint-footer">
+        <span class="viewpoint-time">{{ item.viewpointTs }}</span>
+        <span class="viewpoint-read">阅读 {{ item.readNum }}</span>
+      </div>
     </a>
-  </li>
+  </div>
 {{/each}}
