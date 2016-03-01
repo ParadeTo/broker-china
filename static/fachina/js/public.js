@@ -120,39 +120,8 @@
     /*接口*/
     api: apis,
 
-    /*头部固定栏跳转*/
-    fixedHeaderSkip: function() {
-      // back
-      $("#fixed-header-back").click(function() {
-        window.history.back();
-      });
-      // 回到首页
-      $("#fixed-header-home").click(function() {
-        window.location.href = "index.html";
-      });
-    },
-
-    /*使用rem初始化页面,自执行*/
-    fontSize: function() {
-
-      var page = this;
-      var html = document.getElementsByTagName("html")[0];
-      page.width = 320;
-      page.fontSize = 100;
-      page.widthProportion = function(){
-         var p = (html.offsetWidth)/page.width;
-         return p>2?2:p<1?1:p;
-      };
-      page.changePage = function(){
-          html.setAttribute("style","font-size:" + page.widthProportion() * page.fontSize + "px !important");
-      };
-      page.changePage();
-      window.addEventListener("resize",function(){page.changePage();},false);
-    },
-
     // 页面跳转
     link : links,
-
 
     /*获取url中的参数*/
     getUrlParam : function(name) {
@@ -527,12 +496,6 @@
     window.addEventListener("resize",function(){page.changePage();},false);
   })();
 
-  $(function() {
-    J_app.fixedHeaderSkip();
-    J_app.fontSize();
-    J_app.touchEvent();
-  });
-
   // 全局按钮触摸事件
   (function($){
     $(document).on('touchstart', '.J-touch', function() {
@@ -542,6 +505,17 @@
     });
   })(jQuery);
 
+  //头部固定栏跳转*/
+  (function($) {
+    // back
+    $("#fixed-header-back").click(function() {
+      window.history.back();
+    });
+    // 回到首页
+    $("#fixed-header-home").click(function() {
+      window.location.href = "index.html";
+    });
+  })(jQuery);
 
   //抛出对象
   factory && (global.J_app = J_app);
