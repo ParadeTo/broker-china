@@ -10,6 +10,9 @@
   padding: pxToRem(12px);
   width: pxToRem(320px);
   background-color: #fff;
+  h4 {
+    font-size: pxToRem(14px);
+  }
   .viewpoint-adviser {
     height: pxToRem(43px);
     position: relative;
@@ -19,14 +22,13 @@
       height: pxToRem(36px);
     }
     h4 {
-      font-size: pxToRem(14px);
       position: absolute;
       left: pxToRem(50px);
-      top: pxToRem(3px);
+      top: pxToRem(0px);
     }
     span {
       color: #888888;
-      font-size: pxToRem(12px);
+      font-size: pxToRem(10px);
       position: absolute;
       left: pxToRem(50px);
       top: pxToRem(20px);
@@ -48,9 +50,7 @@
         font-size: pxToRem(14px);
         float: left;
         margin-right: pxToRem(5px);
-      }
-      h4 {
-        font-size: pxToRem(14px);
+        margin-top: pxToRem(2px);
       }
     }
     .viewpoint-middle {
@@ -58,6 +58,7 @@
         width: pxToRem(296px);
         margin-top: pxToRem(12px);
         word-wrap: break-word;
+        font-size: pxToRem(12px);
       }
       .first-img {
         width: pxToRem(72px);
