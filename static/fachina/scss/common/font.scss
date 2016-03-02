@@ -1,0 +1,38 @@
+﻿@charset "UTF-8";
+
+// 文字大小
+.font-8 {
+  font-size: pxToRem(8px);
+}
+.font-10 {
+  font-size: pxToRem(10px);
+}
+.font-12 {
+  font-size: pxToRem(12px);
+}
+.font-14 {
+  font-size: pxToRem(14px);
+}
+.font-16 {
+  font-size: pxToRem(16px);
+}
+
+// 字体颜色
+.text-red {
+  color: $red;
+}
+.text-blue {
+  color: $blue;
+}
+.text-green {
+  color: $green;
+}
+.text-gray {
+  color: $gray;
+}
+.text-light {
+  color: $light;
+}
+.text-black {
+  color: $black;
+}
