@@ -48,6 +48,7 @@
   top: 0px;
   height: pxToRem(43px);
   background-color: #d83e3a;
+  min-width: 320px;
   img {
     height: pxToRem(43px);
     width: pxToRem(43px);
@@ -62,4 +63,48 @@
     color: #fff;
     font-size: pxToRem(16px);
   }
+}
+
+// 底部下载一起牛悬浮栏
+.fixed-footer {
+  position: fixed;
+  z-index: 99;
+  bottom: 0px;
+  height: pxToRem(60px);
+  background-color: #303030;
+  min-width: 320px;
+  padding: pxToRem(10px);
+  img {
+    height: pxToRem(40px);
+    width: pxToRem(40px);
+    float: left;
+  }
+  .fixed-footer-text {
+    width: pxToRem(200px);
+    float: left;
+    padding-left: pxToRem(10px);
+    padding-top: pxToRem(5px);
+    span {
+      font-size: pxToRem(13px);
+      color: #fff;
+    }
+    p {
+      font-size: pxToRem(9px);
+      color: #7b7b7b;
+    }
+  }
+  a {
+    border-radius: pxToRem(4px);
+    line-height: pxToRem(29px);
+    text-align: center;
+    display: block;
+    background-color: #d83e3a;
+    height: pxToRem(29px);
+    width: pxToRem(60px);
+    color: #fff;
+    margin-top: pxToRem(6px);
+    float: right;
+    font-size: pxToRem(12px);
+  }
+
 }

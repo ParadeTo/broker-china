@@ -5,7 +5,7 @@
       <h4>#{{ item.uName }}投顾精选#</h4>
       <span>{{ item.adviserType }}</span>
     </div>
-    <a class="viewpoint-content" href="{{ item.url }}">
+    <a class="viewpoint-content" href="{{ item.shareUrl }}">
       <div class="viewpoint-top">
         <span>精</span>
         <h4>{{ item.title }}</h4>
