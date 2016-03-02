@@ -44,6 +44,7 @@
 // 头部固定栏
 .fixed-header {
   position: fixed;
+  z-index: 99;
   top: 0px;
   height: pxToRem(43px);
   background-color: #d83e3a;
