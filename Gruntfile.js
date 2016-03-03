@@ -67,7 +67,7 @@ module.exports = function(grunt) {
         options: {
           globals: {
             // 全局版本号，自动取时间
-            pageVersion: '<%= grunt.template.today("yymmddhh") %>'
+            pageVersion: '<%= grunt.template.today("ddhhMM") %>'
           },
           includesDir: 'html/fachina/common'
         },

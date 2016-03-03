@@ -61,3 +61,28 @@
 .icon-sell {
   background: $bg-blue;
 }
+
+.icon-link-buy,
+.icon-link-sell,
+.icon-link-cancel,
+.icon-link-search {
+  display: inline-block;
+  width: pxToRem(25px);
+  height: pxToRem(20px);
+  background-image: url(../images/icon_trade.png);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: 100% auto;
+}
+.icon-link-buy {
+  background-position: 0 0;
+}
+.icon-link-sell {
+  background-position: 0 pxToRem(-20px);
+}
+.icon-link-cancel {
+  background-position: 0 pxToRem(-40px);
+}
+.icon-link-search {
+  background-position: 0 pxToRem(-60px);
+}

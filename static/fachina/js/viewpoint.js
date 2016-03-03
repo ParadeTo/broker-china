@@ -45,7 +45,7 @@ viewpointHandler.getList = function() {
       J_app.alert(data.message);
     }
   },function(){
-    J_app.alert("请求失败！")
+    J_app.alert("请求数据失败")
   });
 };
 

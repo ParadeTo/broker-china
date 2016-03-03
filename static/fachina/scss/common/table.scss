@@ -1,0 +1,30 @@
+﻿@charset "UTF-8";
+
+.ui-table {
+  width: 100%;
+
+  tr {
+    border: 1px solid $border-color;
+  }
+
+  th {
+    padding: pxToRem(6px) 0;
+    background: $bg-color;
+    font-size: pxToRem(12px);
+    text-align: center;
+    color: $gray;
+  }
+
+  td {
+    padding: pxToRem(6px) 0;
+    font-size: pxToRem(12px);
+    text-align: center;
+    color: $black;
+  }
+
+  &.span-block {
+    span {
+      display: block;
+    }
+  }
+}

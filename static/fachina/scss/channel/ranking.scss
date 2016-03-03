@@ -1,3 +1,28 @@
 ﻿@charset "UTF-8";
 
 // 榜单
+.ranking-action-wrap {
+  padding: pxToRem(10px);
+}
+
+.ranking-action-box {
+  padding: pxToRem(10px);
+  padding-left: pxToRem(80px);
+  border: 1px solid $border-color;
+  border-radius: pxToRem(4px);
+
+  .ranking-user-info {
+    float: left;
+    margin-left: pxToRem(-80px);
+    width: pxToRem(80px);
+    text-align: center;
+  }
+}
+.ranking-btn-box {
+  padding: pxToRem(10px);
+
+  .btn-red {
+    width: 100%;
+    height: pxToRem(40px);
+  }
+}

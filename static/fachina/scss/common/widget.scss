@@ -2,42 +2,83 @@
 
 //增减框
 .quantity-form {
-  display: inline-block;
-  font-size: 0;
+  display: block;
+  padding-left: pxToRem(40px);
+  padding-right: pxToRem(40px);
+  @include clearfix();
+
   .minus-btn,
   .plus-btn {
-    display: inline-block;
+    display: block;
     width: pxToRem(40px);
     height: pxToRem(40px);
-    line-height: pxToRem(40px);
-    text-align: center;
-    font-size: pxToRem(30px);
-    color: #262932;
-    background: #c1c8e4;
-    vertical-align: middle;
-    &.active {
-      background: #a1a7c0;
-    }
+    background-image: url(../images/icon_quantity.png);
+    background-color: $border-color;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    font-size: 0;
   }
   .minus-btn {
-    border-top-left-radius: pxToRem(2px);
-    border-bottom-left-radius: pxToRem(2px);
+    float: left;
+    margin-left: pxToRem(-40px);
+    border-top-left-radius: pxToRem(4px);
+    border-bottom-left-radius: pxToRem(4px);
+    background-position: 0 0;
   }
   .plus-btn {
-    border-top-right-radius: pxToRem(2px);
-    border-bottom-right-radius: pxToRem(2px);
+    float: right;
+    margin-right: pxToRem(-40px);
+    background-color: $bg-red;
+    border-top-right-radius: pxToRem(4px);
+    border-bottom-right-radius: pxToRem(4px);
+    background-position: 0 pxToRem(-40px);
   }
-  input {
-    width: pxToRem(100px);
+  .input {
+    float: left;
+    width: 100%;
     height: pxToRem(40px);
-    background-color: #262932;
-    border: pxToRem(1px) solid #c1c8e4;
-    border-left: 0 none;
-    border-right: 0 none;
-    font-size: pxToRem(18px);
-    vertical-align: middle;
-    text-align: center;
-    color: #ff5a00;
+    border: pxToRem(1px) solid $border-color;
+
+    input {
+      width: 100%;
+      height: pxToRem(38px);
+      background-color: #fff;
+      border: 0 none;
+      font-size: pxToRem(18px);
+      vertical-align: middle;
+      text-align: center;
+      color: $black;
+    }
+  }
+
+  &.buy {
+    .minus-btn,
+    .plus-btn {
+      background-color: $bg-red;
+
+      &.touch {
+        background-color: $bg-red-active;
+      }
+    }
+
+    .input {
+      border-color: $bg-red;
+    }
+  }
+
+  &.sell {
+    .minus-btn,
+    .plus-btn {
+      background-color: $bg-blue;
+
+      &.touch {
+        background-color: $bg-blue-active;
+      }
+    }
+
+    .input {
+      border-color: $bg-blue;
+    }
   }
 }
 
@@ -106,5 +147,4 @@
     float: right;
     font-size: pxToRem(12px);
   }
-
 }

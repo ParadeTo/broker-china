@@ -25,4 +25,16 @@
     background-color: $bg-color;
     opacity: 1;
   }
+
+  &.text {
+    height: pxToRem(40px);
+
+    &.buy {
+      border-color: $bg-red;
+    }
+
+    &.sell {
+      border-color: $bg-blue;
+    }
+  }
 }
