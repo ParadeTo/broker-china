@@ -18,7 +18,7 @@ function dealTime(data) {
 // 获取观点列表
 viewpointHandler.getList = function() {
   var params = {};
-  params['typed'] = "L";
+  params['type'] = "L";
   params['count'] = 10;
   params['readId'] = viewpointHandler.lastViewpointId;
 
@@ -45,7 +45,7 @@ viewpointHandler.getList = function() {
       J_app.alert(data.message);
     }
   },function(){
-    J_app.alert("请求数据失败")
+    J_app.alert("请求失败！")
   });
 };
 

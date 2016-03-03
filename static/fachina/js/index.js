@@ -145,7 +145,7 @@ indexHandler.joinActive = function() {
 
   $('#joinEvent').on('click', function(){
     J_app.checkSign(function(){
-      window.location.href = './enroll.html';
+      window.location.href = './enroll_1.html';
     })
   });
 };

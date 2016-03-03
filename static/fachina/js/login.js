@@ -26,9 +26,6 @@ loginHandler.init = function() {
   $('#login-btn-register').attr("href","register.html");
 }
 
-//
-
-
 // 登录
 loginHandler.login = function(){
   $('#login-btn-login').click(function() {
@@ -53,16 +50,19 @@ loginHandler.login = function(){
     params['certCode'] = phone;
     params['pwd'] = password;
     J_app.ajax(J_app.api.login, params, function(data){
+      console.log(params);
+      console.log(data);
       if(data.code === 0){
         $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
         window.location.href = "index.html";
-      } else{
+      } else {
         $("#validError").html("<p>" + data.message + "</p>");
       }
+    },function() {
+      J_app.alert('请求失败！');
     });
   });
 }
-
 
 $(function() {
   loginHandler.init();

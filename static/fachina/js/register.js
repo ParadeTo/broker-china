@@ -60,6 +60,8 @@ registerHandler.getCaptcha = function() {
       } else {
         $("#validError").html("<p>" + data.message + "</p>");
       }
+    },function() {
+      J_app.alert('请求失败！');
     });
   });
 };
@@ -110,6 +112,8 @@ registerHandler.register = function() {
         $("#validError").html("<p>" + data.message + "</p>");
       }
       iTime = 0;
+    },function() {
+      J_app.alert('请求失败！');
     });
   });
 

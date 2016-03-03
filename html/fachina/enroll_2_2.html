@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  @@include('_meta.html')
+</head>
+<body>
+  <!-- 报名页面-点击我是股民 -->
+  <!-- 头部固定栏-->
+  @@include('_fixed_header.html',{"title":"报名参赛"})
+  <div class="enroll-2-page">
+    <div class="enroll-2-name">
+      真实姓名：
+      <input id="enroll-2-name" type="text" placeholder="请输入真实姓名"/>
+    </div>
+    <div id="enroll-2-error"></div>
+    <div id="enroll-2-btn" class="enroll-2-join J-btn">
+      确认参赛
+    </div>
+  </div>
+  <!-- script -->
+  @@include('_script.html')
+  <script src="../../static/fachina/js/enroll.js?ver=20160226"></script>
+</body>
+</html>
