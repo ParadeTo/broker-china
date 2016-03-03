@@ -2,58 +2,6 @@
 
 // 首页
 
-.index-head {
-  padding: pxToRem(6px) pxToRem(10px);
-}
-
-.user-status {
-  width: pxToRem(40px);
-  height: pxToRem(40px);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100% 100%;
-
-  &.status-1 {
-    background-image: url(../images/icon_user_1.png);
-  }
-
-  &.status-2 {
-    background-image: url(../images/icon_user_2.png);
-  }
-
-  &.status-3 {
-    background-image: url(../images/icon_user_3.png);
-  }
-
-  &.status-4 {
-    background-image: url(../images/icon_user_4.png);
-  }
-
-  &.status-5 {
-    background-image: url(../images/icon_user_5.png);
-  }
-}
-
-.search-box {
-
-  input {
-    padding: 0 pxToRem(5px);
-    width: pxToRem(198px);
-    height: pxToRem(40px);
-    line-height: pxToRem(40px);
-    border: 1px solid $border-color;
-    font-size: pxToRem(14px);
-  }
-
-  button {
-    width: pxToRem(56px);
-    height: pxToRem(40px);
-    margin-left: pxToRem(5px);
-    font-size: pxToRem(14px);
-    border: 1px solid $border-color;
-  }
-}
-
 .index-banner {
   position: relative;
   width: 100%;
@@ -116,65 +64,6 @@
     }
   }
 }
-.index-scroll {
-  padding: pxToRem(6px) pxToRem(10px);
-
-  dt {
-    width: pxToRem(53px);
-    height: pxToRem(16px);
-    line-height: pxToRem(16px);
-    font-size: pxToRem(12px);
-    text-align: center;
-    color: $white;
-    background: $blue;
-    border-radius: pxToRem(2px);
-  }
-
-  dd {
-    margin-left: pxToRem(5px);
-    width: pxToRem(242px);
-    height: pxToRem(16px);
-    line-height: pxToRem(16px);
-    font-size: pxToRem(12px);
-    overflow: hidden;
-
-    a {
-      display: block;
-      color: $black;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  }
-}
-
-.navbar {
-  border-top: 1px solid $border-color;
-
-  .ui-col {
-    width: 25%;
-    text-align: center;
-
-    a {
-      display: inline-block;
-      padding: pxToRem(10px) 0;
-      font-size: pxToRem(14px);
-      color: $gray;
-      cursor: position;
-      text-align: center;
-
-      &.active {
-        border-bottom: pxToRem(2px) solid $red;
-        color: $red;
-      }
-
-      &.touch {
-        color: $red;
-      }
-    }
-  }
-}
-
 .index-join {
   padding: pxToRem(10px) pxToRem(10px) 0 pxToRem(10px);
 

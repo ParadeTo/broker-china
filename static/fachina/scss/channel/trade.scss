@@ -60,3 +60,169 @@
     }
   }
 }
+
+.trade-panel-box {
+  padding: pxToRem(10px);
+}
+
+.trade-panel-left {
+  width: 60%;
+}
+
+.trade-panel-right {
+  margin-left: 2%;
+  width: 38%;
+
+  .trade-five_bets + .trade-five_bets {
+    border-top: 1px solid $border-color;
+    padding-top: pxToRem(5px);
+  }
+}
+
+.trade-panel-text {
+  .ui-col {
+    width: 50%;
+  }
+}
+
+.trade-select-btn {
+  .ui-col {
+    width: 33.3333%;
+    border: 1px solid $border-color;
+    border-left: 0 none;
+    line-height: pxToRem(40px);
+    text-align: center;
+
+    &:first-child {
+      border-left: 1px solid $border-color;
+      border-top-left-radius: pxToRem(4px);
+      border-bottom-left-radius: pxToRem(4px);
+    }
+
+    &:last-child {
+      border-top-right-radius: pxToRem(4px);
+      border-bottom-right-radius: pxToRem(4px);
+    }
+  }
+
+  &.buy {
+
+    .ui-col {
+      border-color: $bg-red;
+      color: $red;
+
+      &.touch {
+        background: $bg-red;
+        color: $white;
+      }
+    }
+  }
+
+  &.sell {
+
+    .ui-col {
+      border-color: $bg-blue;
+      color: $blue;
+
+      &.touch {
+        background: $bg-blue;
+        color: $white;
+      }
+    }
+  }
+}
+
+.trade-btn {
+  width: 100%;
+  height: pxToRem(40px);
+}
+
+.trade-five_bets {
+
+  li {
+    line-height: pxToRem(20px);
+    font-size: 0;
+
+    span {
+      display: inline-block;
+      width: 33.3333%;
+      font-size: pxToRem(12px);
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.trade-panel-link {
+  background: $white;
+
+  .ui-col {
+    width: 25%;
+    padding: pxToRem(5px) 0;
+    border: 1px solid $border-color;
+    border-left-width: 0;
+    border-right-width: 0;
+    text-align: center;
+
+    span {
+      display: inline-block;
+    }
+  }
+
+  .ui-col + .ui-col {
+    border-left-width: 1px;
+  }
+}
+
+.trade-assets-box {
+  padding: pxToRem(10px) 0;
+  margin-bottom: pxToRem(10px);
+
+  .ui-col {
+    width: 50%;
+    text-align: center;
+
+    dt {
+      font-size: pxToRem(14px);
+      color: $black;
+    }
+
+    dd {
+      font-size: pxToRem(14px);
+    }
+
+    dl + dl {
+      margin-top: pxToRem(10px);
+    }
+  }
+
+  .ui-col + .ui-col {
+    border-left: 1px solid $border-color;
+  }
+}
+
+.trade-statis {
+  padding: pxToRem(18px) 0;
+  background: $bg-yellow;
+
+  .ui-col {
+    width: 33.3333%;
+    text-align: center;
+    color: $white;
+
+    dt {
+      font-size: pxToRem(14px);
+      margin-bottom: pxToRem(10px);
+    }
+
+    dd {
+      font-size: pxToRem(20px);
+    }
+  }
+
+  .ui-col + .ui-col {
+    border-left: 1px solid $yellow;
+  }
+}

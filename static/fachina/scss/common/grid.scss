@@ -9,3 +9,65 @@
     float: left;
   }
 }
+
+// 间距修复
+.m-t-2 {
+  margin-top: pxToRem(2px);
+}
+.m-t-4 {
+  margin-top: pxToRem(4px);
+}
+.m-t-6 {
+  margin-top: pxToRem(6px);
+}
+.m-t-8 {
+  margin-top: pxToRem(8px);
+}
+.m-t-10 {
+  margin-top: pxToRem(10px);
+}
+.m-r-2 {
+  margin-right: pxToRem(2px);
+}
+.m-r-4 {
+  margin-right: pxToRem(4px);
+}
+.m-r-6 {
+  margin-right: pxToRem(6px);
+}
+.m-r-8 {
+  margin-right: pxToRem(8px);
+}
+.m-r-10 {
+  margin-right: pxToRem(10px);
+}
+.m-b-2 {
+  margin-bottom: pxToRem(2px);
+}
+.m-b-4 {
+  margin-bottom: pxToRem(4px);
+}
+.m-b-6 {
+  margin-bottom: pxToRem(6px);
+}
+.m-b-8 {
+  margin-bottom: pxToRem(8px);
+}
+.m-b-10 {
+  margin-bottom: pxToRem(10px);
+}
+.m-l-2 {
+  margin-left: pxToRem(2px);
+}
+.m-l-4 {
+  margin-left: pxToRem(4px);
+}
+.m-l-6 {
+  margin-left: pxToRem(6px);
+}
+.m-l-8 {
+  margin-left: pxToRem(8px);
+}
+.m-l-10 {
+  margin-left: pxToRem(10px);
+}
