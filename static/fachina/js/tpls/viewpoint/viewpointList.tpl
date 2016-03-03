@@ -3,7 +3,7 @@
     <div class="viewpoint-adviser">
       <img src="{{ item.uImg }}" alt=""/>
       <h4>#{{ item.uName }}投顾精选#</h4>
-      <span>{{ item.adviserType }}({{ item.adviserOrg }})</span>
+      <span>{{ item.adviserType }}</span>
     </div>
     <a class="viewpoint-content" href="{{ item.shareUrl }}">
       <div class="viewpoint-top">
