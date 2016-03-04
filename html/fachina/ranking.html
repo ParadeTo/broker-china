@@ -13,22 +13,22 @@
     <!-- 导航 -->
     <ul class="ui-container bg-white ui-row ui-navbar">
       <li class="ui-col">
-        <a href="#" class="nav-link">大赛首页</a>
+        <a href="./index.html?ver=@@pageVersion" class="nav-link">大赛首页</a>
       </li>
       <li class="ui-col">
-        <a href="#" class="nav-link">个人中心</a>
+        <a href="./home.html?ver=@@pageVersion" class="nav-link">个人中心</a>
       </li>
       <li class="ui-col">
-        <a href="#" class="nav-link">模拟交易</a>
+        <a href="./trade.html?ver=@@pageVersion" class="nav-link">模拟交易</a>
       </li>
       <li class="ui-col">
-        <a href="#" class="nav-link active">排行榜</a>
+        <a href="javascript:;" class="nav-link active">排行榜</a>
       </li>
     </ul>
 
     <!-- 参赛 -->
     <div class="ui-box ranking-action-wrap">
-      <div class="ui-container bg-white ranking-action-box">
+      <div class="ui-container bg-white ranking-action-box clearfix">
         <div class="ranking-user-info">
           <div class="ui-avatar">
             <img src="../../static/fachina/images/pic_demo_user.jpg">
@@ -37,10 +37,26 @@
             某某人*
           </div>
         </div>
-
-        <div class="ranking-btn-box">
+        <!-- <div class="ranking-btn-box">
           <button class="btn btn-red">我要参赛</button>
           <a href="#">查看规则</a>
+        </div> -->
+        <div class="ranking-btn-box" id="userInfo">
+          <ul class="ui-row">
+            <li class="ui-col">
+              <span>综合排名</span>
+              <span>1234</span>
+            </li>
+            <li class="ui-col">
+              <span>赛季收益率</span>
+              <span>4.38%</span>
+            </li>
+            <li class="ui-col">
+              <span>得票数</span>
+              <span>2392</span>
+            </li>
+          </ul>
+          <button class="btn btn-red">投票</button>
         </div>
       </div>
     </div>
@@ -49,23 +65,25 @@
     <div class="ui-container">
       <!-- tabs -->
       <div class="index-tabs">
-        <ul class="ui-row">
-          <li class="ui-col tab-1">
-            <a href="#" class="nav-link active">投顾</a>
+        <ul class="ui-row" id="rankTab">
+          <li data-view="0" data-type="A" class="ui-col tab-1 active J-touch">
+            <span class="nav-link">投顾</span>
           </li>
-          <li class="ui-col tab-2">
-            <a href="#" class="nav-link">机构</a>
+          <li data-view="1" data-type="O" class="ui-col tab-2 J-touch">
+            <span class="nav-link">机构</span>
           </li>
-          <li class="ui-col tab-3">
-            <a href="#" class="nav-link">达人</a>
+          <li data-view="2" data-type="E" class="ui-col tab-3 J-touch">
+            <span class="nav-link">达人</span>
           </li>
         </ul>
       </div>
     </div>
 
     <!-- 列表 -->
-    <div class="ui-box">
-      <div class="ui-container">
+    <div class="ui-box bg-white" id="rankContent">
+
+      <!-- 投顾 -->
+      <div class="index-ranking-content show">
         <table class="ui-table">
           <thead>
             <tr>
@@ -76,117 +94,43 @@
               <th>投票数</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>
-                <i class="icon-rank rank-1"><em></em>1</i>
-              </td>
-              <td>
-                <div class="user-info-box">
-                  <div class="user-img">
-                    <img src="../../static/fachina/images/pic_demo_user.jpg">
-                  </div>
-                  <dl class="user-info">
-                    <dt>小妞</dt>
-                    <dd>国家群安</dd>
-                  </dl>
-                </div>
-              </td>
-              <td>
-                <span class="text-danger">98.56%</span>
-              </td>
-              <td>
-                <div class="index-td-btn">
-                  <a href="javascript:;" class="btn btn-white">查看</a>
-                </div>
-              </td>
-              <td>
-                <div class="index-td-btn">
-                  <span class="total-number">53023</span>
-                  <a href="javascript:;" class="btn btn-red">投票</a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><i class="icon-rank rank-2"><em></em>2</i></td>
-              <td>
-                <div class="user-info-box">
-                  <div class="user-img">
-                    <img src="../../static/fachina/images/pic_demo_user.jpg">
-                  </div>
-                  <dl class="user-info">
-                    <dt>小妞</dt>
-                    <dd>国家群安</dd>
-                  </dl>
-                </div>
-              </td>
-              <td><span class="text-danger">98.56%</span></td>
-              <td>
-                <div class="index-td-btn">
-                  <a href="javascript:;" class="btn btn-white">查看</a>
-                </div>
-              </td>
-              <td>
-                <div class="index-td-btn">
-                  <span class="total-number">53023</span>
-                  <a href="javascript:;" class="btn btn-red">投票</a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><i class="icon-rank rank-3"><em></em>3</i></td>
-              <td>
-                <div class="user-info-box">
-                  <div class="user-img">
-                    <img src="../../static/fachina/images/pic_demo_user.jpg">
-                  </div>
-                  <dl class="user-info">
-                    <dt>小妞</dt>
-                    <dd>国家群安</dd>
-                  </dl>
-                </div>
-              </td>
-              <td><span class="text-danger">98.56%</span></td>
-              <td>
-                <div class="index-td-btn">
-                  <a href="javascript:;" class="btn btn-white">查看</a>
-                </div>
-              </td>
-              <td>
-                <div class="index-td-btn">
-                  <span class="total-number">53023</span>
-                  <a href="javascript:;" class="btn btn-red">投票</a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><i class="icon-rank">4</i></td>
-              <td>
-                <div class="user-info-box">
-                  <div class="user-img">
-                    <img src="../../static/fachina/images/pic_demo_user.jpg">
-                  </div>
-                  <dl class="user-info">
-                    <dt>小妞</dt>
-                    <dd>国家群安</dd>
-                  </dl>
-                </div>
-              </td>
-              <td><span class="text-danger">98.56%</span></td>
-              <td>
-                <div class="index-td-btn">
-                  <a href="javascript:;" class="btn btn-white">查看</a>
-                </div>
-              </td>
-              <td>
-                <div class="index-td-btn">
-                  <span class="total-number">53023</span>
-                  <a href="javascript:;" class="btn btn-red">投票</a>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="rankAdviser"><!-- 投顾列表 --></tbody>
         </table>
+        <div data-type="A" class="ui-more">点击查看更多</div>
+      </div>
+
+      <!-- 机构 -->
+      <div class="index-ranking-content">
+        <table class="ui-table">
+          <thead>
+            <tr>
+              <th>综合<br/>排名</th>
+              <th>投顾<br/>机构</th>
+              <th>赛季<br/>收益率</th>
+              <th>当前持仓</th>
+              <th>投票数</th>
+            </tr>
+          </thead>
+          <tbody id="rankOrg"><!-- 机构列表 --></tbody>
+        </table>
+        <div data-type="O" class="ui-more">点击查看更多</div>
+      </div>
+
+      <!-- 达人 -->
+      <div class="index-ranking-content">
+        <table class="ui-table">
+          <thead>
+            <tr>
+              <th>综合<br/>排名</th>
+              <th>投顾<br/>机构</th>
+              <th>赛季<br/>收益率</th>
+              <th>当前持仓</th>
+              <th>投票数</th>
+            </tr>
+          </thead>
+          <tbody id="rankElite"><!-- 达人列表 --></tbody>
+        </table>
+        <div data-type="E" class="ui-more">点击查看更多</div>
       </div>
     </div>
   </main>
@@ -196,6 +140,6 @@
 
   <!-- script -->
   @@include('_script.html')
-  <script src="../../static/fachina/js/index.js?ver=20160226"></script>
+  <script src="../../static/fachina/js/ranking.js?ver=20160226"></script>
 </body>
 </html>

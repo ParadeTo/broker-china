@@ -24,7 +24,7 @@
     </div>
 
     <!-- statis -->
-    <div class="trade-statis">
+    <div class="trade-statis" id="userInfo">
       <ul class="ui-row">
         <li class="ui-col">
           <dl>
@@ -50,9 +50,7 @@
     <!-- 赛事直播 -->
     <dl class="ui-row ui-event-radio">
       <dt class="ui-col">赛事直播</dt>
-      <dd class="ui-col">
-        <span>季逾800位投顾参展，鹿死谁手，谁主沉浮谁主沉浮谁主沉浮</span>
-      </dd>
+      <dd class="ui-col" id="eventRadio"><!-- 赛事直播 --></dd>
     </dl>
   </header>
 
@@ -80,21 +78,21 @@
         <div class="ui-col">
           <dl>
             <dt>总资产</dt>
-            <dd>￥10,655,655.00</dd>
+            <dd id="totalAssets">--</dd>
           </dl>
           <dl>
             <dt>可用资产</dt>
-            <dd>￥10,655.00</dd>
+            <dd id="ableAssets">--</dd>
           </dl>
         </div>
         <div class="ui-col">
           <dl>
             <dt>累计收益</dt>
-            <dd>8.27%</dd>
+            <dd id="totalYield">--</dd>
           </dl>
           <dl>
             <dt>日收益率</dt>
-            <dd>-1.12%</dd>
+            <dd id="dayYield">--</dd>
           </dl>
         </div>
       </div>
@@ -139,62 +137,7 @@
             <th>成本价<br>现&nbsp;&nbsp;价</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              <span>平安银行</span>
-              <span>000001</span>
-            </td>
-            <td>
-              <span>98.56%</span>
-              <span>-98.56%</span>
-            </td>
-            <td>
-              <span>2000</span>
-              <span>0</span>
-            </td>
-            <td>
-              <span>9.97</span>
-              <span>9.96</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>平安银行</span>
-              <span>000001</span>
-            </td>
-            <td>
-              <span>98.56%</span>
-              <span>-98.56%</span>
-            </td>
-            <td>
-              <span>2000</span>
-              <span>0</span>
-            </td>
-            <td>
-              <span>9.97</span>
-              <span>9.96</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>平安银行</span>
-              <span>000001</span>
-            </td>
-            <td>
-              <span>98.56%</span>
-              <span>-98.56%</span>
-            </td>
-            <td>
-              <span>2000</span>
-              <span>0</span>
-            </td>
-            <td>
-              <span>9.97</span>
-              <span>9.96</span>
-            </td>
-          </tr>
-        </tbody>
+        <tbody id="stkList"></tbody>
       </table>
     </div>
   </main>
@@ -204,6 +147,6 @@
 
   <!-- script -->
   @@include('_script.html')
-  <script src="../../static/fachina/js/index.js?ver=@@pageVersion"></script>
+  <script src="../../static/fachina/js/trade.js?ver=@@pageVersion"></script>
 </body>
 </html>

@@ -1,168 +1,209 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-  <meta charset="UTF-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
-  <title>券商中国</title>
-  <meta name="description" content=""/>
-  <meta name="apple-mobile-web-app-title" content="券商中国"/>
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
-  <link rel="stylesheet" href="../../../static/fachina/css/style.css?ver=20160224"/>
+<html lang="zh-cn">
+<head>
+  @@include('_meta.html')
 </head>
 <body>
-  <!-- 头部标题-->
-  <header>
-    <div class="ui-header">
-      <div class="ui-header-left ui-back J-touch">返回</div>
-      <div class="ui-header-title">撤单</div>
-      <div class="ui-header-right ui-refresh J-touch">刷新</div>
-    </div>
-  </header>
 
-  <!-- 主体-->
-  <main>
-    <!-- tabs -->
-    <div class="trade-tabs">
+    <!-- header -->
+  <header>
+
+    <!-- 搜索 -->
+    <div class="ui-box ui-row ui-head">
+      <div class="ui-col ui-user-status status-1"></div>
+      <div class="ui-col ui-search-box">
+        <ul class="ui-row">
+          <li class="ui-col">
+            <input type="text" class="form-control" placeholder="输入投顾／机构">
+          </li>
+          <li class="ui-col">
+            <button class="btn btn-white" type="button">搜索</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- statis -->
+    <div class="trade-statis">
       <ul class="ui-row">
-        <li data-view="0" data-type="A" class="ui-col J-touch">
-          <span class="nav-link">买入</span>
+        <li class="ui-col">
+          <dl>
+            <dt>综合排名</dt>
+            <dd>1289</dd>
+          </dl>
         </li>
-        <li data-view="1" data-type="O" class="ui-col J-touch">
-          <span class="nav-link">卖出</span>
+        <li class="ui-col">
+          <dl>
+            <dt>赛季收益率</dt>
+            <dd>18.45%</dd>
+          </dl>
         </li>
-        <li data-view="2" data-type="E" class="ui-col active J-touch">
-          <span class="nav-link">撤单</span>
-        </li>
-        <li data-view="3" data-type="E" class="ui-col J-touch">
-          <span class="nav-link">查询</span>
+        <li class="ui-col">
+          <dl>
+            <dt>得票数</dt>
+            <dd>23124</dd>
+          </dl>
         </li>
       </ul>
     </div>
 
-    <div class="ui-container">
-      <div class="trade-tabs-content">
+    <!-- 赛事直播 -->
+    <dl class="ui-row ui-event-radio">
+      <dt class="ui-col">赛事直播</dt>
+      <dd class="ui-col">
+        <span>季逾800位投顾参展，鹿死谁手，谁主沉浮谁主沉浮谁主沉浮</span>
+      </dd>
+    </dl>
+  </header>
 
-      </div>
-      <div class="trade-tabs-content">
+  <!-- main -->
+  <main>
+    <!-- 导航 -->
+    <ul class="ui-container bg-white ui-row ui-navbar">
+      <li class="ui-col">
+        <a href="./index.html?ver=@@pageVersion" class="nav-link">大赛首页</a>
+      </li>
+      <li class="ui-col">
+        <a href="./home.html?ver=@@pageVersion" class="nav-link">个人中心</a>
+      </li>
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link active">模拟交易</a>
+      </li>
+      <li class="ui-col">
+        <a href="./ranking.html?ver=@@pageVersion" class="nav-link">排行榜</a>
+      </li>
+    </ul>
 
-      </div>
-
-      <!-- 撤单 -->
-      <div class="trade-tabs-content">
-        <table class="trade-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>股票名称<br>委托时间</th>
-              <th>委托价<br>成交均价</th>
-              <th>委托股数<br>成交股数</th>
-              <th>状态</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <i class="icon-buy">买</i>
-              </td>
-              <td>
-                <span class="text-black">平安银行</span>
-                <span class="font-8 text-light">10:39:56</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>0.000</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>0.000</span>
-              </td>
-              <td>
-                <span class="text-gray">未成交</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="icon-sell">卖</i>
-              </td>
-              <td>
-                <span class="text-black">平安银行</span>
-                <span class="font-8 text-light">10:39:56</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>0.000</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>0.000</span>
-              </td>
-              <td>
-                <span class="text-gray">未成交</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- 查询 -->
-      <div class="trade-tabs-content show">
-        <table class="trade-table">
-          <thead>
-            <tr>
-              <th>操作</th>
-              <th>股票名称</th>
-              <th>委托价<br>成交价</th>
-              <th>委托股数<br>成交股数</th>
-              <th>状态</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <span class="text-red">买入</span>
-              </td>
-              <td>
-                <span>平安银行</span>
-                <span class="font-8 text-light">000001</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>--</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>--</span>
-              </td>
-              <td>
-                <span>待交易</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="text-blue">卖出</span>
-              </td>
-              <td>
-                <span>平安银行</span>
-                <span class="font-8 text-light">000001</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>--</span>
-              </td>
-              <td>
-                <span>5.960</span>
-                <span>--</span>
-              </td>
-              <td>
-                <span>待交易</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- 个人资产 -->
+    <div class="ui-box bg-white trade-assets-box">
+      <div class="ui-row">
+        <div class="ui-col">
+          <dl>
+            <dt>总资产</dt>
+            <dd>￥10,655,655.00</dd>
+          </dl>
+          <dl>
+            <dt>可用资产</dt>
+            <dd>￥10,655.00</dd>
+          </dl>
+        </div>
+        <div class="ui-col">
+          <dl>
+            <dt>累计收益</dt>
+            <dd>8.27%</dd>
+          </dl>
+          <dl>
+            <dt>日收益率</dt>
+            <dd>-1.12%</dd>
+          </dl>
+        </div>
       </div>
     </div>
+
+    <!-- 操作tab -->
+    <ul class="ui-row trade-panel-link">
+      <li class="ui-col">
+        <a href="./trade_panel.html?tab=buy" class="nav-link">
+          <i class="icon-link-buy"></i><br>
+          <span>买入</span>
+        </a>
+      </li>
+      <li class="ui-col">
+        <a href="./trade_panel.html?tab=sell" class="nav-link">
+          <i class="icon-link-sell"></i><br>
+          <span>卖出</span>
+        </a>
+      </li>
+      <li class="ui-col">
+        <a href="./trade_panel.html?tab=cancel" class="nav-link active">
+          <i class="icon-link-cancel"></i><br>
+          <span>撤单</span>
+        </a>
+      </li>
+      <li class="ui-col">
+        <a href="./trade_panel.html?tab=search" class="nav-link">
+          <i class="icon-link-search"></i><br>
+          <span>查询</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- 持仓 -->
+    <div class="ui-container bg-white">
+      <table class="ui-table span-block">
+        <thead>
+          <tr>
+            <th>股票名称<br/>当前市值</th>
+            <th>盈亏金额<br/>盈亏比例</th>
+            <th>持仓股数<br/>可用股数</th>
+            <th>成本价<br>现&nbsp;&nbsp;价</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span>平安银行</span>
+              <span>000001</span>
+            </td>
+            <td>
+              <span>98.56%</span>
+              <span>-98.56%</span>
+            </td>
+            <td>
+              <span>2000</span>
+              <span>0</span>
+            </td>
+            <td>
+              <span>9.97</span>
+              <span>9.96</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>平安银行</span>
+              <span>000001</span>
+            </td>
+            <td>
+              <span>98.56%</span>
+              <span>-98.56%</span>
+            </td>
+            <td>
+              <span>2000</span>
+              <span>0</span>
+            </td>
+            <td>
+              <span>9.97</span>
+              <span>9.96</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>平安银行</span>
+              <span>000001</span>
+            </td>
+            <td>
+              <span>98.56%</span>
+              <span>-98.56%</span>
+            </td>
+            <td>
+              <span>2000</span>
+              <span>0</span>
+            </td>
+            <td>
+              <span>9.97</span>
+              <span>9.96</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
+
+  <!-- widget -->
+  @@include('_common.html')
+
+  <!-- script -->
+  @@include('_script.html')
+  <script src="../../static/fachina/js/index.js?ver=@@pageVersion"></script>
 </body>
 </html>

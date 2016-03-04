@@ -71,28 +71,28 @@
     eventDetail: (development ? devHost : host) + "/g_adviser_api/event_detail",
 
     //持仓详情
-    ptfDetail: (development ? devHost : host) + "/ptf_api/fetch_simu_ptf_balance_detail",
+    ptfDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_balance_detail",
 
     //组合委托概要
-    ptfOrders: (development ? devHost : host) + "/ptf_api/fetch_simu_ptf_today_orders",
+    ptfOrders: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_today_orders",
 
     //当日组合委托详情
-    ptfOrderDetail: (development ? devHost : host) + "/ptf_api/fetch_simu_today_order_detail",
+    ptfOrderDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_today_order_detail",
 
     //调仓预检
-    simuCheck: (development ? devHost : host) + "/ptf_api/check_simu_adjust_trans",
+    simuCheck: (development ? devHost : host) + "/g_adviser_api/check_simu_adjust_trans",
 
     //新增股票预检
-    simuAddStkCheck: (development ? devHost : host) + "/ptf_api/check_simu_add_stks_trans",
+    simuAddStkCheck: (development ? devHost : host) + "/g_adviser_api/check_simu_add_stks_trans",
 
     //调仓
-    simuOrder: (development ? devHost : host) + "/ptf_api/simu_order",
+    simuOrder: (development ? devHost : host) + "/g_adviser_api/simu_order",
 
     //撤单预检
-    withdrawCheck: (development ? devHost : host) + "/ptf_api/check_simu_ptf_withdraw",
+    withdrawCheck: (development ? devHost : host) + "/g_adviser_api/check_simu_ptf_withdraw",
 
     //撤单
-    withdrawOrder: (development ? devHost : host) + "/ptf_api/simu_ptf_withdraw",
+    withdrawOrder: (development ? devHost : host) + "/g_adviser_api/simu_ptf_withdraw",
 
     //获取历史委托概要
     historyOrders: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_his_orders",

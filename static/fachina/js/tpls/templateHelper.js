@@ -65,3 +65,46 @@ template.helper('limit', function(data, limitLength) {
     return data;
   }
 });
+
+/*委托状态*/
+template.helper('ordStat', function(data) {
+  switch(data){
+    case 'A':
+      return '待交易';
+      break;
+    case 'B':
+      return '交易中';
+      break;
+    case 'C':
+      return '全部成交';
+      break;
+    case 'D':
+      return '部分撤销';
+      break;
+    case 'E':
+      return '全部撤销';
+      break;
+    case 'F':
+      return '委托失败';
+      break;
+    case 'G':
+      return '发送异常';
+      break;
+    case 'H':
+      return '未成交';
+      break;
+    case 'I':
+      return '撤单中';
+      break;
+    case 'J':
+      return '部分成交';
+      break;
+    default :
+      return '--';
+  }
+});
+
+/*判断为空*/
+template.helper('isNull', function(val) {
+  return val ? val : '--';
+});
