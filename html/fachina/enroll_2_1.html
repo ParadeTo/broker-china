@@ -5,6 +5,54 @@
 </head>
 <body>
   <!-- 报名页面-选择投顾 -->
+  <!-- 头部固定栏-->
+  @@include('_fixed_header.html',{"title":"报名参赛"})
 
+  <div class="enroll-1-page">
+    <div class="enroll-1-row">
+      真实姓名
+      <input id="enroll-1-name" type="text" placeholder="请输入真实姓名"/>
+    </div>
+    <div class="enroll-1-row">
+      身份证号
+      <input id="enroll-1-idNum" type="text" placeholder="请输入身份证号"/>
+    </div>
+    <div class="enroll-1-row">
+      执业编号
+      <input id="enroll-1-proCode" type="text" placeholder="请输入执业编号"/>
+    </div>
+    <div class="enroll-1-row enroll-1-select">
+      所属机构
+      <input id="enroll-1-org" type="text" readonly="readonly" style="display: none"/>
+    </div>
+    <div class="enroll-1-row">
+      所属营业部
+      <input id="enroll-1-office" type="text" placeholder="请输入所在营业部"/>
+    </div>
+    <div class="enroll-1-row enroll-1-select">
+      所在城市
+      <input id="enroll-1-city" type="text" readonly="readonly" style="display: none"/>
+    </div>
+    <div class="enroll-upload">
+      <img id="enroll-upload-img" src="../../static/fachina/images/pic_identity.jpg" alt=""/>
+      <p>
+        温馨提示：请本人手持身份证照片，需保证头像和身份证上的信息清晰可见。
+      </p>
+
+      <!--<a id="enroll-upload-btn">上传</a>-->
+      
+      <label id="enroll-upload-btn-fake" for="enroll-upload-btn">上传</label>
+      <form action="" method="post" enctype="multipart/form-data" id="enroll-upload-form" target="hidden_frame">
+        <input id="enroll-upload-cId" name="cId" type="hidden" style="display: none"/>
+        <input id="enroll-upload-btn" name="filesData" type="file" style="display: none"/>
+        <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
+      </form>
+    </div>
+  </div>
+
+  <!-- script -->
+  @@include('_script.html')
+  <script src="../../static/common/js/libs/webuploader/webuploader.js?ver=20160304"></script>
+  <script src="../../static/fachina/js/enroll.js?ver=20160226"></script>
 </body>
 </html>

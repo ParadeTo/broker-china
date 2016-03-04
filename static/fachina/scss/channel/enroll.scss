@@ -83,11 +83,69 @@
   }
 }
 
+// 报名参赛-投顾
+.enroll-1-page {
+  padding-top: pxToRem(43px);
+  padding-left: pxToRem(12px);
+  padding-right: pxToRem(12px);
+  background-color: #fff;
+  .enroll-1-row {
+    height: pxToRem(34px);
+    line-height: pxToRem(34px);
+    border-bottom: solid #dbdbdb 1px;
+    width: 100%;
+    text-align: left;
+    font-size: pxToRem(14px);
+    input {
+      text-align: right;
+      line-height: pxToRem(20px);
+      width: 60%;
+      float: right;
+      margin: pxToRem(7px) 0;
+      height: pxToRem(20px);
+    }
+  }
+  .enroll-1-select {
+    background: url(../images/pic_right_arrow.png) no-repeat right;
+    background-size: pxToRem(14px) pxToRem(14px);
+  }
+  .enroll-upload {
+    padding: pxToRem(11px) 0;
+    font-size: pxToRem(12px);
+    height: pxToRem(78px);
+    width: 100%;
+    color: #a5a5a5;
+    background-color: #fff;
+    img {
+      float: left;
+      width: pxToRem(50px);
+    }
+    p {
+      padding-left: pxToRem(10px);
+      width: pxToRem(170px);
+      display: block;
+      float: left;
+    }
+    #enroll-upload-btn {
+      display: block;
+      float: right;
+      width: pxToRem(60px);
+      height: 100%;
+      line-height: pxToRem(25px);
+      text-align: center;
+      font-size: pxToRem(14px);
+      padding-top: pxToRem(10px);
+    }
+  }
+}
+
+
 // 报名参赛-小白
 .enroll-2-page {
   padding-top: pxToRem(43px);
 }
 .enroll-2-name {
+  border: solid #ccc 1px;
   width: 100%;
   padding-left: pxToRem(12px);
   padding-top: pxToRem(10px);
@@ -98,8 +156,17 @@
   font-size: pxToRem(16px);
   text-align: left;
   input {
+    text-align: right;
+    float: right;
     width: 60%;
-    margin: auto 0;
+    margin: auto pxToRem(12px) auto 0;
+    height: pxToRem(40px);
+  }
+  label {
+    text-align: right;
+    float: right;
+    width: 60%;
+    margin: auto pxToRem(12px) auto 0;
     height: pxToRem(40px);
   }
 }

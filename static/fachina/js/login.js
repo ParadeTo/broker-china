@@ -50,11 +50,10 @@ loginHandler.login = function(){
     params['certCode'] = phone;
     params['pwd'] = password;
     J_app.ajax(J_app.api.login, params, function(data){
-      console.log(params);
       console.log(data);
       if(data.code === 0){
         $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        window.location.href = "index.html";
+        //window.location.href = "index.html";
       } else {
         $("#validError").html("<p>" + data.message + "</p>");
       }
