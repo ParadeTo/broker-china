@@ -437,15 +437,24 @@
 
       var _html = [];
 
-      _html.push('<div class="niu-load-fail">');
-      _html.push('<div class="niu-load-fail-img">');
+      _html.push('<div class="ui-loading-fail">');
+      _html.push('<div class="loading-fail-img">');
       _html.push('<img src="' + J_app.host + '/static/common/images/icon_fail.png" alt="">');
       _html.push('</div>');
-      _html.push('<div class="niu-load-fail-text">抱歉，出错啦！</div>');
+      _html.push('<div class="loading-fail-text">抱歉，出错啦！</div>');
       _html.push('</div>');
 
       $('body').empty().append(_html.join(''));
       $('title').text('请求错误');
+    },
+
+    // 加载动画
+    loading: function(type) {
+      if(type){
+        $('body').append('<div class="ui-loading"><div class="loader"></div></div>');
+      } else{
+        $('.ui-loading').remove();
+      }
     },
 
     // 判断是否登录公用方法

@@ -31,6 +31,8 @@ handler.loadOrderList = function() {
 
       if(data.result.stkOrds){
         handler.readId = data.result.stkOrds[data.result.stkOrds.length-1].ordId;
+      }else{
+        trHtml = template('common/noData', {"message":"咱无今日委托"});
       }
     } else{
       trHtml = template('common/error', data);
@@ -53,6 +55,8 @@ handler.moreOrderList = function() {
     }
     $this.addClass('locked');
 
+    J_app.loading(true);
+
     params['cId'] = J_app.param.cId;
     params['ordType'] = 'H';
     params['locatedOrderId'] = handler.readId;
@@ -61,6 +65,7 @@ handler.moreOrderList = function() {
     J_app.ajax(J_app.api.orderDetail, params, function(data){
 
       $this.removeClass('locked');
+      J_app.loading(false);
 
       var trHtml;
 
@@ -76,6 +81,9 @@ handler.moreOrderList = function() {
       }
 
       $('#orderList').append(trHtml);
+    },function(){
+      $this.removeClass('locked');
+      J_app.loading(false);
     });
   });
 };
