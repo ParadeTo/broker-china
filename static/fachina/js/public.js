@@ -98,7 +98,13 @@
     getQuot: (development ? devHost : host) + "/mktinfo_api/get_quot",
 
     // 获取微信签名
-    fetchJssdk: (development ? devHost : host) + "/g_adviser_api/fetch_js_sdk_signature"
+    fetchJssdk: (development ? devHost : host) + "/g_adviser_api/fetch_js_sdk_signature",
+
+    //获取省、直辖市列表
+    province: (development ? devHost : host) + "/g_adviser_api/fetch_province",
+
+    //获取城市列表
+    city: (development ? devHost : host) + "/g_adviser_api/fetch_city"
   };
 
   var links = {

@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-<head>
+<html>
+<head lang="en">
   @@include('_meta.html')
+  <style>
+    .agreement-page {
+
+    }
+  </style>
 </head>
 <body>
-  <h1>协议页面</h1>
+<div class="agreement-page">
+
+</div>
+
+<!-- script -->
+@@include('_script.html')
+<script>
+  $(".agreement-page").load("../../../page/user_agreement.html .m-page", function() {
+
+  });
+</script>
 </body>
 </html>
