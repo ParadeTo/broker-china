@@ -121,3 +121,81 @@
     font-size: pxToRem(12px);
   }
 }
+
+// 加载动画2
+.ui-loading-circle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9990;
+  width: pxToRem(40px);
+  height: pxToRem(40px);
+  background: $bg-red;
+
+  .loader,
+  .loader:before,
+  .loader:after {
+    border-radius: 50%;
+  }
+
+  .loader:before,
+  .loader:after {
+    position: absolute;
+    content: '';
+  }
+
+  .loader:before {
+    width: pxToRem(40px);
+    height: pxToRem(40px);
+    background: $bg-color;
+    border-radius: 50% 0 0 50%;
+    top: 0;
+    left: 0;
+    -webkit-transform-origin: pxToRem(20px) pxToRem(20px);
+    transform-origin: pxToRem(20px) pxToRem(20px);
+    -webkit-animation: loading-circle 2s infinite ease 1.5s;
+    animation: loading-circle 2s infinite ease 1.5s;
+  }
+
+  .loader {
+    position: relative;
+    margin: 0 auto;
+    text-indent: -99999em;
+    width: pxToRem(40px);
+    height: pxToRem(40px);
+    box-shadow: inset 0 0 0 pxToRem(10px) $bg-red;
+  }
+
+  .loader:after {
+    width: pxToRem(40px);
+    height: pxToRem(40px);
+    background: $bg-color;
+    border-radius: 0 50% 50% 0;
+    top: -0.1em;
+    left: 5.1em;
+    -webkit-transform-origin: 0px 5.1em;
+    transform-origin: 0px 5.1em;
+    -webkit-animation: loading-circle 2s infinite ease;
+    animation: loading-circle 2s infinite ease;
+  }
+}
+@-webkit-keyframes loading-circle {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loading-circle {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

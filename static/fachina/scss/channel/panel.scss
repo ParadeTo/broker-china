@@ -1,0 +1,156 @@
+﻿@charset "UTF-8";
+
+// 交易面板
+.trade-tabs {
+  border: 1px solid $border-color;
+  .ui-col {
+    width: 25%;
+    font-size: pxToRem(14px);
+    text-align: center;
+
+    .nav-link,
+    a {
+      display: inline-block;
+      padding: pxToRem(10px) 0;
+      color: $gray;
+    }
+
+    &.active {
+      .nav-link,
+      a {
+        color: $red;
+        border-bottom: pxToRem(2px) solid $red;
+      }
+    }
+  }
+}
+
+.trade-tabs-content {
+  display: none;
+
+  table {
+    width: 100%;
+  }
+
+  tr {
+    border: 1px solid $border-color;
+  }
+
+  thead tr {
+    border-top: 0 none;
+  }
+
+  th {
+    padding: pxToRem(6px) 0;
+    background: $bg-color;
+    font-size: pxToRem(12px);
+    text-align: center;
+    color: $gray;
+  }
+
+  td {
+    padding: pxToRem(6px) 0;
+    font-size: pxToRem(12px);
+    text-align: center;
+    color: $black;
+    background: $white;
+
+    span {
+      display: block;
+    }
+  }
+}
+
+.trade-panel-box {
+  padding: pxToRem(10px);
+}
+
+.trade-panel-left {
+  width: 60%;
+}
+
+.trade-panel-right {
+  margin-left: 2%;
+  width: 38%;
+
+  .trade-five_bets + .trade-five_bets {
+    border-top: 1px solid $border-color;
+    padding-top: pxToRem(5px);
+  }
+}
+
+.trade-panel-text {
+  .ui-col {
+    width: 50%;
+  }
+}
+
+.trade-select-btn {
+  .ui-col {
+    width: 33.3333%;
+    border: 1px solid $border-color;
+    border-left: 0 none;
+    line-height: pxToRem(40px);
+    text-align: center;
+
+    &:first-child {
+      border-left: 1px solid $border-color;
+      border-top-left-radius: pxToRem(4px);
+      border-bottom-left-radius: pxToRem(4px);
+    }
+
+    &:last-child {
+      border-top-right-radius: pxToRem(4px);
+      border-bottom-right-radius: pxToRem(4px);
+    }
+  }
+
+  &.buy {
+
+    .ui-col {
+      border-color: $bg-red;
+      color: $red;
+
+      &.touch {
+        background: $bg-red;
+        color: $white;
+      }
+    }
+  }
+
+  &.sell {
+
+    .ui-col {
+      border-color: $bg-blue;
+      color: $blue;
+
+      &.touch {
+        background: $bg-blue;
+        color: $white;
+      }
+    }
+  }
+}
+
+.trade-btn {
+  width: 100%;
+  height: pxToRem(40px);
+}
+
+.trade-five_bets {
+
+  li {
+    line-height: pxToRem(20px);
+    font-size: 0;
+
+    span {
+      display: inline-block;
+      width: 33.3333%;
+      font-size: pxToRem(12px);
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}

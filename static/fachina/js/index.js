@@ -236,5 +236,31 @@ $(function() {
     });
   }
 
+  // 用户状态
+  if(!$.cookie("fachinaId")){
+    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+  } else{
+    var params = {};
+
+    //params['cId'] = $.cookie("fachinaId");
+    params['joinId'] = 1;
+
+    J_app.ajax(J_app.api.joinDetail, params, function(data){
+
+      if(data.code === 0){
+
+        if(data.result.joinStatus === 0){
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+        } else if(data.result.joinStatus === 1) {
+          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
+        } else if(data.result.joinStatus === 2) {
+          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
+        } else {
+          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
+        }
+      }
+    });
+  }
+
   indexHandler.init();
 });

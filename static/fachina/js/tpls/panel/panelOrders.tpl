@@ -9,7 +9,7 @@
   </td>
   <td>
     <span>{{ item.stkName }}</span>
-    <span class="font-8 text-light">{{ item.assetId }}</span>
+    <span class="font-8 text-light">没返回时间</span>
   </td>
   <td>
     <span>{{ item.ordPrc }}</span>

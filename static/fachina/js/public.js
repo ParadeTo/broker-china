@@ -73,17 +73,8 @@
     //持仓详情
     ptfDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_balance_detail",
 
-    //组合委托概要
-    ptfOrders: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_today_orders",
-
-    //当日组合委托详情
-    ptfOrderDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_today_order_detail",
-
-    //调仓预检
-    simuCheck: (development ? devHost : host) + "/g_adviser_api/check_simu_adjust_trans",
-
-    //新增股票预检
-    simuAddStkCheck: (development ? devHost : host) + "/g_adviser_api/check_simu_add_stks_trans",
+    //组合委托详情
+    orderDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_order_detail",
 
     //调仓
     simuOrder: (development ? devHost : host) + "/g_adviser_api/simu_order",
@@ -104,11 +95,18 @@
     searchMkt: (development ? devHost : host) + "/mktinfo_api/search_mkt",
 
     //实时行情
-    getQuot: (development ? devHost : host) + "/mktinfo_api/get_quot"
+    getQuot: (development ? devHost : host) + "/mktinfo_api/get_quot",
+
+    // 获取微信签名
+    fetchJssdk: (development ? devHost : host) + "/g_adviser_api/fetch_js_sdk_signature"
   };
 
   var links = {
     register: host + (development ? '/html/' : '/webstatic/') + 'fachina/register.html'
+  };
+
+  var params = {
+    cId: $.cookie("fachinaId")
   };
 
   // 抛出对象
@@ -121,7 +119,10 @@
     api: apis,
 
     // 页面跳转
-    link : links,
+    link: links,
+
+    // 公用参数
+    param: params,
 
     /*获取url中的参数*/
     getUrlParam : function(name) {
@@ -245,111 +246,110 @@
       return timeHtml;
     },
 
-    /*微信分享封装，doption为传入对象，分享地址，图片地址需为绝对地址*/
-    shareByWeixin : function(doption) {
+    //微信分享
+    shareByWeixin: function (b, t, d, l, i) {
 
-      var ua = navigator.userAgent.toLowerCase();
+      var pageUrl = window.location.href;
+      var title = t;
+      var desc = d;
+      var link = l;
+      var imgUrl = i;
+      var options = {};
 
-      if(ua.indexOf('micromessenger') > -1){
+      var params = {
+        url: pageUrl
+      };
+      /*获取签名*/
+      promotion.ajax(apis.fetchJssdk, params, function (data) {
+        options = {
+          debug: false,
+          appId: data.result.appId,
+          timestamp: data.result.timestamp,
+          nonceStr: data.result.noncestr,
+          signature: data.result.signature,
+          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ'],
+          title: title,
+          desc: desc,
+          link: link,
+          imgUrl: imgUrl,
+        };
+        /*调用微信分享方法*/
+        niuWebShare(options);
+      }, promotion.ajaxFail, { });
 
-        var options = {};
+      /*微信分享样式自定义方法*/
+      function niuWebShare(options) {
 
-        /*获取签名*/
-        $.ajax({
-          type : "post",
-          async : false, /*同步执行*/
-          url : window.location.protocol + "//" + window.location.host + "/web/getWxSignature",
-          dataType : "json",
-          data : {
-            "url" : window.location.href
-          },
-          success : function(data) {
+        var options = options;
 
-            options = {
-              debug: false,
-              appId: 'wx06d05f7e4f8d0fdc',
-              timestamp: data.timestamp,
-              nonceStr: data.nonceStr,
-              signature: data.signature,
-              jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'],
-              title:doption.title,
-              desc:doption.desc,
-              link:doption.link,
-              imgUrl:doption.imgUrl
-            };
-            /*调用微信分享方法*/
-            niuWebShare(options);
-          },
-          error : function(errorMsg) {
-            return ;
-          }
+        if (!options) {
+          console.log("error:没有正确配置参数！");
+          return true;
+        }
+
+        wx.config({
+          debug: options.debug, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: options.appId, // 必填，公众号的唯一标识
+          timestamp: options.timestamp, // 必填，生成签名的时间戳
+          nonceStr: options.nonceStr, // 必填，生成签名的随机串
+          signature: options.signature, // 必填，签名，见附录1
+          jsApiList: options.jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
 
-        /*微信分享样式自定义方法*/
-        function niuWebShare (options) {
+        wx.ready(function () {
 
-          var options = options;
-
-          if(!options){
-            console.log("error:没有正确配置参数！");
-            return true;
+          //关闭分享按钮
+          if (b) {
+            wx.hideOptionMenu();
+          } else {
+            wx.showOptionMenu();
           }
 
-          wx.config({
-            debug: options.debug, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: options.appId, // 必填，公众号的唯一标识
-            timestamp: options.timestamp, // 必填，生成签名的时间戳
-            nonceStr: options.nonceStr, // 必填，生成签名的随机串
-            signature: options.signature,// 必填，签名，见附录1
-            jsApiList: options.jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          /*---分享给朋友---*/
+          wx.onMenuShareAppMessage({
+            title: options.title, // 分享标题
+            desc: options.desc, // 分享描述
+            link: options.link, // 分享链接
+            imgUrl: options.imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+              console.log("----朋友分享成功的------");
+            },
+            cancel: function () {
+              console.log("----朋友点击了取消------");
+            }
           });
 
-          wx.ready(function(){
-            /*---分享给朋友---*/
-            wx.onMenuShareAppMessage({
-              title: options.title, // 分享标题
-              desc: options.desc, // 分享描述
-              link: options.link, // 分享链接
-              imgUrl: options.imgUrl, // 分享图标
-              type: '', // 分享类型,music、video或link，不填默认为link
-              dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-              success: function () {
-                console.log("----朋友分享成功的------");
-              },
-              cancel: function () {
-                console.log("----朋友点击了取消------");
-              }
-            });
-
-            /*---分享到朋友圈---*/
-            wx.onMenuShareTimeline({
-              title: options.title,
-              link: options.link,
-              imgUrl: options.imgUrl,
-              success: function () {
-                console.log("----朋友圈分享成功的------");
-              },
-              cancel: function () {
-                console.log("----朋友圈点击了取消------");
-              }
-            });
-
-            /*---分享到QQ---*/
-            wx.onMenuShareQQ({
-              title: options.title,
-              desc: options.desc,
-              link: options.link,
-              imgUrl: options.imgUrl,
-              success: function () {
-                console.log("----qq分享成功的------");
-              },
-              cancel: function () {
-                console.log("----qq点击了取消------");
-              }
-            });
+          /*---分享到朋友圈---*/
+          wx.onMenuShareTimeline({
+            title: options.title,
+            link: options.link,
+            imgUrl: options.imgUrl,
+            success: function () {
+              console.log("----朋友圈分享成功的------");
+            },
+            cancel: function () {
+              console.log("----朋友圈点击了取消------");
+            }
           });
-        };
-      }
+
+          /*---分享到QQ---*/
+          wx.onMenuShareQQ({
+            title: options.title,
+            desc: options.desc,
+            link: options.link,
+            imgUrl: options.imgUrl,
+            success: function () {
+              console.log("----qq分享成功的------");
+            },
+            cancel: function () {
+              console.log("----qq点击了取消------");
+            }
+          });
+
+        });
+      };
     },
 
     //提示类弹窗
@@ -371,6 +371,43 @@
       setTimeout(function() {
         $('.ui-alert').remove();
       },time);
+    },
+
+    // 确认弹窗
+    confirm: function(opt) {
+
+      var option = {
+        title: '标题',
+        main: '',
+        sure: function() {
+          console.log('你执行了确认操作！');
+        },
+        cancel: function() {
+          $(this).closest('.ui-dialog').remove();
+        },
+        sureBtnText: '确定',
+        cancelBtnText: '取消'
+      };
+
+      $.extend(option, opt);
+
+      var _html = [];
+
+      _html.push('<div class="ui-dialog"><div class="dialog-box">');
+      _html.push('<div class="dialog-title">' + option.title + '</div>');
+      _html.push('<div class="dialog-main">' + option.main + '</div>');
+      _html.push('<div class="dialog-action ui-row">');
+      _html.push('<div class="ui-col col-2"><button class="btn btn-gray J-dialog-cancel">' + option.cancelBtnText + '</button></div>');
+      _html.push('<div class="ui-col col-2"><button class="btn btn-red J-dialog-sure">' + option.sureBtnText + '</button></div>');
+      _html.push('</div></div>');
+
+      $('body').append(_html.join(''));
+
+      $('.J-dialog-cancel').unbind('click');
+      $('.J-dialog-sure').unbind('click');
+
+      $('.J-dialog-cancel').on('click', option.cancel);
+      $('.J-dialog-sure').on('click', option.sure);
     },
 
     //在一起牛APP打开
@@ -505,7 +542,7 @@
     });
   })(jQuery);
 
-  //头部固定栏跳转*/
+  //头部固定栏跳转
   (function($) {
     // back
     $("#fixed-header-back").click(function() {
@@ -514,6 +551,33 @@
     // 回到首页
     $("#fixed-header-home").click(function() {
       window.location.href = "index.html";
+    });
+  })(jQuery);
+
+  //用户登录状态
+  (function($) {
+
+    if($.cookie('fachinaStatus')){
+      $('#userStatus').addClass('status-' + $.cookie('fachinaStatus'));
+    } else{
+      console.log('登录出错');
+    }
+  })(jQuery);
+
+  //回到顶部
+  (function($) {
+
+    $(window).scroll(function() {
+      if($(this).scrollTop() > 400) {
+        $('.ui-gotop').fadeIn();
+      } else {
+        $('.ui-gotop').fadeOut();
+      }
+    });
+
+    $('.ui-gotop').on('click', function() {
+      $('body, html').stop(true).animate({scrollTop: 0}, 400);
+      return false;
     });
   })(jQuery);
 
