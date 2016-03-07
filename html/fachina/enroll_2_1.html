@@ -5,48 +5,93 @@
 </head>
 <body>
   <!-- 报名页面-选择投顾 -->
-  <!-- 头部固定栏-->
-  @@include('_fixed_header.html',{"title":"报名参赛"})
+  <div id="info" style="display: block">
+    <!-- 头部固定栏-->
+    @@include('_fixed_header.html',{"title":"报名参赛"})
+    <div class="enroll-1-page" >
+      <div class="enroll-1-row">
+        真实姓名
+        <input id="enroll-1-name" type="text" placeholder="请输入真实姓名"/>
+      </div>
+      <div class="enroll-1-row">
+        身份证号
+        <input id="enroll-1-idNum" type="text" placeholder="请输入身份证号"/>
+      </div>
+      <div class="enroll-1-row">
+        执业编号
+        <input id="enroll-1-proCode" type="text" placeholder="请输入执业编号"/>
+      </div>
+      <div id="enroll-org-btn" class="enroll-1-row enroll-1-select">
+        所属机构
+        <input id="enroll-1-org-id" type="hidden" readonly="readonly"/>
+        <input id="enroll-1-org" type="text" readonly="readonly" style="display: none"/>
+      </div>
+      <div class="enroll-1-row">
+        所属营业部
+        <input id="enroll-1-office" type="text" placeholder="请输入所在营业部"/>
+      </div>
+      <div id="enroll-city-btn" class="enroll-1-row enroll-1-select">
+        所在城市
+        <input id="enroll-1-city-id" type="hidden" readonly="readonly"/>
+        <input id="enroll-1-city" type="text" readonly="readonly" style="display: none"/>
+      </div>
+      <div class="enroll-upload">
+        <img id="enroll-upload-img" src="../../static/fachina/images/pic_identity.jpg" alt=""/>
+        <p>
+          温馨提示：请本人手持身份证照片，需保证头像和身份证上的信息清晰可见。
+        </p>
 
-  <div class="enroll-1-page">
-    <div class="enroll-1-row">
-      真实姓名
-      <input id="enroll-1-name" type="text" placeholder="请输入真实姓名"/>
-    </div>
-    <div class="enroll-1-row">
-      身份证号
-      <input id="enroll-1-idNum" type="text" placeholder="请输入身份证号"/>
-    </div>
-    <div class="enroll-1-row">
-      执业编号
-      <input id="enroll-1-proCode" type="text" placeholder="请输入执业编号"/>
-    </div>
-    <div class="enroll-1-row enroll-1-select">
-      所属机构
-      <input id="enroll-1-org" type="text" readonly="readonly" style="display: none"/>
-    </div>
-    <div class="enroll-1-row">
-      所属营业部
-      <input id="enroll-1-office" type="text" placeholder="请输入所在营业部"/>
-    </div>
-    <div class="enroll-1-row enroll-1-select">
-      所在城市
-      <input id="enroll-1-city" type="text" readonly="readonly" style="display: none"/>
-    </div>
-    <div class="enroll-upload">
-      <img id="enroll-upload-img" src="../../static/fachina/images/pic_identity.jpg" alt=""/>
-      <p>
-        温馨提示：请本人手持身份证照片，需保证头像和身份证上的信息清晰可见。
-      </p>
+        <a id="enroll-upload-btn">上传</a>
 
-      <!--<a id="enroll-upload-btn">上传</a>-->
-      
-      <label id="enroll-upload-btn-fake" for="enroll-upload-btn">上传</label>
-      <form action="" method="post" enctype="multipart/form-data" id="enroll-upload-form" target="hidden_frame">
-        <input id="enroll-upload-cId" name="cId" type="hidden" style="display: none"/>
-        <input id="enroll-upload-btn" name="filesData" type="file" style="display: none"/>
-        <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
-      </form>
+      </div>
+    </div>
+    <!-- 提交申请-->
+    <div id="enroll-apply">
+      提交申请
+    </div>
+    <!-- 说明文字-->
+    <div class="enroll-notes">
+      请确保填写正确，如需修改请下载App</br>
+      认证咨询 0755-26921766
+    </div>
+  </div>
+
+  <!-- 省市列表-->
+  <div id="pro" style="display: none">
+    <!-- 头部-->
+    <div class="enroll-inner-header">
+      <img id="enroll-pro-back" class="J-touch" src="../../static/fachina/images/pic_back.png" alt=""/>
+      <p>选择省市</p>
+    </div>
+    <div class="enroll-1-page">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 城市列表-->
+  <div id="city" style="display:none">
+    <!-- 头部-->
+    <div class="enroll-inner-header">
+      <img id="enroll-city-back" class="J-touch" src="../../static/fachina/images/pic_back.png" alt=""/>
+      <p>选择城市</p>
+    </div>
+    <div class="enroll-1-page">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <!--机构列表-->
+  <div id="org" style="display:none">
+    <!-- 头部-->
+    <div class="enroll-inner-header">
+      <img id="enroll-org-back" class="J-touch" src="../../static/fachina/images/pic_back.png" alt=""/>
+      <p>选择机构</p>
+    </div>
+    <div class="enroll-1-page">
+      <ul>
+      </ul>
     </div>
   </div>
 

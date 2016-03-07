@@ -104,7 +104,13 @@
     searchMkt: (development ? devHost : host) + "/mktinfo_api/search_mkt",
 
     //实时行情
-    getQuot: (development ? devHost : host) + "/mktinfo_api/get_quot"
+    getQuot: (development ? devHost : host) + "/mktinfo_api/get_quot",
+
+    //获取省、直辖市列表
+    province: (development ? devHost : host) + "/g_adviser_api/fetch_province",
+
+    //获取城市列表
+    city: (development ? devHost : host) + "/g_adviser_api/fetch_city"
   };
 
   var links = {

@@ -85,13 +85,13 @@
 
 // 报名参赛-投顾
 .enroll-1-page {
-  padding-top: pxToRem(43px);
+  padding-top: pxToRem(45px);
   padding-left: pxToRem(12px);
   padding-right: pxToRem(12px);
   background-color: #fff;
   .enroll-1-row {
-    height: pxToRem(34px);
-    line-height: pxToRem(34px);
+    height: pxToRem(40px);
+    line-height: pxToRem(40px);
     border-bottom: solid #dbdbdb 1px;
     width: 100%;
     text-align: left;
@@ -99,15 +99,18 @@
     input {
       text-align: right;
       line-height: pxToRem(20px);
-      width: 60%;
+      width: 70%;
       float: right;
-      margin: pxToRem(7px) 0;
+      margin: pxToRem(10px) 0;
       height: pxToRem(20px);
     }
   }
   .enroll-1-select {
     background: url(../images/pic_right_arrow.png) no-repeat right;
     background-size: pxToRem(14px) pxToRem(14px);
+    &:active {
+      background-color: #f2f2f2;
+    }
   }
   .enroll-upload {
     padding: pxToRem(11px) 0;
@@ -136,6 +139,70 @@
       font-size: pxToRem(14px);
       padding-top: pxToRem(10px);
     }
+  }
+  // 选择城市
+  ul li {
+    border-bottom: solid #dbdbdb 1px;
+    width: 100%;
+    text-align: left;
+    font-size: pxToRem(14px);
+  }
+  .enroll-address-row:active {
+    background-color: #f2f2f2;
+  }
+  .enroll-address-initial {
+    height: pxToRem(45px);
+    line-height: pxToRem(45px);
+    color: #999999;
+  }
+  .enroll-address-row {
+    height: pxToRem(40px);
+    line-height: pxToRem(40px);
+  }
+}
+// 提交申请
+#enroll-apply {
+  width: pxToRem(296px);
+  height: pxToRem(44px);
+  background-color: #d83e3a;
+  color: #fff;
+  text-align: center;
+  line-height: pxToRem(44px);
+  border-radius: pxToRem(3px);
+  margin: 0 auto;
+  font-size: pxToRem(14px);
+  margin-top: pxToRem(30px);
+}
+// 说明文字
+.enroll-notes {
+  color: #888888;
+  font-size: pxToRem(11px);
+  text-align: center;
+  margin-top: pxToRem(61px);
+  margin-bottom: pxToRem(16px);
+}
+// 选择机构、城市的头部
+.enroll-inner-header {
+  position: fixed;
+  z-index: 99;
+  top: 0px;
+  height: pxToRem(43px);
+  line-height: pxToRem(43px);
+  background-color: #d83e3a;
+  min-width: 320px;
+  width: pxToRem(320px);
+  img {
+    display: block;
+    height: pxToRem(43px);
+    width: pxToRem(43px);
+    float:left;
+  }
+  p {
+    color: #fff;
+    font-size: pxToRem(16px);
+    display: block;
+    text-align: center;
+    padding-right: pxToRem(43px);
   }
 }
 
