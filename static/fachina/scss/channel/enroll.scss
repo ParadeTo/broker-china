@@ -160,6 +160,14 @@
     line-height: pxToRem(40px);
   }
 }
+// 验证提示信息
+#enroll-1-error {
+  height: pxToRem(20px);
+  padding-left: pxToRem(12px);
+  font-size: pxToRem(12px);
+  line-height: pxToRem(20px);
+  color: #d83e3a;
+}
 // 提交申请
 #enroll-apply {
   width: pxToRem(296px);
@@ -171,7 +179,7 @@
   border-radius: pxToRem(3px);
   margin: 0 auto;
   font-size: pxToRem(14px);
-  margin-top: pxToRem(30px);
+  margin-top: pxToRem(10px);
 }
 // 说明文字
 .enroll-notes {

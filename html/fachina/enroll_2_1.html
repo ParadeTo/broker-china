@@ -23,7 +23,7 @@
       </div>
       <div id="enroll-org-btn" class="enroll-1-row enroll-1-select">
         所属机构
-        <input id="enroll-1-org-id" type="hidden" readonly="readonly"/>
+        <input id="enroll-1-org-id" type="hidden"/>
         <input id="enroll-1-org" type="text" readonly="readonly" style="display: none"/>
       </div>
       <div class="enroll-1-row">
@@ -32,7 +32,7 @@
       </div>
       <div id="enroll-city-btn" class="enroll-1-row enroll-1-select">
         所在城市
-        <input id="enroll-1-city-id" type="hidden" readonly="readonly"/>
+        <input id="enroll-1-city-id" type="hidden"/>
         <input id="enroll-1-city" type="text" readonly="readonly" style="display: none"/>
       </div>
       <div class="enroll-upload">
@@ -40,11 +40,13 @@
         <p>
           温馨提示：请本人手持身份证照片，需保证头像和身份证上的信息清晰可见。
         </p>
-
+        <input id="enroll-1-img" type="hidden"/>
         <a id="enroll-upload-btn">上传</a>
 
       </div>
     </div>
+    <!-- 验证信息-->
+    <div id="enroll-1-error"></div>
     <!-- 提交申请-->
     <div id="enroll-apply">
       提交申请
