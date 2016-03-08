@@ -456,12 +456,66 @@
 
     // 判断是否登录公用方法
     checkSign: function(callback) {
-
       if(!$.cookie("fachinaId")){
         window.location.href = J_app.link.register;
       } else{
         callback();
       }
+    },
+
+    // 我要参赛
+    joinEvent: function() {
+      $("#joinEvent").click(function() {
+        // 判断是否登录
+        J_app.checkSign(function() {
+          window.location.href = "enroll_entry.html";
+        })
+      });
+    },
+
+    // 投票
+    vote: function() {
+      $(document).on('click', '.J-vote', function() {
+
+        var _this = $(this);
+
+        J_app.checkSign(function(){
+
+          var numberBox = _this.parent().find('.total-number'),
+            number = parseInt(numberBox.html()),
+            params = {};
+
+          if(_this.hasClass('J-locked')){
+            return;
+          }
+          _this.addClass('J-locked');
+
+          params['joinId'] = _this.data('id');
+
+          J_app.ajax(J_app.api.vote, params, function(data){
+
+            _this.removeClass('J-locked');
+
+            if(data.code === 0){
+
+              J_app.alert('投票成功！');
+
+              numberBox.html(++number);
+
+              if(data.result.voteCount === 1){
+                _this.html('再投一票');
+              } else{
+                _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
+              }
+            } else{
+              J_app.alert(data.message);
+            }
+          },function(){
+            J_app.alert('请求失败！');
+            _this.removeClass('J-locked');
+          });
+        });
+      });
     }
   };
 
@@ -545,6 +599,16 @@
     window.addEventListener("resize",function(){page.changePage();},false);
   })();
 
+  // 报名参赛
+  (function($){
+    J_app.joinEvent();
+  })(jQuery);
+
+  // 投票
+  (function($){
+    J_app.vote();
+  })(jQuery);
+
   // 全局按钮触摸事件
   (function($){
     $(document).on('touchstart', '.J-touch', function() {
@@ -592,6 +656,7 @@
       return false;
     });
   })(jQuery);
+
 
   //抛出对象
   factory && (global.J_app = J_app);

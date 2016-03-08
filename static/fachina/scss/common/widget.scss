@@ -90,10 +90,14 @@
   height: pxToRem(43px);
   background-color: #d83e3a;
   min-width: 320px;
-  img {
+  .J-touch {
+    background-color: #d83e3a;
     height: pxToRem(43px);
     width: pxToRem(43px);
-    float:left;
+    float: left;
+    &.active {
+      background-color: #c00000;
+    }
   }
   .fixed-header-title {
     float:left;
@@ -146,5 +150,8 @@
     margin-top: pxToRem(6px);
     float: right;
     font-size: pxToRem(12px);
+    &:active {
+      background-color: #c00000;
+    }
   }
 }

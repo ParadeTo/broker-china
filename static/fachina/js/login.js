@@ -29,6 +29,7 @@ loginHandler.init = function() {
 // 登录
 loginHandler.login = function(){
   $('#login-btn-login').click(function() {
+    var $this = $(this);
     var phone = $("#login-body-phone").val();
     var password = $('#login-body-password').val();
 
@@ -39,10 +40,19 @@ loginHandler.login = function(){
     }
 
     // 密码为空
-    if(!password) {
+    if(typeof password === undefined) {
       $("#validError").html("<p>请输入密码</p>");
       return ;
     }
+
+    // 防重发
+    if($this.hasClass('locked')){
+      return ;
+    }
+    $this.addClass('locked');
+
+    // 加载动画
+    J_app.loading(true);
 
     // 登录
     var params = {};
@@ -50,14 +60,19 @@ loginHandler.login = function(){
     params['certCode'] = phone;
     params['pwd'] = password;
     J_app.ajax(J_app.api.login, params, function(data){
-      console.log(data);
+
+      $this.removeClass('locked');
+      J_app.loading(false);
+
       if(data.code === 0){
         $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        //window.location.href = "index.html";
+        window.location.href = "index.html";
       } else {
         $("#validError").html("<p>" + data.message + "</p>");
       }
     },function() {
+      $this.removeClass('locked');
+      J_app.loading(false);
       J_app.alert('请求失败！');
     });
   });

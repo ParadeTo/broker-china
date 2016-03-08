@@ -2,23 +2,20 @@
 <html>
 <head lang="en">
   @@include('_meta.html')
-  <style>
-    .agreement-page {
-
-    }
-  </style>
 </head>
 <body>
-<div class="agreement-page">
+  <!-- 头部固定栏-->
+  @@include('_fixed_header.html',{"title":"用户协议"})
 
-</div>
+  <div class="agreement-page"></div>
 
-<!-- script -->
-@@include('_script.html')
-<script>
-  $(".agreement-page").load("../../../page/user_agreement.html .m-page", function() {
-
-  });
-</script>
+  <div class="J-touch" id="joinEvent">我要参赛</div>
+  <!-- script -->
+  @@include('_script.html')
+  <script>
+    $(function(){
+      $(".agreement-page").load("../page/user_agreement.html");
+    });
+  </script>
 </body>
 </html>
