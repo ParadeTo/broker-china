@@ -53,7 +53,7 @@ template.helper('rate', function(data) {
   if(data){
     return (data * 100).toFixed(2) + '%';
   } else{
-    return '-';
+    return '--';
   }
 });
 

@@ -6,7 +6,21 @@
 <body>
 
   <!-- header -->
-  @@include('_header.html')
+  <header>
+
+    <!-- 搜索 -->
+    @@include('_header.html')
+
+    <!-- banner -->
+    <div class="index-banner" id="indexBanner">
+      <!-- 广告 -->
+      <div class="container index-advert"></div>
+      <!-- 赛事信息 -->
+    </div>
+
+    <!-- 赛事直播 -->
+    @@include('_event_radio.html')
+  </header>
 
   <!-- main -->
   <main>

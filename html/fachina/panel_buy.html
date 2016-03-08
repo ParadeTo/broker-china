@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  @@include('_meta.html')
+</head>
+<body>
+
+  <!-- header -->
+  @@include('_appHeader.html', {"title":"买入"})
+
+  <!-- 主体-->
+  <main>
+    <!-- tabs -->
+    <div class="trade-tabs">
+      <ul class="ui-row" id="tradeTab">
+        <li class="ui-col active J-touch">
+          <a href="javascript:;" class="nav-link">买入</a>
+        </li>
+        <li class="ui-col J-touch">
+          <a href="./panel_sell.html?ver=@@pageVersion" class="nav-link">卖出</a>
+        </li>
+        <li class="ui-col J-touch">
+          <a href="./panel_cancel.html?ver=@@pageVersion" class="nav-link">撤单</a>
+        </li>
+        <li class="ui-col J-touch">
+          <a href="./panel_orders.html?ver=@@pageVersion" class="nav-link">查询</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ui-container" id="tradeContent">
+
+      <!-- 买入 -->
+      <div class="ui-row ui-box bg-white trade-panel-box">
+        <div class="ui-col trade-panel-left">
+          <div class="trade-row m-t-6 ">
+            <input type="text" class="form-control text buy">
+          </div>
+          <ul class="quantity-form buy m-t-6 ">
+            <li data-type="reduce" class="minus-btn active">-</li>
+            <li class="input">
+              <input type="text" value="0" disabled="disabled" readonly/>
+            </li>
+            <li data-type="add" class="plus-btn disabled">+</li>
+          </ul>
+          <ul class="ui-row trade-panel-text m-t-2">
+            <li class="ui-col left">
+              跌停：<span class="text-green">555</span>
+            </li>
+            <li class="ui-col right">
+              涨停：<span class="text-red">999</span>
+            </li>
+          </ul>
+          <div class="m-t-6">
+            <input type="text" class="form-control text buy">
+          </div>
+          <ul class="m-t-6 ui-row trade-select-btn buy">
+            <li class="ui-col touch">全仓</li>
+            <li class="ui-col">1/2仓</li>
+            <li class="ui-col">1/3仓</li>
+          </ul>
+          <div class="m-t-6">
+            <button class="btn btn-red trade-btn">买入</button>
+          </div>
+        </div>
+        <div class="ui-col trade-panel-right">
+          <ul class="trade-five_bets">
+            <li>
+              <span>卖5</span>
+              <span>9.97</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>卖4</span>
+              <span>9.96</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>卖3</span>
+              <span>9.95</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>卖2</span>
+              <span>9.94</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>卖1</span>
+              <span>9.93</span>
+              <span>2029</span>
+            </li>
+          </ul>
+          <ul class="trade-five_bets">
+            <li>
+              <span>买5</span>
+              <span>9.97</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>买4</span>
+              <span>9.96</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>买3</span>
+              <span>9.95</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>买2</span>
+              <span>9.94</span>
+              <span>2029</span>
+            </li>
+            <li>
+              <span>买1</span>
+              <span>9.93</span>
+              <span>2029</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 持仓 -->
+      <div class="ui-box bg-white">
+        <table class="ui-table">
+          <thead>
+            <tr>
+              <th>股票名称<br>当前市值</th>
+              <th>盈亏金额<br>盈亏比例</th>
+              <th>持仓股数<br>可用股数</th>
+              <th>成本价<br>现&nbsp;&nbsp;价</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="text-black">平安银行</span>
+                <span class="font-8 text-light">19992.000</span>
+              </td>
+              <td>
+                <span>-5.960</span>
+                <span>-0.10%</span>
+              </td>
+              <td>
+                <span>2000</span>
+                <span>0</span>
+              </td>
+              <td>
+                <span>56.99</span>
+                <span>56.22</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-black">平安银行</span>
+                <span class="font-8 text-light">19992.000</span>
+              </td>
+              <td>
+                <span>-5.960</span>
+                <span>-0.10%</span>
+              </td>
+              <td>
+                <span>2000</span>
+                <span>0</span>
+              </td>
+              <td>
+                <span>56.99</span>
+                <span>56.22</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- script -->
+  @@include('_script.html')
+  <script src="../../static/fachina/js/panel_buy.js?ver=@@pageVersion"></script>
+</body>
+</html>

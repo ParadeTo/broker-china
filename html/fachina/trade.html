@@ -9,19 +9,7 @@
   <header>
 
     <!-- 搜索 -->
-    <div class="ui-box ui-row ui-head">
-      <div class="ui-col ui-user-status status-1"></div>
-      <div class="ui-col ui-search-box">
-        <ul class="ui-row">
-          <li class="ui-col">
-            <input type="text" class="form-control" placeholder="输入投顾／机构">
-          </li>
-          <li class="ui-col">
-            <button class="btn btn-white" type="button">搜索</button>
-          </li>
-        </ul>
-      </div>
-    </div>
+    @@include('_header.html')
 
     <!-- statis -->
     <div class="trade-statis" id="userInfo">
@@ -48,10 +36,7 @@
     </div>
 
     <!-- 赛事直播 -->
-    <dl class="ui-row ui-event-radio">
-      <dt class="ui-col">赛事直播</dt>
-      <dd class="ui-col" id="eventRadio"><!-- 赛事直播 --></dd>
-    </dl>
+    @@include('_event_radio.html')
   </header>
 
   <!-- main -->
@@ -101,25 +86,25 @@
     <!-- 操作tab -->
     <ul class="ui-row trade-panel-link">
       <li class="ui-col">
-        <a href="./trade_panel.html?tab=buy" class="nav-link">
+        <a href="./panel_buy.html?ver=@@pageVersion" class="nav-link">
           <i class="icon-link-buy"></i><br>
           <span>买入</span>
         </a>
       </li>
       <li class="ui-col">
-        <a href="./trade_panel.html?tab=sell" class="nav-link">
+        <a href="./panel_sell.html?ver=@@pageVersion" class="nav-link">
           <i class="icon-link-sell"></i><br>
           <span>卖出</span>
         </a>
       </li>
       <li class="ui-col">
-        <a href="./trade_panel.html?tab=cancel" class="nav-link active">
+        <a href="./panel_cancel.html?ver=@@pageVersion" class="nav-link active">
           <i class="icon-link-cancel"></i><br>
           <span>撤单</span>
         </a>
       </li>
       <li class="ui-col">
-        <a href="./trade_panel.html?tab=search" class="nav-link">
+        <a href="./panel_orders.html?ver=@@pageVersion" class="nav-link">
           <i class="icon-link-search"></i><br>
           <span>查询</span>
         </a>

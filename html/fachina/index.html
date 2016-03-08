@@ -10,6 +10,16 @@
 
   <!-- main -->
   <main>
+    <!-- banner -->
+    <div class="index-banner" id="indexBanner">
+      <!-- 广告 -->
+      <div class="container index-advert"></div>
+      <!-- 赛事信息 -->
+    </div>
+
+    <!-- 赛事直播 -->
+    @@include('_event_radio.html')
+
     <!-- 导航 -->
     <ul class="ui-container bg-white ui-row ui-navbar">
       <li class="ui-col">
@@ -197,6 +207,7 @@
 
   <!-- script -->
   @@include('_script.html')
+
   <script src="../../static/fachina/js/index.js?ver=@@pageVersion"></script>
 </body>
 </html>

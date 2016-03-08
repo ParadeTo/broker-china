@@ -1,3 +1,42 @@
 ﻿@charset "UTF-8";
 
 // 个人中心
+.home-banner {
+  height: pxToRem(130px);
+  background: url(../images/pic_banner_2.jpg) no-repeat center 0;
+  background-size: auto 100%;
+}
+
+.home-user-info {
+  padding: pxToRem(15px) 0;
+  text-align: center;
+}
+
+.home-user-name {
+  font-size: pxToRem(14px);
+  color: $white;
+}
+
+.home-user-org {
+  font-size: pxToRem(12px);
+  color: $light;
+}
+
+.home-statis {
+  padding: pxToRem(10px) 0;
+
+  .ui-col {
+    width: 33.33333%;
+
+    span {
+      display: block;
+      text-align: center;
+      font-size: pxToRem(12px);
+      color: $gray;
+    }
+  }
+
+  .ui-col + .ui-col {
+    border-left: 1px solid $border-color;
+  }
+}

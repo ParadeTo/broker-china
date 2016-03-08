@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  @@include('_meta.html')
+</head>
+<body>
+
+  <!-- header -->
+  @@include('_appHeader.html', {"title":"查询"})
+
+  <!-- 主体-->
+  <main>
+    <!-- tabs -->
+    <div class="trade-tabs">
+      <ul class="ui-row">
+        <li class="ui-col J-touch">
+          <a href="./panel_buy.html?ver=@@pageVersion" class="nav-link">买入</a>
+        </li>
+        <li class="ui-col J-touch">
+          <a href="./panel_sell.html?ver=@@pageVersion" class="nav-link">卖出</a>
+        </li>
+        <li class="ui-col J-touch">
+          <a href="./panel_cancel.html?ver=@@pageVersion" class="nav-link">撤单</a>
+        </li>
+        <li class="ui-col active J-touch">
+          <a href="javascript:;" class="nav-link">查询</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ui-container" id="orderList"><!-- 委托列表 --></div>
+  </main>
+  <!-- script -->
+  @@include('_script.html')
+  <script src="../../static/fachina/js/panel_orders.js?ver=@@pageVersion"></script>
+</body>
+</html>

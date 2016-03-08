@@ -63,6 +63,7 @@ body {
 }
 
 .ui-gotop {
+  display: none;
   position: fixed;
   bottom: pxToRem(10px);
   right: pxToRem(10px);
@@ -170,13 +171,13 @@ body {
   }
 }
 
-.ui-head {
+.ui-header-top {
   padding: pxToRem(6px) pxToRem(10px);
 }
 
 .ui-user-status {
   width: pxToRem(40px);
-  height: pxToRem(40px);
+  height: pxToRem(30px);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -206,17 +207,17 @@ body {
 
   input {
     padding: 0 pxToRem(5px);
-    width: pxToRem(198px);
-    height: pxToRem(40px);
-    line-height: pxToRem(40px);
+    width: pxToRem(200px);
+    height: pxToRem(30px);
+    line-height: pxToRem(30px);
     border: 1px solid $border-color;
     font-size: pxToRem(14px);
   }
 
   button {
+    margin-left: pxToRem(4px);
     width: pxToRem(56px);
-    height: pxToRem(40px);
-    margin-left: pxToRem(5px);
+    height: pxToRem(30px);
     font-size: pxToRem(14px);
     border: 1px solid $border-color;
   }
@@ -277,6 +278,72 @@ body {
       &.touch {
         color: $red;
       }
+    }
+  }
+}
+
+.ui-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .5);
+  z-index: 9990;
+
+  .dialog-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: pxToRem(-100px);
+    margin-left: pxToRem(-150px);
+    padding: pxToRem(15px) pxToRem(15px) pxToRem(20px);
+    width: pxToRem(300px);
+    background-color: #fff;
+    z-index: 9999;
+    border-radius: pxToRem(4px);
+  }
+
+  .dialog-title {
+    padding-bottom: pxToRem(10px);
+    font-size: pxToRem(14px);
+    color: $gray;
+    text-align: center;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .dialog-main {
+    padding: pxToRem(10px) 0;
+    min-height: pxToRem(28px);
+    line-height: pxToRem(28px);
+    font-size: pxToRem(12px);
+    color: $black;
+  }
+
+  .dialog-action {
+    text-align: center;
+
+    .col-1 {
+      width: 100%;
+    }
+
+    .col-2 {
+      width: 48%;
+    }
+
+    .col-2 + .col-2 {
+      margin-left: 4%;
+    }
+
+    .dialog-btn {
+      font-size: pxToRem(14px);
+      display: block;
+      width: 100%;
+      height: pxToRem(30px);
+      line-height: pxToRem(30px);
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
     }
   }
 }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  @@include('_meta.html')
+</head>
+<body>
+
+  <!-- header -->
+  @@include('_appHeader.html', {"title":"撤单"})
+
+  <!-- 主体-->
+  <main>
+    <!-- tabs -->
+    <div class="trade-tabs">
+      <ul class="ui-row" id="tradeTab">
+        <li class="ui-col J-touch">
+          <a href="./panel_buy.html?ver=@@pageVersion" class="nav-link">买入</a>
+        </li>
+        <li class="ui-col J-touch">
+          <a href="./panel_sell.html?ver=@@pageVersion" class="nav-link">卖出</a>
+        </li>
+        <li class="ui-col active J-touch">
+          <a href="javascript:;" class="nav-link">撤单</a>
+        </li>
+        <li class="ui-col J-touch">
+          <a href="./panel_orders.html?ver=@@pageVersion" class="nav-link">查询</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ui-container" id="tradeContent">
+
+      <!-- 撤单 -->
+      <table class="trade-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>股票名称<br>委托时间</th>
+            <th>委托价<br>成交均价</th>
+            <th>委托股数<br>成交股数</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody id="cancelList">
+          <tr>
+            <td>
+              <i class="icon-buy">买</i>
+            </td>
+            <td>
+              <span class="text-black">平安银行</span>
+              <span class="font-8 text-light">10:39:56</span>
+            </td>
+            <td>
+              <span>5.960</span>
+              <span>0.000</span>
+            </td>
+            <td>
+              <span>5.960</span>
+              <span>0.000</span>
+            </td>
+            <td>
+              <span class="text-gray">未成交</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="icon-sell">卖</i>
+            </td>
+            <td>
+              <span class="text-black">平安银行</span>
+              <span class="font-8 text-light">10:39:56</span>
+            </td>
+            <td>
+              <span>5.960</span>
+              <span>0.000</span>
+            </td>
+            <td>
+              <span>5.960</span>
+              <span>0.000</span>
+            </td>
+            <td>
+              <span class="text-gray">未成交</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- script -->
+  @@include('_script.html')
+  <script src="../../static/fachina/js/panel_cancel.js?ver=@@pageVersion"></script>
+</body>
+</html>
