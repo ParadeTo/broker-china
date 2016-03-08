@@ -1,0 +1,23 @@
+﻿@charset "UTF-8";
+
+// 协议页
+.agreement-page {
+  padding: pxToRem(45px) pxToRem(12px) pxToRem(12px) pxToRem(12px);
+}
+
+.align-right {
+  text-align: right;
+}
+
+h2 {
+  line-height: 200%;
+}
+
+.m-page h2 {
+  text-align: center;
+}
+
+.m-page section h2 {
+  text-align: left;
+}
+
