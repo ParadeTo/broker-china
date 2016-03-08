@@ -1,82 +1,62 @@
 /*
- * 模拟交易
+ * 模拟交易-撤单
  * author： qinxingjun
  */
 
-var tradeHandler = window.tradeHandler || {};
-
-tradeHandler.cId = $.cookie("fachinaId");
+var handler = window.handler || {};
 
 // 初始化
-tradeHandler.init = function() {
-
-  $('#tradeTab').muTabs($('#tradeContent'),function(){
-    console.log('你点击了我');
-  });
+handler.init = function() {
 
   // 委托查询
-  tradeHandler.loadOrderList();
-  tradeHandler.loadCancelList();
+  handler.loadOrderList();
+  handler.cancelAction();
 };
 
-// 撤单预检
-tradeHandler.loadCancelList = function() {
+// 查询可撤单列表
+handler.loadOrderList = function() {
   var params = {};
 
-  params['cId'] = tradeHandler.cId;
+  params['cId'] = J_app.param.cId;
 
-  J_app.ajax(J_app.api.withdrawCheck, params, function(data){
+  J_app.ajax(J_app.api.todayOrders, params, function(data){
 
-    var listHtml;
+    var trHtml;
 
     if(data.code === 0){
-      if(data.result){
-        listHtml = template('trade/panelCancel', data.result);
+
+      var stks = data.result.stkOrds,
+          newStks = [];
+
+      for(var i=0; i<stks.length; i++){
+        if(stks[i].displayStatus === 'A' || stks[i].displayStatus === 'B'){
+          newStks.push(stks[i]);
+        }
       }
+
+      trHtml = template('panel/panelCancel', { "stks" : newStks});
     } else{
-      listHtml = template('common/error', data);
+      trHtml = template('common/error', data);
     }
 
-    $('#cancelList').empty().append(listHtml);
+    $('#orderList').empty().append(trHtml);
   });
 };
 
-// 委托查询
-tradeHandler.loadOrderList = function() {
-  var params = {};
-
-  params['cId'] = tradeHandler.cId;
-
-  J_app.ajax(J_app.api.ptfOrders, params, function(data){
-    if(data.code === 0){
-
-    }
-  });
-};
-
-// 加载委托详情
-tradeHandler.loadOrderLista = function() {
-  var params = {};
-
-  params['cId'] = tradeHandler.cId;
-
-  J_app.ajax(J_app.api.ptfOrders, params, function(data){
-
-    var listHtml;
-
-    if(data.code === 0){
-      if(data.result){
-        listHtml = template('trade/panelSearch', data.result);
+// 撤单操作
+handler.cancelAction = function() {
+  $(document).on('click', 'table', function(){
+    var option = {
+      title: '委托撤单确认',
+      main: template('panel/dialogCancel', {}),
+      sure: function(){
+        handler.loadOrderList();
       }
-    } else{
-      listHtml = template('common/error', data);
-    }
-
-    $('#searchList').empty().append(listHtml);
+    };
+    J_app.confirm(option);
   });
 };
 
 $(function() {
-
-  tradeHandler.init();
+  handler.init();
 });

@@ -1,5 +1,5 @@
 {{ each stks as item}}
-<tr>
+<tr data-tId="{{item.ptfTransId}}">
   <td>
     {{ if item.ordBS === 'B'}}
       <i class="icon-buy">买</i>

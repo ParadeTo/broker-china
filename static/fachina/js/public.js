@@ -73,8 +73,8 @@
     //持仓详情
     ptfDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_balance_detail",
 
-    //组合委托详情
-    orderDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_order_detail",
+    //当日委托
+    todayOrders: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_today_orders",
 
     //调仓
     simuOrder: (development ? devHost : host) + "/g_adviser_api/simu_order",
@@ -85,11 +85,8 @@
     //撤单
     withdrawOrder: (development ? devHost : host) + "/g_adviser_api/simu_ptf_withdraw",
 
-    //获取历史委托概要
-    historyOrders: (development ? devHost : host) + "/g_adviser_api/fetch_simu_ptf_his_orders",
-
-    //获取历史委托详情
-    historyOrderDetail: (development ? devHost : host) + "/g_adviser_api/fetch_simu_his_order_detail",
+    //历史委托
+    historyOrders: (development ? devHost : host) + "/g_adviser_api/fetch_simu_his_order_detail",
 
     //市场全局搜索
     searchMkt: (development ? devHost : host) + "/mktinfo_api/search_mkt",

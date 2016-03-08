@@ -222,7 +222,7 @@ $(function() {
   if(!$.cookie("fachinaId")){
     var params = {};
     params['certType'] = '0';
-    params['certCode'] = '13402810264';
+    params['certCode'] = '15878763719';
     params['pwd'] = '666666';
 
     J_app.ajax(J_app.api.login, params, function(data){

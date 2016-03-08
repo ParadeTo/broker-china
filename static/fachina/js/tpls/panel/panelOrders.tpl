@@ -1,15 +1,4 @@
-<table class="ui-table">
-  <thead>
-    <tr>
-      <th>操作</th>
-      <th>股票名称</th>
-      <th>委托价<br>成交价</th>
-      <th>委托股数<br>成交股数</th>
-      <th>状态</th>
-    </tr>
-  </thead>
-  <tbody >
-    {{ each stkOrds as item}}
+{{ each stkOrds as item}}
 <tr>
   <td>
     {{ if item.ordBS === 'B'}}
@@ -35,8 +24,3 @@
   </td>
 </tr>
 {{ /each }}
-  </tbody>
-</table>
-<div data-status="Y" class="ui-more" id="orderMore">
-  <a href="javascript:;">点击加载更多</a>
-</div>

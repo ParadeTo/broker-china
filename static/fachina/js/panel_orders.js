@@ -5,34 +5,32 @@
 
 var handler = window.handler || {};
 
-handler.readId = 0;
-
 // 初始化
 handler.init = function() {
 
   // 委托查询
-  handler.loadOrderList();
-  handler.moreOrderList();
+  handler.loadTodayOrder();
+  handler.loadHistoryOrder();
 };
 
-// 委托查询
-handler.loadOrderList = function() {
+// 当日委托
+handler.loadTodayOrder = function() {
   var params = {};
 
   params['cId'] = J_app.param.cId;
-  params['ordType'] = 'T';
 
-  J_app.ajax(J_app.api.orderDetail, params, function(data){
+  J_app.ajax(J_app.api.todayOrders, params, function(data){
 
     var trHtml;
 
     if(data.code === 0){
-      trHtml = template('panel/panelOrders', data.result);
 
-      if(data.result.stkOrds){
-        handler.readId = data.result.stkOrds[data.result.stkOrds.length-1].ordId;
+      if(data.result.stkOrds.length > 0){
+        trHtml = template('panel/panelOrders', data.result);
       }else{
-        trHtml = template('common/noData', {"message":"咱无今日委托"});
+
+        // 如果没有今日委托，自动加载历史委托
+        $('#orderMore').trigger('click');
       }
     } else{
       trHtml = template('common/error', data);
@@ -42,8 +40,10 @@ handler.loadOrderList = function() {
   });
 };
 
-// 查看历史查询
-handler.moreOrderList = function() {
+// 历史委托
+handler.loadHistoryOrder = function() {
+
+  var readId = 0;
 
   $('#orderMore').on('click', function() {
 
@@ -58,11 +58,10 @@ handler.moreOrderList = function() {
     J_app.loading(true);
 
     params['cId'] = J_app.param.cId;
-    params['ordType'] = 'H';
-    params['locatedOrderId'] = handler.readId;
-    params['pageSize'] = 5;
+    params['pageSize'] = readId;
+    params['pagerId'] = 10;
 
-    J_app.ajax(J_app.api.orderDetail, params, function(data){
+    J_app.ajax(J_app.api.historyOrders, params, function(data){
 
       $this.removeClass('locked');
       J_app.loading(false);
@@ -71,10 +70,12 @@ handler.moreOrderList = function() {
 
       if(data.code === 0){
 
+        $this.show();
+
         if(data.result.stkOrds){
           trHtml = template('panel/panelOrders', data.result);
         } else{
-          $this.data('status', 'N').html('没有更多');
+          $this.data('status', 'N').html('没有更多委托');
         }
       } else{
         trHtml = template('common/error', data);
