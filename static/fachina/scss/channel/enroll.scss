@@ -1,6 +1,6 @@
 ﻿@charset "UTF-8";
 
-// 报名参赛
+// 报名参赛-入口
 .enroll-title {
   height: pxToRem(153px);
   padding-top: pxToRem(79px);
@@ -14,7 +14,9 @@
     color: #999999;
   }
 }
-
+.enroll-container {
+  padding-bottom: pxToRem(70px);
+}
 .enroll-select {
   height: pxToRem(200px);
   border: dashed #c5c5c5 pxToRem(1px);
@@ -139,6 +141,12 @@
       font-size: pxToRem(14px);
       padding-top: pxToRem(10px);
     }
+
+  }
+  #enroll-bar {
+    height: pxToRem(2px);
+    width: 0%;
+    background-color: #d83e3a;
   }
   // 选择城市
   ul li {
@@ -180,6 +188,9 @@
   margin: 0 auto;
   font-size: pxToRem(14px);
   margin-top: pxToRem(10px);
+  &.active {
+    background-color: #c00000;
+  }
 }
 // 说明文字
 .enroll-notes {
@@ -213,7 +224,6 @@
     padding-right: pxToRem(43px);
   }
 }
-
 
 // 报名参赛-小白
 .enroll-2-page {
@@ -262,4 +272,7 @@
   font-size: pxToRem(16px);
   color: #fff;
   border-radius: pxToRem(3px);
+  &.active {
+    background-color: #c00000;
+  }
 }

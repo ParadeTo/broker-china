@@ -1,24 +1,23 @@
 ﻿@charset "UTF-8";
 
-// 协议页
-.agreement-page {
+// 规则页
+.rules-page {
   padding: pxToRem(45px) pxToRem(12px) pxToRem(12px) pxToRem(12px);
-}
-
-.align-right {
-  text-align: right;
-}
-
-h2 {
-  line-height: 200%;
-}
-
-.m-page h2 {
-  text-align: center;
-}
-
-.m-page section h2 {
-  text-align: left;
+  h1 {
+    text-align: center;
+  }
+  p {
+    line-height: 150%;
+  }
+  .indent {
+    text-indent: 2em;
+  }
+  .level-2 {
+    margin-left: 1em;
+  }
+  .example {
+    font-size: pxToRem(12px);
+  }
 }
 
 #joinEvent {
@@ -37,5 +36,3 @@ h2 {
     background-color: #c00000;
   }
 }
-
-

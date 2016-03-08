@@ -23,8 +23,8 @@ viewpointHandler.getList = function() {
   params['readId'] = viewpointHandler.lastViewpointId;
 
   J_app.ajax(J_app.api.noteList, params, function(data) {
+    $('#viewpoint-more').removeClass("locked");
     var listHtml;
-    console.log(data);
     if(data.code === 0) {
       if(data.result.data.length>0) {
         var list = dealTime(data.result.data);
@@ -45,6 +45,7 @@ viewpointHandler.getList = function() {
       J_app.alert(data.message);
     }
   },function(){
+    $('#viewpoint-more').removeClass("locked");
     J_app.alert("请求数据失败")
   });
 };
@@ -52,11 +53,20 @@ viewpointHandler.getList = function() {
 // 点击查看更多
 viewpointHandler.getMore = function() {
   $('#viewpoint-more').click(function() {
+    var $this = $(this);
     // 显示加载图片
     $('#viewpoint-more').addClass('hide');
     $('#viewpoint-loading').removeClass('hide');
+
+    // 防重发
+    if($this.hasClass('locked')){
+      return ;
+    }
+    $this.addClass('locked');
+
     // 得到更多观点
     viewpointHandler.getList();
+
   });
 };
 

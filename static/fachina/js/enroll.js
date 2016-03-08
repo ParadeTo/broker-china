@@ -121,6 +121,7 @@ enrollHandler.errorType = {
 enrollHandler.rookieInit = function () {
   // 绑定报名参赛跳转
   $('#enroll-2-btn').click(function () {
+    var $this = $(this);
     // 得到cId
     var cId = $.cookie("fachinaId");
     // 得到真实姓名
@@ -130,19 +131,31 @@ enrollHandler.rookieInit = function () {
       $('#enroll-2-error').html("请输入真实姓名");
       return;
     }
+    // 防重发
+    if($this.hasClass('locked')){
+      return ;
+    }
+    $this.addClass('locked');
+    // 加载动画
+    J_app.loading(true);
     // 报名
     var params = {};
     params['cId'] = cId;
     params['realName'] = realName;
     J_app.ajax(J_app.api.join, params, function (data) {
-      console.log(data);
+      $this.removeClass('locked');
+      J_app.loading(false);
       if (data.code === 0) {
-        // 报名参赛成功后跳转
-        window.location.href = enrollHandler.api;
+        J_app.alert("报名成功");
+        setTimeout(function(){
+          window.location.href = enrollHandler.api;
+        }, 1000);
       } else {
         $("#enroll-2-error").html("<p>" + data.message + "</p>");
       }
     }, function () {
+      $this.removeClass('locked');
+      J_app.loading(false);
       J_app.alert('请求失败！');
     });
   });
@@ -197,20 +210,35 @@ enrollHandler.clearErrorMsg = function() {
 // 提交申请
 enrollHandler.apply = function() {
   $("#enroll-apply").click(function() {
+    var $this = $(this);
     var param = validForm();
-    if(param){
-      console.log(param);
-      J_app.ajax(J_app.api.verify, param, function(data) {
-        console.log(data);
-        if(data.code === 0) {
-
-        } else {
-
-        }
-      }, function(){
-        J_app.alert("认证失败");
-      });
+    if(!param) {
+      return ;
     }
+    // 防重发
+    if($this.hasClass('locked')){
+      return ;
+    }
+    $this.addClass('locked');
+    // 加载动画
+    J_app.loading(true);
+
+    J_app.ajax(J_app.api.verify, param, function(data) {
+      $this.removeClass('locked');
+      J_app.loading(false);
+      if(data.code === 0) {
+        J_app.alert("已提交审核");
+        setTimeout(function(){
+          window.location.href = enrollHandler.api;
+        }, 1000);
+      } else {
+        J_app.alert(data.message);
+      }
+    }, function(){
+      $this.removeClass('locked');
+      J_app.loading(false);
+      J_app.alert("认证失败");
+    });
   });
 
 }
@@ -245,6 +273,7 @@ enrollHandler.back = function() {
 // 选择机构
 enrollHandler.chooseOrg = function() {
   $("#enroll-org-btn").click(function() {
+    var $this = $(this);
     // 去掉验证信息
     if(enrollHandler.errorType.oId) {
       enrollHandler.errorType.oId = false;
@@ -253,8 +282,16 @@ enrollHandler.chooseOrg = function() {
     // 获取机构数据
     var param = {};
     param['cId'] = $.cookie("fachinaId");
+    // 防重发
+    if($this.hasClass('locked')){
+      return ;
+    }
+    $this.addClass('locked');
+    // 加载动画
+    J_app.loading(true);
     J_app.ajax(J_app.api.organization, param, function (data) {
-      console.log(data);
+      $this.removeClass('locked');
+      J_app.loading(false);
       if (data.code === 0) {
         // 显示机构列表，隐藏信息列表
         var $ul = $("#org ul");
@@ -268,6 +305,8 @@ enrollHandler.chooseOrg = function() {
         J_app.alert(data.message);
       }
     }, function () {
+      $this.removeClass('locked');
+      J_app.loading(false);
       J_app.alert('请求失败！');
     });
   });
@@ -276,6 +315,7 @@ enrollHandler.chooseOrg = function() {
 // 选择城市
 enrollHandler.chooseCity = function () {
   $("#enroll-city-btn").click(function () {
+    var $this = $(this);
     // 去掉验证信息
     if(enrollHandler.errorType.cityId) {
       enrollHandler.errorType.cityId = false;
@@ -284,8 +324,16 @@ enrollHandler.chooseCity = function () {
     // 获取省份数据
     var param = {};
     param['cId'] = $.cookie("fachinaId");
+    // 防重发
+    if($this.hasClass('locked')){
+      return ;
+    }
+    $this.addClass('locked');
+    // 加载动画
+    J_app.loading(true);
     J_app.ajax(J_app.api.province, param, function (data) {
-      console.log(data);
+      $this.removeClass('locked');
+      J_app.loading(false);
       if (data.code === 0) {
         // 显示省份列表，隐藏信息列表
         var $ul = $("#pro ul");
@@ -299,6 +347,8 @@ enrollHandler.chooseCity = function () {
         J_app.alert(data.message);
       }
     }, function () {
+      $this.removeClass('locked');
+      J_app.loading(false);
       J_app.alert('请求失败！');
     });
   });
@@ -360,6 +410,7 @@ enrollHandler.clickPro = function() {
   var pros = $("#pro .enroll-address-row");
 
   pros.click(function () {
+    var $this = $(this);
     var $li = $(this);
     // 得到省市id
     var proId = $li.data("id");
@@ -367,9 +418,16 @@ enrollHandler.clickPro = function() {
     var param = {};
     param['cId'] = $.cookie("fachinaId");
     param['provId'] = proId;
-    console.log(param);
+    // 防重发
+    if($this.hasClass('locked')){
+      return ;
+    }
+    $this.addClass('locked');
+    // 加载动画
+    J_app.loading(true);
     J_app.ajax(J_app.api.city, param, function (data) {
-      console.log(data);
+      $this.removeClass('locked');
+      J_app.loading(false);
       if (data.code === 0) {
         // 显示城市列表，隐藏省市列表、信息列表
         var $ul = $("#city ul");
@@ -386,6 +444,8 @@ enrollHandler.clickPro = function() {
         J_app.alert(data.message);
       }
     }, function () {
+      $this.removeClass('locked');
+      J_app.loading(false);
       J_app.alert('请求失败！');
     });
   });
@@ -412,6 +472,10 @@ enrollHandler.clickCity = function() {
 
 // 上传图片
 enrollHandler.uploadImg = function () {
+  // 清空图片隐藏域值
+  $("#enroll-1-img").val("");
+
+  // 定义上传对象
   var uploader = WebUploader.create({
     auto: true, // 自动上传
     swf: '../../static/common/js/libs/webuploader/Uploader.swf', // swf文件路径(以falsh方式支持IE上传)
@@ -425,7 +489,7 @@ enrollHandler.uploadImg = function () {
     },
     //sendAsBinary: true,
     fileNumLimit: 1, //文件最多数量
-    fileSingleSizeLimit: 10 * 1024 * 1024, // 单个文件大小限制:2 M
+    fileSingleSizeLimit: 5 * 1024 * 1024, // 单个文件大小限制:2 M
     thumb: {
       width: 120,
       height: 120,
@@ -437,22 +501,25 @@ enrollHandler.uploadImg = function () {
     duplicate: true //默认为undefined，是否允许重复文件（true为同一文件可以重复上传，false同一个文件只允许上传一次）
   });
 
-  //uploader.on('uploadBeforeSend', function(obj, data, headers) {
-  //
-  //});
+  // 开始上传时，把进度条置为0
+  uploader.on('uploadBeforeSend', function() {
+    // 去掉验证信息
+    if(enrollHandler.errorType.img) {
+      enrollHandler.errorType.img = false;
+      $('#enroll-1-error').html("");
+    }
+    $("#enroll-bar").css('width',0);
+  });
 
   uploader.on("error", function (type) {
-    J_app.alert(type);
     if (type == "Q_TYPE_DENIED") {
       J_app.alert("请上传JPG、PNG格式文件");
     } else if (type == "F_EXCEED_SIZE") {
-      J_app.alert("文件大小不能超过8M");
+      J_app.alert("文件大小不能超过5M");
     }
   });
   // 上传成功
   uploader.on('uploadSuccess', function (file, response) {
-    console.log(file);
-    console.log(response);
     if (response.code === 0) {
       var $img = $("#enroll-upload-img");
       var height = $img.height();
@@ -467,25 +534,28 @@ enrollHandler.uploadImg = function () {
       }, width, height);
 
       $("#enroll-1-img").val(response.result.urls);
-      // 去掉验证信息
-      if(enrollHandler.errorType.img) {
-        enrollHandler.errorType.img = false;
-        $('#enroll-1-error').html("");
-      }
     } else {
       J_app.alert("上传失败");
     }
 
   });
-
   // 上传失败
   uploader.on('uploadError', function (file) {
     J_app.alert("上传失败");
   });
+  // 进度条
+  uploader.on("uploadProgress", function(file,percentage) {
+    $("#enroll-bar").css('width', percentage * 100 + '%');
+  });
+  // 完成上传
+  uploader.on( 'uploadComplete', function(file) {
+    uploader.removeFile(file);
+  });
 };
 
 $(function () {
-  enrollHandler.rookieInit();
-  enrollHandler.adviserInit();
-
+  J_app.checkSign(function() {
+    enrollHandler.rookieInit();
+    enrollHandler.adviserInit();
+  });
 });

@@ -61,10 +61,16 @@ $radius: 3px;
     border-radius: pxToRem($radius);
     line-height: pxToRem(44px);
     margin-bottom: pxToRem(12px);
+    &.active {
+      background-color: #c00000;
+    }
   }
   #login-btn-register {
     text-decoration: underline;
     color: #d83e3a;
     font-size: pxToRem(14px);
+    &.active {
+      color: #c00000;
+    }
   }
 }

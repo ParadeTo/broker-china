@@ -7,6 +7,7 @@ $radius: 3px;
   padding-left: pxToRem(12px);
   padding-right: pxToRem(12px);
   padding-top: pxToRem(79px);
+  padding-bottom: pxToRem(15px);
   text-align: center;
   span {
     color: #d83e3a;
@@ -43,6 +44,9 @@ $radius: 3px;
       line-height: pxToRem(44px);
       text-align: center;
       border-radius: pxToRem($radius);
+      &.active {
+        background-color: #c00000;
+      }
     }
     .locked {
       color: #d83e3a;
@@ -71,10 +75,16 @@ $radius: 3px;
     border-radius: pxToRem($radius);
     line-height: pxToRem(44px);
     margin-bottom: pxToRem(7px);
+    &.active {
+      background-color: #c00000;
+    }
   }
   #register-btn-login {
     text-decoration: underline;
     color: #d83e3a;
     font-size: pxToRem(14px);
+    &.active {
+      color: #c00000;
+    }
   }
 }

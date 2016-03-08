@@ -36,6 +36,9 @@
     display: block;
     color: inherit;
     padding-top: pxToRem(11px);
+    &:active {
+      background-color: #f2f2f2;
+    }
     .viewpoint-top {
       span {
         border-radius: pxToRem(3px);
