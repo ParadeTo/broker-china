@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  @@include('_meta.html')
+</head>
+<body>
+<!-- 头部搜索栏-->
+<div class="search-header">
+  <img class="J-touch" id="fixed-header-back" src="../../static/fachina/images/pic_back.png" alt=""/>
+  <input id="search-keyword" type="text" class="form-control" placeholder="输入投顾／机构">
+  <button id="global-search" class="btn btn-white" type="button">搜索</button>
+</div>
+<!-- 投顾列表-->
+<div class="search-list index-ranking-content show" id="search-container">
+  <table>
+    <thead>
+    <tr>
+      <th class="col1">综合<br/>排名</th>
+      <th class="col2">投顾<br/>机构</th>
+      <th class="col3">赛季<br/>收益率</th>
+      <th class="col4">当前持仓</th>
+      <th class="col5">投票数</th>
+    </tr>
+    </thead>
+    <tbody id="rankAdviser"><!-- 投顾列表 --></tbody>
+  </table>
+</div>
+<!-- 点击查看更多-->
+<div id="search-more" class="view-more hide">
+  点击查看更多
+</div>
+<div id="search-loading" class="view-more hide">
+  <img src="../../static/fachina/images/pic_loading.gif" alt=""/>
+</div>
+<!-- script -->
+@@include('_script.html')
+<script src="../../static/fachina/js/search.js?ver=20160226"></script>
+</body>
+</html>

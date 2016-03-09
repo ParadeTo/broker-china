@@ -133,7 +133,7 @@
           r = window.location.search.substr(1).match(reg);
 
       if(r != null){
-        return unescape(r[2]);
+        return decodeURIComponent(r[2]);
       } else{
         return null;
       }
@@ -516,6 +516,71 @@
           });
         });
       });
+    },
+
+    // 搜索
+    search: function() {
+      $("#global-search").click(function() {
+        // 获取搜索关键字
+        var keyword = $("#search-keyword").val();
+        if(keyword) {
+          window.location.href = "search.html?keyword=" + keyword;
+        } else {
+          J_app.alert("请输入关键词");
+        }
+      });
+    },
+
+    // 广告栏
+    ad: function(p) {
+      // 滑动切换效果
+      function addSwiping() {
+        var options = {
+            loop: true,
+            pagination: '#adCtrls',
+            nextButton: '#btn_next',
+            prevButton: '#btn_prev',
+            paginationClickable: false,
+            spaceBetween: 0,
+            centeredSlides: true,
+            autoplay: 5000,
+            autoplayDisableOnInteraction: false
+          },
+          swiper = new Swiper('#adDiscover', options);
+      }
+      // 测试
+      $.ajax({
+        type: 'GET',
+        url: '../ad_api/fetch_ad_link_list.json',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(data) {
+          if (data.code === 0) {
+            if(data.result && data.result.datas){
+
+              var ads = data.result.datas;
+              var imgsHtml = [];
+
+              for(var i=0; i<ads.length; i++){
+
+                imgsHtml.push('<div class="swiper-slide">');
+                imgsHtml.push('<a id="' + ads[i].adId + '" href="' + ads[i].adUrl + '" style="background-image:url(' + ads[i].adImg + ')"></a>');
+                imgsHtml.push('</div>');
+              }
+              $('#adImages').empty().append(imgsHtml.join(''));
+
+              if(ads.length > 1){
+                addSwiping();
+              }
+              setTimeout(function(){
+                $('#adCtrls').fadeIn(1000);
+              },500);
+            }
+          } else{
+            console.log(data.message);
+          }
+        }
+      });
     }
   };
 
@@ -599,14 +664,11 @@
     window.addEventListener("resize",function(){page.changePage();},false);
   })();
 
-  // 报名参赛
+  // 事件绑定
   (function($){
-    J_app.joinEvent();
-  })(jQuery);
-
-  // 投票
-  (function($){
-    J_app.vote();
+    J_app.joinEvent();  // 报名参赛
+    J_app.vote(); // 投票
+    J_app.search(); // 搜索
   })(jQuery);
 
   // 全局按钮触摸事件
@@ -632,7 +694,6 @@
 
   //用户登录状态
   (function($) {
-
     if($.cookie('fachinaStatus')){
       $('#userStatus').addClass('status-' + $.cookie('fachinaStatus'));
     } else{
@@ -642,7 +703,6 @@
 
   //回到顶部
   (function($) {
-
     $(window).scroll(function() {
       if($(this).scrollTop() > 400) {
         $('.ui-gotop').fadeIn();
@@ -656,7 +716,6 @@
       return false;
     });
   })(jQuery);
-
 
   //抛出对象
   factory && (global.J_app = J_app);
