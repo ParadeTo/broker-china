@@ -154,3 +154,45 @@
     }
   }
 }
+
+.trade-search-box {
+  position: relative;
+}
+
+.trade-fuzzy {
+  display: none;
+  position: absolute;
+  top: pxToRem(44px);
+  left: pxToRem(-10px);
+  z-index:99;
+  width:pxToRem(320px);
+
+  li {
+    padding: pxToRem(15px);
+    background-color : $bg-color;
+    border-bottom: 1px solid $border-color;
+    font-size: pxToRem(14px);
+    color: $gray;
+    em {
+      display: inline-block;
+      margin-left: pxToRem(15px);
+      padding: pxToRem(2px) pxToRem(8px);
+      border: 1px solid $orange;
+      color: $orange;
+      font-style: normal;
+    }
+  }
+}
+
+.trade-row-number {
+  position: relative;
+}
+
+.trade-able-num {
+  position: absolute;
+  top: pxToRem(10px);
+  right: pxToRem(5px);
+  z-index: 2;
+  font-size: pxToRem(12px);
+  color: $light;
+}

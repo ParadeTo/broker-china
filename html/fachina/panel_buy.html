@@ -33,89 +33,93 @@
       <!-- 买入 -->
       <div class="ui-row ui-box bg-white trade-panel-box">
         <div class="ui-col trade-panel-left">
-          <div class="trade-row m-t-6 ">
-            <input type="text" class="form-control text buy">
+          <div class="trade-row m-t-6 trade-search-box">
+            <input id="searchInput" type="text" class="form-control text buy" placeholder="股票名/代码">
+            <ul class="trade-fuzzy" id="searchResult">
+              <!-- <li>股神来了ZA002156 <em>停牌</em></li>-->
+            </ul>
           </div>
-          <ul class="quantity-form buy m-t-6 ">
+          <ul class="quantity-form buy m-t-6" id="quantityForm">
             <li data-type="reduce" class="minus-btn active">-</li>
             <li class="input">
-              <input type="text" value="0" disabled="disabled" readonly/>
+              <input id="stkPrice" type="text" value="0"/>
             </li>
             <li data-type="add" class="plus-btn disabled">+</li>
           </ul>
           <ul class="ui-row trade-panel-text m-t-2">
             <li class="ui-col left">
-              跌停：<span class="text-green">555</span>
+              跌停：<span id="priceFall" class="text-green">--</span>
             </li>
             <li class="ui-col right">
-              涨停：<span class="text-red">999</span>
+              涨停：<span id="priceRise" class="text-red">--</span>
             </li>
           </ul>
-          <div class="m-t-6">
-            <input type="text" class="form-control text buy">
+          <div class="m-t-6 trade-row-number">
+            <input id="stkQuantity" type="text" class="form-control text buy" placeholder="购买数量">
+            <div class="trade-able-num">可买<span id="ableQuantity">0</span>股</div>
           </div>
-          <ul class="m-t-6 ui-row trade-select-btn buy">
-            <li class="ui-col touch">全仓</li>
-            <li class="ui-col">1/2仓</li>
-            <li class="ui-col">1/3仓</li>
+          <ul class="m-t-6 ui-row trade-select-btn buy" id="quantitySpace">
+            <li data-den="1" class="ui-col J-touch">全仓</li>
+            <li data-den="2" class="ui-col J-touch">1/2仓</li>
+            <li data-den="3" class="ui-col J-touch">1/3仓</li>
           </ul>
           <div class="m-t-6">
-            <button class="btn btn-red trade-btn">买入</button>
+            <button id="submitBtn" class="btn btn-red trade-btn">买入</button>
           </div>
         </div>
-        <div class="ui-col trade-panel-right">
+        <div class="ui-col trade-panel-right" id="fiveBetsBox">
           <ul class="trade-five_bets">
             <li>
               <span>卖5</span>
-              <span>9.97</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>卖4</span>
-              <span>9.96</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>卖3</span>
-              <span>9.95</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>卖2</span>
-              <span>9.94</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>卖1</span>
-              <span>9.93</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
           </ul>
           <ul class="trade-five_bets">
             <li>
               <span>买5</span>
-              <span>9.97</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>买4</span>
-              <span>9.96</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>买3</span>
-              <span>9.95</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>买2</span>
-              <span>9.94</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
             <li>
               <span>买1</span>
-              <span>9.93</span>
-              <span>2029</span>
+              <span>--</span>
+              <span>--</span>
             </li>
           </ul>
         </div>
@@ -132,44 +136,7 @@
               <th>成本价<br>现&nbsp;&nbsp;价</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>
-                <span class="text-black">平安银行</span>
-                <span class="font-8 text-light">19992.000</span>
-              </td>
-              <td>
-                <span>-5.960</span>
-                <span>-0.10%</span>
-              </td>
-              <td>
-                <span>2000</span>
-                <span>0</span>
-              </td>
-              <td>
-                <span>56.99</span>
-                <span>56.22</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="text-black">平安银行</span>
-                <span class="font-8 text-light">19992.000</span>
-              </td>
-              <td>
-                <span>-5.960</span>
-                <span>-0.10%</span>
-              </td>
-              <td>
-                <span>2000</span>
-                <span>0</span>
-              </td>
-              <td>
-                <span>56.99</span>
-                <span>56.22</span>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="ptfDetail"><!-- 持仓详情 --></tbody>
         </table>
       </div>
     </div>

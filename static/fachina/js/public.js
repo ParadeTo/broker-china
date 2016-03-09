@@ -89,10 +89,10 @@
     historyOrders: (development ? devHost : host) + "/g_adviser_api/fetch_simu_his_order_detail",
 
     //市场全局搜索
-    searchMkt: (development ? devHost : host) + "/mktinfo_api/search_mkt",
+    searchMkt: (development ? devHost : host) + "/g_adviser_api/search_mkt",
 
-    //实时行情
-    getQuot: (development ? devHost : host) + "/mktinfo_api/get_quot",
+    //五档行情
+    fiveBets: (development ? devHost : host) + "/g_adviser_api/get_five_bets",
 
     // 获取微信签名
     fetchJssdk: (development ? devHost : host) + "/g_adviser_api/fetch_js_sdk_signature",
@@ -168,6 +168,7 @@
 
       var params = {};
       params['params'] = data;
+      params['id'] = J_app.onlyNum();
 
       $.ajax({
         type: "POST",
