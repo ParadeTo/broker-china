@@ -7,6 +7,9 @@ var rankHandler = window.rankHandler || {};
 
 // 初始化
 rankHandler.init = function() {
+  // 广告
+  J_app.ad();
+  J_app.ad();
 
   // 赛事直播动画
   $('#eventRadio').muSlideUp({time:3000});
@@ -164,7 +167,6 @@ rankHandler.loadListMore = function() {
 
 // 转发邀请
 rankHandler.inviteActive = function() {
-
   $('#inviteEvent').on('click', function(){
     J_app.checkSign(function(){
       console.log('弹出分享提示');

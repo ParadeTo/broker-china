@@ -13,7 +13,16 @@
     <!-- banner -->
     <div class="index-banner" id="indexBanner">
       <!-- 广告 -->
-      <div class="container index-advert"></div>
+      <div class="container index-advert swiper-container" id="adDiscover">
+        <div class="swiper-pagination" id="adCtrls" style="display:none;">
+          <!-- 控制圆点 -->
+        </div>
+        <div class="swiper-wrapper" id="adImages">
+          <!-- banners -->
+        </div>
+        <a href="javascript:;" class="swiper-button-next" id="btn_prev"></a>
+        <a href="javascript:;" class="swiper-button-prev" id="btn_next"></a>
+      </div>
       <!-- 赛事信息 -->
     </div>
 
@@ -208,6 +217,7 @@
   <!-- script -->
   @@include('_script.html')
 
+  <script src="../../static/common/js/libs/swiper.min.js"></script>
   <script src="../../static/fachina/js/index.js?ver=@@pageVersion"></script>
 </body>
 </html>

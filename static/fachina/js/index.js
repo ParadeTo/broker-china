@@ -7,6 +7,8 @@ var indexHandler = window.indexHandler || {};
 
 // 初始化
 indexHandler.init = function() {
+  // 广告
+  J_app.ad();
 
   // 赛事直播动画
   $('#eventRadio').muSlideUp({time:3000});
@@ -17,8 +19,8 @@ indexHandler.init = function() {
   indexHandler.loadEventRadio();
   indexHandler.loadViewpointList();
   indexHandler.loadRankList();
-  indexHandler.voteActive();
-  indexHandler.joinActive();
+  //indexHandler.voteActive();
+  //indexHandler.joinActive();
   indexHandler.inviteActive();
 };
 // 获取赛事信息
