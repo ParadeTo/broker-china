@@ -27,13 +27,14 @@ handler.loadTodayOrder = function() {
 
       if(data.result.stkOrds.length > 0){
         trHtml = template('panel/panelOrders', data.result);
+        $('#orderMore').show();
       }else{
 
         // 如果没有今日委托，自动加载历史委托
         $('#orderMore').trigger('click');
       }
     } else{
-      trHtml = template('common/error', data);
+      J_app.alert(data.message);
     }
 
     $('#orderList').empty().append(trHtml);
@@ -49,6 +50,10 @@ handler.loadHistoryOrder = function() {
 
     var $this = $(this),
         params = {};
+
+    if($this.data('status') === 'N'){
+      return false;
+    }
 
     if($this.hasClass('locked')){
       return false;
@@ -72,10 +77,11 @@ handler.loadHistoryOrder = function() {
 
         $this.show();
 
-        if(data.result.stkOrds){
+        if(data.result.stkOrds.length > 0){
           trHtml = template('panel/panelOrders', data.result);
+          $this.html('<a href="javascript:;">点击查看更多</a>');
         } else{
-          $this.data('status', 'N').html('没有更多委托');
+          $this.data('status', 'N').html('<a href="javascript:;">没有更多委托</a>');
         }
       } else{
         trHtml = template('common/error', data);

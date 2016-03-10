@@ -24,9 +24,8 @@ handler.loadOrderList = function() {
     var trHtml;
 
     if(data.code === 0){
-
       var stks = data.result.stkOrds,
-          newStks = [];
+        newStks = [];
 
       for(var i=0; i<stks.length; i++){
         if(stks[i].displayStatus === 'A' || stks[i].displayStatus === 'B'){
@@ -34,26 +33,72 @@ handler.loadOrderList = function() {
         }
       }
 
-      trHtml = template('panel/panelCancel', { "stks" : newStks});
+      if(newStks.length > 0){
+        trHtml = template('panel/panelCancel', { stks : newStks});
+      } else{
+        $('.panel-cancel-list').after(template('common/noData', { message : '无可撤单委托'}));
+      }
     } else{
-      trHtml = template('common/error', data);
+      J_app.alert(data.message);
     }
 
-    $('#orderList').empty().append(trHtml);
+    $('#cancelList').empty().append(trHtml);
   });
 };
 
 // 撤单操作
 handler.cancelAction = function() {
-  $(document).on('click', 'table', function(){
+  $('#cancelList').on('click', 'tr', function(){
+    var $this = $(this);
+    var data = {
+      seq : $this.data('seq'),
+      tId : $this.data('tid'),
+      type : $this.data('type') === 'B' ? '撤买单' : '撤卖单',
+      code : $this.data('code'),
+      name : $this.data('name'),
+      oprice : $this.data('oprc'),
+      number : $this.data('oqty') - $this.data('cqty')
+    };
+
+    console.log(data.price);
+
     var option = {
       title: '委托撤单确认',
-      main: template('panel/dialogCancel', {}),
+      main: template('panel/dialogCancel', data),
       sure: function(){
-        handler.loadOrderList();
-      }
+        handler.cancelSubmit(data);
+      },
+      sureText: '确定撤单'
     };
     J_app.confirm(option);
+  });
+};
+
+handler.cancelSubmit = function(data) {
+
+  function getExchType(code){
+    if(/SH/.test(code)){
+      return "HA";
+    }else if(/SZ/.test(code)){
+      return "SA";
+    }
+  };
+
+  var params = {};
+  params['cId'] = J_app.param.cId;
+  params['ptfTransId'] = data.tId;
+  params['stkCode'] = data.code;
+  params['ordSeq'] = data.seq;
+  params['exchType'] = getExchType(data.code);
+
+  J_app.ajax(J_app.api.withdrawOrder, params, function(data){
+
+    if(data.code === 0){
+      J_app.alert('操作成功');
+      handler.loadOrderList();
+    } else{
+      J_app.alert(data.message);
+    }
   });
 };
 

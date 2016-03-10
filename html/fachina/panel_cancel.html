@@ -6,13 +6,13 @@
 <body>
 
   <!-- header -->
-  @@include('_appHeader.html', {"title":"撤单"})
+  @@include('_appHeader.html', {"title":"撤单", "src":"./trade.html"})
 
   <!-- 主体-->
   <main>
     <!-- tabs -->
-    <div class="trade-tabs">
-      <ul class="ui-row" id="tradeTab">
+    <div class="panel-tabs">
+      <ul class="ui-row">
         <li class="ui-col J-touch">
           <a href="./panel_buy.html?ver=@@pageVersion" class="nav-link">买入</a>
         </li>
@@ -28,21 +28,22 @@
       </ul>
     </div>
 
-    <div class="ui-container" id="tradeContent">
-
-      <!-- 撤单 -->
-      <table class="ui-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>股票名称<br>委托时间</th>
-            <th>委托价<br>成交均价</th>
-            <th>委托股数<br>成交股数</th>
-            <th>状态</th>
-          </tr>
-        </thead>
-        <tbody id="cancelList"><!-- 撤单列表 --></tbody>
-      </table>
+    <!-- content -->
+    <div class="ui-container">
+      <div class="ui-box bg-white panel-cancel-list">
+        <table class="ui-table span-block">
+          <thead>
+            <tr>
+              <th></th>
+              <th>股票名称<br>委托时间</th>
+              <th class="right">委托价<br>成交价</th>
+              <th class="right">委托股数<br>成交股数</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody id="cancelList"><!-- 撤单列表 --></tbody>
+        </table>
+      </div>
     </div>
   </main>
 

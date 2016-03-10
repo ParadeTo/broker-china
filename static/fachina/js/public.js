@@ -411,7 +411,10 @@
       $('.J-dialog-sure').unbind('click');
 
       $('.J-dialog-cancel').on('click', option.cancel);
-      $('.J-dialog-sure').on('click', option.sure);
+      $('.J-dialog-sure').on('click', function(){
+        option.sure();
+        $(this).closest('.ui-dialog').remove();
+      });
     },
 
     //在一起牛APP打开
@@ -687,9 +690,21 @@
     $("#fixed-header-back").click(function() {
       window.history.back();
     });
+    $(document).on('click', '.J-back', function(){
+      var src = $(this).data('src');
+      if(src){
+        window.location.href = src;
+      } else{
+        window.history.back();
+      }
+    });
     // 回到首页
     $("#fixed-header-home").click(function() {
-      window.location.href = "index.html";
+      window.location.href = "./index.html";
+    });
+    // 刷新
+    $(document).on('click', '.J-refresh', function(){
+      window.location.reload();
     });
   })(jQuery);
 

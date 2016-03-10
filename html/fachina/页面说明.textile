@@ -1,9 +1,18 @@
+accredit.html       : 微信授权成功跳转页面
 agreement.html      ：协议
-enroll.html         ：报名参赛
+enroll_adviser.html : 投顾报名参赛
+enroll_entry.html   : 报名参赛
+enroll_rookie.html  : 普通用户参赛
 home.html           ：个人中心
 index.html          ：大赛首页
 login.html          ：登录
+panel_buy.html      ：交易-买入
+panel_cancel.html   : 交易-撤单
+panel_orders.html   ：交易-委托查询
+panel_sell.html     : 交易-卖出
 ranking.html        ：排行榜
 register.html       ：注册
 rules.html          ：规则
+search.html         : 查询结果页
 trade.html          : 交易
+viewpoint.html      ：观点列表

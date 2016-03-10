@@ -1,54 +1,18 @@
 <ul class="trade-five_bets">
-  <li>
-    <span>卖5</span>
-    <span>9.97</span>
-    <span>2029</span>
+  {{ each ask }}
+  <li data-price="{{ask.price}}">
+    <span>卖{{ ask.index }}</span>
+    <span>{{ ask.price }}</span>
+    <span>{{ ask.vol }}</span>
   </li>
-  <li>
-    <span>卖4</span>
-    <span>9.96</span>
-    <span>2029</span>
-  </li>
-  <li>
-    <span>卖3</span>
-    <span>9.95</span>
-    <span>2029</span>
-  </li>
-  <li>
-    <span>卖2</span>
-    <span>9.94</span>
-    <span>2029</span>
-  </li>
-  <li>
-    <span>卖1</span>
-    <span>9.93</span>
-    <span>2029</span>
-  </li>
+  {{ /each }}
 </ul>
 <ul class="trade-five_bets">
-  <li>
-    <span>买5</span>
-    <span>9.97</span>
-    <span>2029</span>
+  {{ each bid }}
+  <li data-price="{{ask.price}}">
+    <span>买{{ bid.index }}</span>
+    <span>{{ bid.price }}</span>
+    <span>{{ bid.vol }}</span>
   </li>
-  <li>
-    <span>买4</span>
-    <span>9.96</span>
-    <span>2029</span>
-  </li>
-  <li>
-    <span>买3</span>
-    <span>9.95</span>
-    <span>2029</span>
-  </li>
-  <li>
-    <span>买2</span>
-    <span>9.94</span>
-    <span>2029</span>
-  </li>
-  <li>
-    <span>买1</span>
-    <span>9.93</span>
-    <span>2029</span>
-  </li>
+  {{/each}}
 </ul>

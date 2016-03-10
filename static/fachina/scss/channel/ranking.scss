@@ -3,6 +3,7 @@
 // 榜单
 .ranking-action-wrap {
   padding: pxToRem(10px);
+  border-bottom: 0 none;
 }
 
 .ranking-action-box {
@@ -25,5 +26,10 @@
   .btn-red {
     width: 100%;
     height: pxToRem(40px);
+  }
+}
+.ranking-tabs {
+  li {
+    background: $white;
   }
 }

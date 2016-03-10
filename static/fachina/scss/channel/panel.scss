@@ -1,8 +1,9 @@
 ﻿@charset "UTF-8";
 
 // 交易面板
-.trade-tabs {
+.panel-tabs {
   border: 1px solid $border-color;
+
   .ui-col {
     width: 25%;
     font-size: pxToRem(14px);
@@ -24,73 +25,79 @@
     }
   }
 }
-
-.trade-tabs-content {
-  display: none;
-
-  table {
-    width: 100%;
-  }
-
-  tr {
-    border: 1px solid $border-color;
-  }
-
-  thead tr {
-    border-top: 0 none;
-  }
-
-  th {
-    padding: pxToRem(6px) 0;
-    background: $bg-color;
-    font-size: pxToRem(12px);
-    text-align: center;
-    color: $gray;
-  }
-
-  td {
-    padding: pxToRem(6px) 0;
-    font-size: pxToRem(12px);
-    text-align: center;
-    color: $black;
-    background: $white;
-
-    span {
-      display: block;
-    }
-  }
-}
-
-.trade-panel-box {
+.panel-box {
   padding: pxToRem(10px);
+  border-top: 0 none;
 }
-
-.trade-panel-left {
+.panel-box-left {
   width: 60%;
 }
-
-.trade-panel-right {
+.panel-box-right {
   margin-left: 2%;
   width: 38%;
 
-  .trade-five_bets + .trade-five_bets {
+  .panel-five-bets + .panel-five-bets {
     border-top: 1px solid $border-color;
     padding-top: pxToRem(5px);
   }
 }
+.panel-search-input {
+  position: relative;
 
-.trade-panel-text {
-  .ui-col {
-    width: 50%;
+  .panel-fuzzy {
+    display: none;
+    position: absolute;
+    top: pxToRem(30px);
+    left: pxToRem(-10px);
+    z-index:99;
+    width:pxToRem(320px);
+
+    li {
+      padding: pxToRem(10px);
+      background-color : $bg-color;
+      border-bottom: 1px solid $border-color;
+      font-size: pxToRem(12px);
+      color: $gray;
+      em {
+        display: inline-block;
+        margin-left: pxToRem(15px);
+        padding: pxToRem(2px) pxToRem(8px);
+        border: 1px solid $orange;
+        color: $orange;
+        font-style: normal;
+      }
+
+      &:first-child {
+        border-top: 1px solid $border-color;
+      }
+    }
   }
 }
+.panel-fall-rise {
+  .ui-col {
+    width: 50%;
+    font-size: pxToRem(12px);
+    color: $light;
+  }
+}
+.panel-number-input {
+  position: relative;
 
-.trade-select-btn {
+  .number {
+    position: absolute;
+    top: pxToRem(7px);
+    right: pxToRem(5px);
+    z-index: 2;
+    font-size: pxToRem(12px);
+    color: $light;
+  }
+}
+.panel-select-btn {
   .ui-col {
     width: 33.3333%;
     border: 1px solid $border-color;
     border-left: 0 none;
-    line-height: pxToRem(40px);
+    line-height: pxToRem(30px);
     text-align: center;
 
     &:first-child {
@@ -111,7 +118,7 @@
       border-color: $bg-red;
       color: $red;
 
-      &.touch {
+      &.active {
         background: $bg-red;
         color: $white;
       }
@@ -124,75 +131,67 @@
       border-color: $bg-blue;
       color: $blue;
 
-      &.touch {
+      &.active {
         background: $bg-blue;
         color: $white;
       }
     }
   }
 }
-
-.trade-btn {
+.panel-submit {
   width: 100%;
-  height: pxToRem(40px);
+  height: pxToRem(30px);
 }
-
-.trade-five_bets {
+.panel-five-bets {
 
   li {
-    line-height: pxToRem(20px);
+    line-height: pxToRem(14px);
     font-size: 0;
 
     span {
       display: inline-block;
       width: 33.3333%;
-      font-size: pxToRem(12px);
+      font-size: pxToRem(10px);
+      color: $light;
+      text-align: right;
 
-      &:last-child {
-        text-align: right;
+      &:first-child {
+        text-align: left;
       }
     }
   }
 }
-
-.trade-search-box {
-  position: relative;
+.panle-ptf-detail {
+  border-top: 0 none;
+  border-bottom: 0 none;
 }
 
-.trade-fuzzy {
-  display: none;
-  position: absolute;
-  top: pxToRem(44px);
-  left: pxToRem(-10px);
-  z-index:99;
-  width:pxToRem(320px);
+// 查询
+.panel-orders-list {
 
-  li {
-    padding: pxToRem(15px);
-    background-color : $bg-color;
-    border-bottom: 1px solid $border-color;
-    font-size: pxToRem(14px);
-    color: $gray;
-    em {
-      display: inline-block;
-      margin-left: pxToRem(15px);
-      padding: pxToRem(2px) pxToRem(8px);
-      border: 1px solid $orange;
-      color: $orange;
-      font-style: normal;
-    }
+  .ui-box {
+    border-top: 0 none;
+    border-bottom: 0 none;
+  }
+
+  thead tr {
+    border-top: 0 none;
   }
 }
-
-.trade-row-number {
-  position: relative;
+.panel-list-more {
+  margin-top: pxToRem(10px);
+  padding: pxToRem(10px);
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  background: $white;
 }
 
-.trade-able-num {
-  position: absolute;
-  top: pxToRem(10px);
-  right: pxToRem(5px);
-  z-index: 2;
-  font-size: pxToRem(12px);
-  color: $light;
+// 撤单
+.panel-cancel-list {
+  border-top: 0 none;
+  border-bottom: 0 none;
+
+  thead tr {
+    border-top: 0 none;
+  }
 }

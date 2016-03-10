@@ -5,7 +5,7 @@
   display: block;
   width: 100%;
   padding: pxToRem(5px);
-  font-size: pxToRem(14px);
+  font-size: pxToRem(12px);
   line-height: 1;
   color: $black;
   background-color: none;
@@ -27,7 +27,8 @@
   }
 
   &.text {
-    height: pxToRem(40px);
+    height: pxToRem(30px);
+    line-height: pxToRem(30px);
 
     &.buy {
       border-color: $bg-red;
