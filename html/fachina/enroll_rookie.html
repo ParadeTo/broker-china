@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
   <!-- 报名页面-点击我是股民 -->
   <!-- 头部固定栏-->
-  @@include('_fixed_header.html',{"title":"报名参赛","back-href":"","home-href":""})
+  @@include('_back_home.html',{"title":"报名参赛"})
   <div class="enroll-2-page">
     <div class="enroll-2-name">
       真实姓名
@@ -17,8 +17,12 @@
       确认参赛
     </div>
   </div>
+
+  <!-- 下载一起牛-->
+  @@include('_download.html')
+
   <!-- script -->
-  @@include('_script.html')
-  <script src="../../static/fachina/js/enroll_rookie.js?ver=20160226"></script>
+  @@include('_scripts.html')
+  <script src="../../static/fachina/js/enroll_rookie.js?ver=@@pageVersion"></script>
 </body>
 </html>

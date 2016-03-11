@@ -681,7 +681,7 @@
   (function($) {
     // back
     $(document).on('click', '.J-back', function(){
-      var href = $(this).data('back-href');
+      var href = $(this).data('src');
       if(href){
         window.location.href = href;
       } else{
@@ -690,12 +690,7 @@
     });
     // 回到首页
     $(document).on('click', '.J-home', function(){
-      var href = $(this).data('home-href');
-      if(href){
-        window.location.href = href;
-      } else{
-        window.location.href = "./index.html";
-      }
+      window.location.href = "./index.html";
     });
     // 刷新
     $(document).on('click', '.J-refresh', function(){

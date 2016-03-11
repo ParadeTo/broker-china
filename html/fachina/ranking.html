@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
 
@@ -9,7 +9,7 @@
   <header>
 
     <!-- 搜索 -->
-    @@include('_header.html')
+    @@include('_search.html')
 
     <!-- banner -->
     <div class="index-banner" id="indexBanner">
@@ -28,7 +28,7 @@
     </div>
 
     <!-- 赛事直播 -->
-    @@include('_event_radio.html')
+    @@include('_radio.html')
   </header>
 
   <!-- main -->
@@ -158,12 +158,15 @@
     </div>
   </main>
 
-  <!-- widget -->
-  @@include('_common.html')
+  <!-- 下载一起牛-->
+  @@include('_download.html')
+
+  <!-- gotop -->
+  @@include('_gotop.html')
 
   <!-- script -->
-  @@include('_script.html')
+  @@include('_scripts.html')
   <script src="../../static/common/js/libs/swiper.min.js"></script>
-  <script src="../../static/fachina/js/ranking.js?ver=20160226"></script>
+  <script src="../../static/fachina/js/ranking.js?ver=@@pageVersion"></script>
 </body>
 </html>

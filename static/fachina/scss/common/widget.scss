@@ -116,7 +116,7 @@
   z-index: 99;
   bottom: 0px;
   height: pxToRem(60px);
-  background-color: $black;
+  background-color: rgba(0, 0, 0, 0.6);
   min-width: 320px;
   padding: pxToRem(10px);
   img {

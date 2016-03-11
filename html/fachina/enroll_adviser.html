@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
   <!-- 报名页面-选择投顾 -->
   <div id="info" style="display: block">
     <!-- 头部固定栏-->
-    @@include('_fixed_header.html',{"title":"报名参赛","back-href":"","home-href":""})
+    @@include('_back_home.html',{"title":"报名参赛"})
     <div class="enroll-1-page" >
       <div class="enroll-1-row">
         真实姓名
@@ -98,9 +98,12 @@
     </div>
   </div>
 
+  <!-- 下载一起牛-->
+  @@include('_download.html')
+
   <!-- script -->
-  @@include('_script.html')
-  <script src="../../static/common/js/libs/webuploader/webuploader.js?ver=20160304"></script>
-  <script src="../../static/fachina/js/enroll_adviser.js?ver=20160226"></script>
+  @@include('_scripts.html')
+  <script src="../../static/common/js/libs/webuploader/webuploader.js?ver=@@pageVersion"></script>
+  <script src="../../static/fachina/js/enroll_adviser.js?ver=@@pageVersion"></script>
 </body>
 </html>

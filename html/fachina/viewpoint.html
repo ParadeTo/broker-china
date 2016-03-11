@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
   <!-- 头部固定栏-->
-  @@include('_fixed_header.html',{"title":"投顾观点精选","back-href":"","home-href":""})
+  @@include('_back_home.html',{"title":"投顾观点精选"})
+
   <!-- 主体-->
   <div class="page">
     <div class="viewpoint-item" >
@@ -83,10 +84,12 @@
   <div id="viewpoint-more" class="view-more">
     点击查看更多
   </div>
-  <!-- 底部下载一起牛悬浮栏-->
-  @@include('_fixed_footer.html')
+
+  <!-- 下载一起牛-->
+  @@include('_download.html')
+
   <!-- script -->
-  @@include('_script.html')
+  @@include('_scripts.html')
   <script src="../../static/fachina/js/viewpoint.js?ver=@@pageVersion"></script>
 </body>
 </html>

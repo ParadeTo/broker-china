@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
 
@@ -9,7 +9,7 @@
   <header>
 
     <!-- 搜索 -->
-    @@include('_header.html')
+    @@include('_search.html')
 
     <!-- banner -->
     <div class="home-banner" id="homeBanner"><!-- 用户信息 --></div>
@@ -112,11 +112,14 @@
     </div>
   </main>
 
-  <!-- widget -->
-  @@include('_common.html')
+  <!-- 下载一起牛-->
+  @@include('_download.html')
+
+  <!-- gotop -->
+  @@include('_gotop.html')
 
   <!-- script -->
-  @@include('_script.html')
-  <script src="../../static/fachina/js/home.js"></script>
+  @@include('_scripts.html')
+  <script src="../../static/fachina/js/home.js?ver=@@pageVersion"></script>
 </body>
 </html>

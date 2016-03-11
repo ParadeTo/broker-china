@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
   <!-- 头部固定栏-->
-  @@include('_fixed_header.html',{"title":"用户协议","back-href":"","home-href":""})
+  @@include('_back_home.html',{"title":"用户协议"})
 
   <div class="agreement-page"></div>
 
   <div class="J-touch agreement-join" id="joinEvent">我要参赛</div>
   <!-- script -->
-  @@include('_script.html')
+  @@include('_scripts.html')
   <script>
     $(function(){
       $(".agreement-page").load("../page/user_agreement.html");

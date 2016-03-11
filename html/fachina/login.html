@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
   <!-- 头部固定栏-->
-  @@include('_fixed_header.html',{"title":"登录","back-href":"","home-href":""})
+  @@include('_back_home.html',{"title":"登录"})
+
   <!-- 主体-->
   <div class="login-body">
     <span>首届一起牛杯金牌投顾选拔赛</span>
@@ -23,8 +24,11 @@
     <a class="J-touch" id="login-btn-register" href="javascript:;">立即注册</a>
   </div>
 
+  <!-- 下载一起牛-->
+  @@include('_download.html')
+
   <!-- script -->
-  @@include('_script.html')
+  @@include('_scripts.html')
   <script src="../../static/fachina/js/login.js?ver=@@pageVersion"></script>
 </body>
 </html>

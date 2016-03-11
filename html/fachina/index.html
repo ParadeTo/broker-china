@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
 
   <!-- header -->
-  @@include('_header.html')
+  @@include('_search.html')
 
   <!-- main -->
   <main>
@@ -27,7 +27,7 @@
     </div>
 
     <!-- 赛事直播 -->
-    @@include('_event_radio.html')
+    @@include('_radio.html')
 
     <!-- 导航 -->
     <ul class="ui-container bg-white ui-row ui-navbar">
@@ -211,11 +211,14 @@
   <!-- footer -->
   @@include('_footer.html')
 
+  <!-- 下载一起牛-->
+  @@include('_download.html')
+
   <!-- widget -->
-  @@include('_common.html')
+  @@include('_gotop.html')
 
   <!-- script -->
-  @@include('_script.html')
+  @@include('_scripts.html')
 
   <script src="../../static/common/js/libs/swiper.min.js"></script>
   <script src="../../static/fachina/js/index.js?ver=@@pageVersion"></script>
