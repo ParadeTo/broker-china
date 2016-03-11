@@ -88,15 +88,15 @@
   z-index: 99;
   top: 0px;
   height: pxToRem(43px);
-  background-color: #d83e3a;
+  background-color: $bg-red;
   min-width: 320px;
   .J-touch {
-    background-color: #d83e3a;
+    background-color: $bg-red;
     height: pxToRem(43px);
     width: pxToRem(43px);
     float: left;
     &.active {
-      background-color: #c00000;
+      background-color: $bg-red-active;
     }
   }
   .fixed-header-title {
@@ -105,7 +105,7 @@
     width: pxToRem(234px);
     line-height: pxToRem(43px);
     text-align: center;
-    color: #fff;
+    color: $white;
     font-size: pxToRem(16px);
   }
 }
@@ -116,7 +116,7 @@
   z-index: 99;
   bottom: 0px;
   height: pxToRem(60px);
-  background-color: #303030;
+  background-color: $black;
   min-width: 320px;
   padding: pxToRem(10px);
   img {
@@ -131,11 +131,11 @@
     padding-top: pxToRem(5px);
     span {
       font-size: pxToRem(13px);
-      color: #fff;
+      color: $white;
     }
     p {
       font-size: pxToRem(9px);
-      color: #7b7b7b;
+      color: $light;
     }
   }
   a {
@@ -143,15 +143,15 @@
     line-height: pxToRem(29px);
     text-align: center;
     display: block;
-    background-color: #d83e3a;
+    background-color: $bg-red;
     height: pxToRem(29px);
     width: pxToRem(60px);
-    color: #fff;
+    color: $white;
     margin-top: pxToRem(6px);
     float: right;
     font-size: pxToRem(12px);
     &:active {
-      background-color: #c00000;
+      background-color: $bg-red-active;
     }
   }
 }

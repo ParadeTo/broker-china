@@ -19,8 +19,8 @@ rankHandler.init = function() {
   rankHandler.loadEventDetail();
   rankHandler.loadEventRadio();
   rankHandler.loadRankList();
-  rankHandler.voteActive();
-  rankHandler.joinActive();
+  //rankHandler.voteActive();
+  //rankHandler.joinActive();
   rankHandler.inviteActive();
   rankHandler.loadListMore();
   rankHandler.loadUserInfo();

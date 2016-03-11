@@ -11,18 +11,18 @@ $radius: 3px;
   padding-top: pxToRem(79px);
   text-align: center;
   span {
-    color: #d83e3a;
+    color: $red;
     font-size: pxToRem(16px);
   }
   p {
-    color: #999999;
+    color: $light;
     font-size: pxToRem(11px);
     margin-bottom: pxToRem(37px);
   }
   .login-body-input {
-    border: solid #dbdbdb 1px;
+    border: solid $border-color 1px;
     border-radius: pxToRem($radius);
-    background-color: #fff;
+    background-color: $white;
     width: pxToRem(296px);
     height: pxToRem(46px);
     margin-top: pxToRem(10px);
@@ -34,7 +34,6 @@ $radius: 3px;
     input {
       font-size: pxToRem(14px);
       float:left;
-      color: #999999;
       width: pxToRem(259px);
       height:pxToRem(44px);
     }
@@ -46,14 +45,14 @@ $radius: 3px;
     margin-top: pxToRem(5px);
     text-align: left;
     p {
-      color: #d83e3a;
+      color: $red;
     }
   }
   // 登录、注册跳转
   #login-btn-login {
     display: block;
-    background-color: #d83e3a;
-    color: #fff;
+    background-color: $bg-red;
+    color: $white;
     font-size: pxToRem(16px);
     text-align: center;
     width: 100%;
@@ -62,15 +61,15 @@ $radius: 3px;
     line-height: pxToRem(44px);
     margin-bottom: pxToRem(12px);
     &.active {
-      background-color: #c00000;
+      background-color: $bg-red-active;
     }
   }
   #login-btn-register {
     text-decoration: underline;
-    color: #d83e3a;
+    color: $red;
     font-size: pxToRem(14px);
     &.active {
-      color: #c00000;
+      color: $bg-red-active;
     }
   }
 }

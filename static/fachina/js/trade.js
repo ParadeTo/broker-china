@@ -100,50 +100,50 @@ tradeHandler.inviteActive = function() {
 };
 
 // 投票
-tradeHandler.voteActive = function() {
-
-  $(document).on('click', '.J-vote', function() {
-
-    var _this = $(this);
-
-    J_app.checkSign(function(){
-
-      var numberBox = _this.parent().find('.total-number'),
-        number = parseInt(numberBox.html()),
-        params = {};
-
-      if(_this.hasClass('J-locked')){
-        return;
-      }
-      _this.addClass('J-locked');
-
-      params['joinId'] = _this.data('id');
-
-      J_app.ajax(J_app.api.joinList, params, function(data){
-
-        _this.removeClass('J-locked');
-
-        if(data.code === 0){
-
-          J_app.alert('投票成功！');
-
-          numberBox.html(++number);
-
-          if(data.result.voteCount === 1){
-            _this.html('再投一票');
-          } else{
-            _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
-          }
-        } else{
-          J_app.alert(data.message);
-        }
-      },function(){
-        J_app.alert('请求失败！');
-        _this.removeClass('J-locked');
-      });
-    });
-  });
-};
+//tradeHandler.voteActive = function() {
+//
+//  $(document).on('click', '.J-vote', function() {
+//
+//    var _this = $(this);
+//
+//    J_app.checkSign(function(){
+//
+//      var numberBox = _this.parent().find('.total-number'),
+//        number = parseInt(numberBox.html()),
+//        params = {};
+//
+//      if(_this.hasClass('J-locked')){
+//        return;
+//      }
+//      _this.addClass('J-locked');
+//
+//      params['joinId'] = _this.data('id');
+//
+//      J_app.ajax(J_app.api.joinList, params, function(data){
+//
+//        _this.removeClass('J-locked');
+//
+//        if(data.code === 0){
+//
+//          J_app.alert('投票成功！');
+//
+//          numberBox.html(++number);
+//
+//          if(data.result.voteCount === 1){
+//            _this.html('再投一票');
+//          } else{
+//            _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
+//          }
+//        } else{
+//          J_app.alert(data.message);
+//        }
+//      },function(){
+//        J_app.alert('请求失败！');
+//        _this.removeClass('J-locked');
+//      });
+//    });
+//  });
+//};
 
 // 拉票
 tradeHandler.voteShareActive = function() {

@@ -10,8 +10,8 @@
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	background: #d83e3a;
-	color: #fff;
+	background: $bg-red;
+	color: $white;
 	text-align: center;
 	border-radius: pxToRem(3px);
 	overflow: hidden;
@@ -20,7 +20,7 @@
   	line-height: pxToRem(30px);
 }
 .webuploader-pick-hover {
-  background: #d83e3a;
+  background: $bg-red;
 }
 .webuploader-pick-disable {
 	opacity: 0.6;

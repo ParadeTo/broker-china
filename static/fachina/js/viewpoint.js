@@ -17,6 +17,9 @@ function dealTime(data) {
 
 // 获取观点列表
 viewpointHandler.getList = function() {
+  // 加载动画
+  J_app.loading(true);
+
   var params = {};
   params['type'] = "L";
   params['count'] = 10;
@@ -24,6 +27,7 @@ viewpointHandler.getList = function() {
 
   J_app.ajax(J_app.api.noteList, params, function(data) {
     $('#viewpoint-more').removeClass("locked");
+    J_app.loading(false);
     var listHtml;
     if(data.code === 0) {
       if(data.result.data.length>0) {
@@ -32,12 +36,10 @@ viewpointHandler.getList = function() {
         listHtml = template('viewpoint/viewpointList', {'list':list});
         $('.page').append(listHtml);
         // 隐藏加载图片
-        $('#viewpoint-more').html("点击查看更多").removeClass('hide');
-        $('#viewpoint-loading').addClass('hide');
+        $('#viewpoint-more').html("点击查看更多").show();
       } else { // 没有更多数据
         // 隐藏加载图片
-        $('#viewpoint-more').html("没有更多观点").removeClass('hide');
-        $('#viewpoint-loading').addClass('hide');
+        $('#viewpoint-more').html("").show();
         // 解绑点击事件
         $('#viewpoint-more').unbind("click");
       }
@@ -54,10 +56,6 @@ viewpointHandler.getList = function() {
 viewpointHandler.getMore = function() {
   $('#viewpoint-more').click(function() {
     var $this = $(this);
-    // 显示加载图片
-    $('#viewpoint-more').addClass('hide');
-    $('#viewpoint-loading').removeClass('hide');
-
     // 防重发
     if($this.hasClass('locked')){
       return ;

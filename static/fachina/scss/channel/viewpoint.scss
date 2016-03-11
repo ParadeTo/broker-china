@@ -9,11 +9,11 @@
   margin-bottom: pxToRem(10px);
   padding: pxToRem(12px);
   width: pxToRem(320px);
-  background-color: #fff;
+  background-color: $white;
   .viewpoint-adviser {
     height: pxToRem(43px);
     position: relative;
-    border-bottom: solid #e5e5e5 1px;
+    border-bottom: solid $border-color 1px;
     img {
       width: pxToRem(36px);
       height: pxToRem(36px);
@@ -25,7 +25,7 @@
       top: pxToRem(3px);
     }
     span {
-      color: #888888;
+      color: $light;
       font-size: pxToRem(12px);
       position: absolute;
       left: pxToRem(50px);
@@ -37,17 +37,17 @@
     color: inherit;
     padding-top: pxToRem(11px);
     &:active {
-      background-color: #f2f2f2;
+      background-color: $border-color;
     }
     .viewpoint-top {
       span {
         border-radius: pxToRem(3px);
-        color: #fff;
+        color: $white;
         text-align: center;
         line-height: pxToRem(17px);
         height: pxToRem(17px);
         width: pxToRem(17px);
-        background-color: #d83e3a;
+        background-color: $bg-red;
         font-size: pxToRem(14px);
         float: left;
         margin-right: pxToRem(5px);
@@ -75,7 +75,7 @@
     }
     .viewpoint-footer {
       height: pxToRem(10px);
-      color: #888888;
+      color: $light;
       font-size: pxToRem(10px);
       line-height: pxToRem(10px);
       margin-top: pxToRem(16px);
@@ -95,15 +95,7 @@
   height: pxToRem(60px);
   line-height: pxToRem(60px);
   text-align: center;
-  img {
-    margin-top: pxToRem(20px);
-    width: pxToRem(20px);
-    height: pxToRem(20px);
-  }
 }
 
-.hide {
-  display: none;
-}
 
 

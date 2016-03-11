@@ -1,26 +1,26 @@
 /*
-* name:    投顾大赛公用js；
-* version: 2.0
-* info:    基于jquery
-* more:    支持的接口及功能请查看相应的文档，支持模块化调用
-* update:  2016-02-25
-*/
+ * name:    投顾大赛公用js；
+ * version: 2.0
+ * info:    基于jquery
+ * more:    支持的接口及功能请查看相应的文档，支持模块化调用
+ * update:  2016-02-25
+ */
 
-! function (global, factory) {
+!function (global, factory) {
   "function" == typeof define && (define.amd || define.cmd) ? define(function () {
     return factory(global)
   }) : factory(global, !0)
-}(this, function (global, factory){
+}(this, function (global, factory) {
 
   var ua = navigator.userAgent.toLowerCase(), // 浏览器标识
-      isAndroid = -1 != ua.indexOf("android"), // 安卓版
-      isIos = -1 != ua.indexOf("iphone") || -1 != ua.indexOf("ipad"), // IOS版
-      isYiqiniu = -1 != ua.indexOf("yiqiniu"), // 一起牛APP
-      host = window.location.protocol + "//" + window.location.host;
+    isAndroid = -1 != ua.indexOf("android"), // 安卓版
+    isIos = -1 != ua.indexOf("iphone") || -1 != ua.indexOf("ipad"), // IOS版
+    isYiqiniu = -1 != ua.indexOf("yiqiniu"), // 一起牛APP
+    host = window.location.protocol + "//" + window.location.host;
 
-      // 需要配置的地方
+  // 需要配置的地方
   var devHost = 'http://192.168.1.19',
-      development = true; // 是否开发模式，开发时配置true，上线时为false
+    development = true; // 是否开发模式，开发时配置true，上线时为false
 
   //apis
   var apis = {
@@ -128,43 +128,43 @@
     param: params,
 
     /*获取url中的参数*/
-    getUrlParam : function(name) {
+    getUrlParam: function (name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)'),
-          r = window.location.search.substr(1).match(reg);
+        r = window.location.search.substr(1).match(reg);
 
-      if(r != null){
+      if (r != null) {
         return decodeURIComponent(r[2]);
-      } else{
+      } else {
         return null;
       }
     },
 
     /*生成唯一数*/
-    onlyNum : function() {
+    onlyNum: function () {
       var num = '',
         timestamp = '',
         randomNum = '';
 
       timestamp = (new Date()).valueOf();
 
-      for(var r = 0; r < 6; r++) {
-        randomNum +=Math.floor(Math.random()*10);
+      for (var r = 0; r < 6; r++) {
+        randomNum += Math.floor(Math.random() * 10);
       }
       num = timestamp + randomNum;
       return num;
     },
 
     /*为空处理*/
-    isNull : function(text) {
-       if(typeof text === "undefined" || text === null){
-         return '';
-       }else{
-         return text;
-       }
+    isNull: function (text) {
+      if (typeof text === "undefined" || text === null) {
+        return '';
+      } else {
+        return text;
+      }
     },
 
     /*AJAX请求封装，data需传递对象*/
-    ajax : function(url,data,callback,error){
+    ajax: function (url, data, callback, error) {
 
       var params = {};
       params['params'] = data;
@@ -172,15 +172,15 @@
 
       $.ajax({
         type: "POST",
-        url : url,
+        url: url,
         data: JSON.stringify(params),
-        dataType:"json",
-        contentType:"application/json",
+        dataType: "json",
+        contentType: "application/json",
         success: callback,
-        error: function(){
-          if(error){
+        error: function () {
+          if (error) {
             error();
-          }else{
+          } else {
             console.log("请求失败");
           }
         }
@@ -188,23 +188,22 @@
     },
 
     /*计算时间差，参数为时间戳*/
-    timeDifference : function(timestamps) {
-
-      var formatNumber = function(n) {
-        if(n < 10) {
+    timeDifference: function (timestamps) {
+      var formatNumber = function (n) {
+        if (n < 10) {
           n = '0' + n;
         }
         return n;
       };
 
       var originalTime = new Date(timestamps),
-          currentTime = (new Date()).getTime(),
-          interval = currentTime - timestamps,
-          days,
-          hours,
-          minutes,
-          seconds,
-          timeHtml = '';
+        currentTime = (new Date()).getTime(),
+        interval = currentTime - timestamps,
+        days,
+        hours,
+        minutes,
+        seconds,
+        timeHtml = '';
 
       days = Math.floor(interval / (24 * 3600 * 1000)); //相差天数
       hours = Math.floor(interval / (3600 * 1000)); //相差小时数
@@ -212,40 +211,40 @@
       seconds = Math.floor(interval / 1000); //相差秒数
 
       var adjustedYear = originalTime.getFullYear(),
-          adjustedMonth = formatNumber((originalTime.getMonth() + 1)),
-          adjustedDate = formatNumber(originalTime.getDate()),
-          adjustedHours = formatNumber(originalTime.getHours()),
-          adjustedMinutes = formatNumber(originalTime.getMinutes()),
-          adjustedSeconds = formatNumber(originalTime.getSeconds());
+        adjustedMonth = formatNumber((originalTime.getMonth() + 1)),
+        adjustedDate = formatNumber(originalTime.getDate()),
+        adjustedHours = formatNumber(originalTime.getHours()),
+        adjustedMinutes = formatNumber(originalTime.getMinutes()),
+        adjustedSeconds = formatNumber(originalTime.getSeconds());
 
       var nowTime = new Date;
 
-      if(originalTime.getFullYear() == nowTime.getFullYear() && originalTime.getMonth() == nowTime.getMonth() && originalTime.getDate() == nowTime.getDate()) {
-        if(seconds < 60) {
+      if (originalTime.getFullYear() == nowTime.getFullYear() && originalTime.getMonth() == nowTime.getMonth() && originalTime.getDate() == nowTime.getDate()) {
+        if (seconds < 60) {
           timeHtml = '刚刚';
         } else if (minutes < 60) {
           timeHtml = minutes + '分钟前';
         } else {
           timeHtml = '今天&nbsp;' +
-                  adjustedHours + ':' +
-                  adjustedMinutes;
+          adjustedHours + ':' +
+          adjustedMinutes;
         }
-      } else if(originalTime.getFullYear() == nowTime.getFullYear() && originalTime.getMonth() == nowTime.getMonth() && originalTime.getDate() == (nowTime.getDate() - 1)) {
+      } else if (originalTime.getFullYear() == nowTime.getFullYear() && originalTime.getMonth() == nowTime.getMonth() && originalTime.getDate() == (nowTime.getDate() - 1)) {
         timeHtml = '昨天&nbsp;' +
-                adjustedHours + ':' +
-                adjustedMinutes;
+        adjustedHours + ':' +
+        adjustedMinutes;
       } else {
         var yearHtml = '';
 
-        if(adjustedYear != (new Date()).getFullYear()) {
+        if (adjustedYear != (new Date()).getFullYear()) {
           yearHtml = adjustedYear + '年'
         }
 
         timeHtml += yearHtml +
-                  adjustedMonth + '月' +
-                  adjustedDate + '日&nbsp;' +
-                  adjustedHours + ':' +
-                  adjustedMinutes;
+        adjustedMonth + '月' +
+        adjustedDate + '日&nbsp;' +
+        adjustedHours + ':' +
+        adjustedMinutes;
       }
       return timeHtml;
     },
@@ -279,7 +278,7 @@
         };
         /*调用微信分享方法*/
         niuWebShare(options);
-      }, promotion.ajaxFail, { });
+      }, promotion.ajaxFail, {});
 
       /*微信分享样式自定义方法*/
       function niuWebShare(options) {
@@ -357,9 +356,9 @@
     },
 
     //提示类弹窗
-    alert : function(text, time) {
+    alert: function (text, time) {
 
-      if(typeof time === 'undefined' || typeof time !== 'number'){
+      if (typeof time === 'undefined' || typeof time !== 'number') {
         time = 2000;
       }
 
@@ -372,21 +371,21 @@
       $('body').append(_html.join(''));
       $(".ui-alert").fadeIn();
 
-      setTimeout(function() {
+      setTimeout(function () {
         $('.ui-alert').remove();
-      },time);
+      }, time);
     },
 
     // 确认弹窗
-    confirm: function(opt) {
+    confirm: function (opt) {
 
       var option = {
         title: '标题',
         main: '',
-        sure: function() {
+        sure: function () {
           console.log('你执行了确认操作！');
         },
-        cancel: function() {
+        cancel: function () {
           $(this).closest('.ui-dialog').remove();
         },
         sureBtnText: '确定',
@@ -415,13 +414,13 @@
     },
 
     //在一起牛APP打开
-    notAtYiqiniu: function() {
+    notAtYiqiniu: function () {
 
       var _html = [];
 
       _html.push('<div class="niu-at-yiqiniu">');
       _html.push('<div class="niu-at-yiqiniu-img">');
-      _html.push('<img src="'+ J_app.host + '/static/common/images/logo120.png" alt="">');
+      _html.push('<img src="' + J_app.host + '/static/common/images/logo120.png" alt="">');
       _html.push('</div>');
       _html.push('<div class="niu-at-yiqiniu-text">请在一起牛客户端打开链接！</div>');
       _html.push('</div>');
@@ -431,7 +430,7 @@
     },
 
     //加载失败
-    loadFail: function() {
+    loadFail: function () {
 
       var _html = [];
 
@@ -447,71 +446,71 @@
     },
 
     // 加载动画
-    loading: function(type) {
-      if(type){
+    loading: function (type) {
+      if (type) {
         $('body').append('<div class="ui-loading"><div class="loader"></div></div>');
-      } else{
+      } else {
         $('.ui-loading').remove();
       }
     },
 
     // 判断是否登录公用方法
-    checkSign: function(callback) {
-      if(!$.cookie("fachinaId")){
+    checkSign: function (callback) {
+      if (!$.cookie("fachinaId")) {
         window.location.href = J_app.link.register;
-      } else{
+      } else {
         callback();
       }
     },
 
     // 我要参赛
-    joinEvent: function() {
-      $("#joinEvent").click(function() {
+    joinEvent: function () {
+      $("#joinEvent").click(function () {
         // 判断是否登录
-        J_app.checkSign(function() {
+        J_app.checkSign(function () {
           window.location.href = "enroll_entry.html";
         })
       });
     },
 
     // 投票
-    vote: function() {
-      $(document).on('click', '.J-vote', function() {
+    vote: function () {
+      $(document).on('click', '.J-vote', function () {
 
         var _this = $(this);
 
-        J_app.checkSign(function(){
+        J_app.checkSign(function () {
 
           var numberBox = _this.parent().find('.total-number'),
             number = parseInt(numberBox.html()),
             params = {};
 
-          if(_this.hasClass('J-locked')){
+          if (_this.hasClass('J-locked')) {
             return;
           }
           _this.addClass('J-locked');
 
           params['joinId'] = _this.data('id');
 
-          J_app.ajax(J_app.api.vote, params, function(data){
+          J_app.ajax(J_app.api.vote, params, function (data) {
 
             _this.removeClass('J-locked');
 
-            if(data.code === 0){
+            if (data.code === 0) {
 
               J_app.alert('投票成功！');
 
               numberBox.html(++number);
 
-              if(data.result.voteCount === 1){
+              if (data.result.voteCount === 1) {
                 _this.html('再投一票');
-              } else{
+              } else {
                 _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
               }
-            } else{
+            } else {
               J_app.alert(data.message);
             }
-          },function(){
+          }, function () {
             J_app.alert('请求失败！');
             _this.removeClass('J-locked');
           });
@@ -520,11 +519,11 @@
     },
 
     // 搜索
-    search: function() {
-      $("#global-search").click(function() {
+    search: function () {
+      $("#global-search").click(function () {
         // 获取搜索关键字
         var keyword = $("#search-keyword").val();
-        if(keyword) {
+        if (keyword) {
           window.location.href = "search.html?keyword=" + keyword;
         } else {
           J_app.alert("请输入关键词");
@@ -532,8 +531,24 @@
       });
     },
 
+    // 头部固定栏跳转
+    fixedHeaderSkip: function (backUrl) {
+      // back
+      $("#fixed-header-back").click(function () {
+        if (backUrl) {
+          window.location.href = backUrl;
+        } else {
+          window.history.back();
+        }
+      });
+      // 回到首页
+      $("#fixed-header-home").click(function () {
+        window.location.href = "index.html";
+      });
+    },
+
     // 广告栏
-    ad: function(p) {
+    ad: function (p) {
       // 滑动切换效果
       function addSwiping() {
         var options = {
@@ -549,20 +564,21 @@
           },
           swiper = new Swiper('#adDiscover', options);
       }
+
       // 测试
       $.ajax({
         type: 'GET',
         url: '../ad_api/fetch_ad_link_list.json',
         dataType: 'json',
         contentType: 'application/json',
-        success: function(data) {
+        success: function (data) {
           if (data.code === 0) {
-            if(data.result && data.result.datas){
+            if (data.result && data.result.datas) {
 
               var ads = data.result.datas;
               var imgsHtml = [];
 
-              for(var i=0; i<ads.length; i++){
+              for (var i = 0; i < ads.length; i++) {
 
                 imgsHtml.push('<div class="swiper-slide">');
                 imgsHtml.push('<a id="' + ads[i].adId + '" href="' + ads[i].adUrl + '" style="background-image:url(' + ads[i].adImg + ')"></a>');
@@ -570,14 +586,14 @@
               }
               $('#adImages').empty().append(imgsHtml.join(''));
 
-              if(ads.length > 1){
+              if (ads.length > 1) {
                 addSwiping();
               }
-              setTimeout(function(){
+              setTimeout(function () {
                 $('#adCtrls').fadeIn(1000);
-              },500);
+              }, 500);
             }
-          } else{
+          } else {
             console.log(data.message);
           }
         }
@@ -585,62 +601,62 @@
     }
   };
 
-  // Jquery扩展方法
-  (function($){
+// Jquery扩展方法
+  (function ($) {
     /*
      * muSlideUp：向上定时无缝滚动动画
      * @option.time: 滚动间隔时间
      * @option.speed: 滚动速度
      * 使用方法：$('#demo').muSlideUp({time:5000,speed: 500})
      */
-    $.fn.muSlideUp = function(option) {
+    $.fn.muSlideUp = function (option) {
 
       var scrollWrap = $(this),
-          childHeight = scrollWrap.height(),
-          timer;
+        childHeight = scrollWrap.height(),
+        timer;
 
       //默认参数
-      option=$.extend({
-        "time":3000,
-        "speed":1000
+      option = $.extend({
+        "time": 3000,
+        "speed": 1000
       }, option);
 
       //向上滑动动画
-      function slideUpAnimate(){
+      function slideUpAnimate() {
         scrollWrap.children().first().animate(
           {marginTop: -childHeight},
           option.speed,
-          function(){
+          function () {
             $(this).css("margin-top", 0).appendTo(scrollWrap);
-        })
+          })
       }
 
       //自动间隔时间向上滑动
       timer = setInterval(slideUpAnimate, option.time);
 
       //悬停时停止滑动，离开时继续执行
-      scrollWrap.children().hover(function(){
+      scrollWrap.children().hover(function () {
         clearInterval(timer);
-      },function(){
-        timer = setInterval(slideUpAnimate,option.time);  //继续执行动画
+      }, function () {
+        timer = setInterval(slideUpAnimate, option.time);  //继续执行动画
       })
     };
 
     /*muTabs: tab切换*/
-    $.fn.muTabs = function(view, callback) {
+    $.fn.muTabs = function (view, callback) {
 
       var tabWrap = $(this),
-          tabs = tabWrap.children(),
-          views = $(view).children();
+        tabs = tabWrap.children(),
+        views = $(view).children();
 
-      $.each(tabs, function(index,val){
-        $(val).on('click', function(){
+      $.each(tabs, function (index, val) {
+        $(val).on('click', function () {
           tabs.removeClass('active');
           $(this).addClass('active');
           views.removeClass('show');
           views.eq(index).addClass('show');
 
-          if(typeof callback === 'function'){
+          if (typeof callback === 'function') {
             callback($(this));
           }
         })
@@ -648,76 +664,80 @@
     };
   })(jQuery);
 
-  // 使用rem初始化页面,自执行
-  (function(){
+// 使用rem初始化页面,自执行
+  (function () {
     var page = this;
     var html = document.getElementsByTagName("html")[0];
     page.width = 320;
     page.fontSize = 100;
-    page.widthProportion = function(){
-       var p = (html.offsetWidth)/page.width;
-       return p>2?2:p<1?1:p;
+    page.widthProportion = function () {
+      var p = (html.offsetWidth) / page.width;
+      return p > 2 ? 2 : p < 1 ? 1 : p;
     };
-    page.changePage = function(){
-        html.setAttribute("style","font-size:" + page.widthProportion() * page.fontSize + "px !important");
+    page.changePage = function () {
+      html.setAttribute("style", "font-size:" + page.widthProportion() * page.fontSize + "px !important");
     };
     page.changePage();
-    window.addEventListener("resize",function(){page.changePage();},false);
+    window.addEventListener("resize", function () {
+      page.changePage();
+    }, false);
   })();
 
-  // 事件绑定
-  (function($){
+// 事件绑定
+  (function ($) {
     J_app.joinEvent();  // 报名参赛
     J_app.vote(); // 投票
     J_app.search(); // 搜索
+    J_app.fixedHeaderSkip();  // 头部固定栏跳转
   })(jQuery);
 
-  // 全局按钮触摸事件
-  (function($){
-    $(document).on('touchstart', '.J-touch', function() {
+// 全局按钮触摸事件
+  (function ($) {
+    $(document).on('touchstart', '.J-touch', function () {
       $(this).addClass('active');
-    }).on('touchend', '.J-touch', function() {
+    }).on('touchend', '.J-touch', function () {
       $(this).removeClass('active');
     });
   })(jQuery);
 
-  //头部固定栏跳转
-  (function($) {
+//头部固定栏跳转
+  (function ($) {
     // back
-    $("#fixed-header-back").click(function() {
+    $("#fixed-header-back").click(function () {
       window.history.back();
     });
     // 回到首页
-    $("#fixed-header-home").click(function() {
+    $("#fixed-header-home").click(function () {
       window.location.href = "index.html";
     });
   })(jQuery);
 
-  //用户登录状态
-  (function($) {
-    if($.cookie('fachinaStatus')){
+//用户登录状态
+  (function ($) {
+    if ($.cookie('fachinaStatus')) {
       $('#userStatus').addClass('status-' + $.cookie('fachinaStatus'));
-    } else{
+    } else {
       console.log('登录出错');
     }
   })(jQuery);
 
-  //回到顶部
-  (function($) {
-    $(window).scroll(function() {
-      if($(this).scrollTop() > 400) {
+//回到顶部
+  (function ($) {
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 400) {
         $('.ui-gotop').fadeIn();
       } else {
         $('.ui-gotop').fadeOut();
       }
     });
 
-    $('.ui-gotop').on('click', function() {
+    $('.ui-gotop').on('click', function () {
       $('body, html').stop(true).animate({scrollTop: 0}, 400);
       return false;
     });
   })(jQuery);
 
-  //抛出对象
+//抛出对象
   factory && (global.J_app = J_app);
-});
+})
+;

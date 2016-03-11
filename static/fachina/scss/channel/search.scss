@@ -6,16 +6,16 @@
   z-index: 99;
   top: 0px;
   height: pxToRem(43px);
-  background-color: #d83e3a;
+  background-color: $bg-red;
   min-width: 320px;
   width: pxToRem(320px);
   .J-touch {
-    background-color: #d83e3a;
+    background-color: $bg-red;
     height: pxToRem(43px);
     width: pxToRem(43px);
     float: left;
     &.active {
-      background-color: #c00000;
+      background-color: $bg-red;
     }
   }
   #search-keyword {

@@ -21,9 +21,9 @@ h2 {
   text-align: left;
 }
 
-#joinEvent {
-  background-color: #d83e3a;
-  color: #fff;
+.agreement-join {
+  background-color: $bg-red;
+  color: $white;
   text-align: center;
   line-height: pxToRem(40px);
   height: pxToRem(40px);
@@ -34,7 +34,7 @@ h2 {
   border-radius: pxToRem(3px);
   font-size: pxToRem(16px);
   &.active {
-    background-color: #c00000;
+    background-color: $bg-red-active;
   }
 }
 
