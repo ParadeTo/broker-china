@@ -42,7 +42,6 @@
     position: fixed;
     z-index: 99;
     top: pxToRem(43px);
-    border-bottom: solid 1px $border-color;
     tr {
       width: pxToRem(320px);
     }

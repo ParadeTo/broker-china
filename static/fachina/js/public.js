@@ -274,7 +274,7 @@
           title: title,
           desc: desc,
           link: link,
-          imgUrl: imgUrl,
+          imgUrl: imgUrl
         };
         /*调用微信分享方法*/
         niuWebShare(options);
@@ -410,7 +410,7 @@
       $('.J-dialog-sure').unbind('click');
 
       $('.J-dialog-cancel').on('click', option.cancel);
-      $('.J-dialog-sure').on('click', function(){
+      $('.J-dialog-sure').on('click', function () {
         option.sure();
         $(this).closest('.ui-dialog').remove();
       });
@@ -534,22 +534,6 @@
       });
     },
 
-    // 头部固定栏跳转
-    fixedHeaderSkip: function (backUrl) {
-      // back
-      $("#fixed-header-back").click(function () {
-        if (backUrl) {
-          window.location.href = backUrl;
-        } else {
-          window.history.back();
-        }
-      });
-      // 回到首页
-      $("#fixed-header-home").click(function () {
-        window.location.href = "index.html";
-      });
-    },
-
     // 广告栏
     ad: function (p) {
       // 滑动切换效果
@@ -604,7 +588,7 @@
     }
   };
 
-// Jquery扩展方法
+ // Jquery扩展方法
   (function ($) {
     /*
      * muSlideUp：向上定时无缝滚动动画
@@ -667,7 +651,7 @@
     };
   })(jQuery);
 
-// 使用rem初始化页面,自执行
+ // 使用rem初始化页面,自执行
   (function () {
     var page = this;
     var html = document.getElementsByTagName("html")[0];
@@ -686,15 +670,40 @@
     }, false);
   })();
 
-// 事件绑定
+ // 事件绑定
   (function ($) {
     J_app.joinEvent();  // 报名参赛
     J_app.vote(); // 投票
     J_app.search(); // 搜索
-    J_app.fixedHeaderSkip();  // 头部固定栏跳转
   })(jQuery);
 
-// 全局按钮触摸事件
+  //头部固定栏跳转
+  (function($) {
+    // back
+    $(document).on('click', '.J-back', function(){
+      var href = $(this).data('back-href');
+      if(href){
+        window.location.href = href;
+      } else{
+        window.history.back();
+      }
+    });
+    // 回到首页
+    $(document).on('click', '.J-home', function(){
+      var href = $(this).data('home-href');
+      if(href){
+        window.location.href = href;
+      } else{
+        window.location.href = "./index.html";
+      }
+    });
+    // 刷新
+    $(document).on('click', '.J-refresh', function(){
+      window.location.reload();
+    });
+  })(jQuery);
+
+  // 全局按钮触摸事件
   (function ($) {
     $(document).on('touchstart', '.J-touch', function () {
       $(this).addClass('active');
@@ -703,7 +712,7 @@
     });
   })(jQuery);
 
-//用户登录状态
+ //用户登录状态
   (function ($) {
     if ($.cookie('fachinaStatus')) {
       $('#userStatus').addClass('status-' + $.cookie('fachinaStatus'));
@@ -712,7 +721,7 @@
     }
   })(jQuery);
 
-//回到顶部
+ //回到顶部
   (function ($) {
     $(window).scroll(function () {
       if ($(this).scrollTop() > 400) {
@@ -728,7 +737,7 @@
     });
   })(jQuery);
 
-//抛出对象
+ //抛出对象
   factory && (global.J_app = J_app);
 })
 ;
