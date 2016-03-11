@@ -1,9 +1,9 @@
 /**
- * ±¨Ãû²ÎÈü-Í¶¹Ë
+ *  æŠ¥åå‚èµ›
  * Created by ayou on 2016-03-10.
  */
 
-// ÑéÖ¤ĞÕÃû
+// éªŒè¯å§“å
 function validName(name) {
   var re = /^[\u4e00-\u9fa5]{1,5}$/;
   if (re.test(name)) {
@@ -12,7 +12,7 @@ function validName(name) {
     return false;
   }
 }
-// ÑéÖ¤Éí·İÖ¤ºÅ
+// éªŒè¯èº«ä»½è¯å·
 function validIdNum(idNum) {
   var re = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X|x)$/;
   if (re.test(idNum)) {
@@ -21,7 +21,7 @@ function validIdNum(idNum) {
     return false;
   }
 }
-// ÑéÖ¤Ö´Òµ±àºÅ
+// éªŒè¯æ‰§ä¸šç¼–å·
 function validProCode(proCode) {
   var re = /^\w+$/;
   if (re.test(proCode)) {
@@ -30,64 +30,64 @@ function validProCode(proCode) {
     return false;
   }
 }
-// ÑéÖ¤±íµ¥
+// éªŒè¯è¡¨å•
 function validForm(){
-  // ÕæÊµĞÕÃû
+  // çœŸå®å§“å
   var realName = $("#enroll-1-name").val();
   if(!validName(realName)) {
-    $('#enroll-1-error').html("ÇëÊäÈëÕæÊµĞÕÃû");
+    $('#enroll-1-error').html("è¯·è¾“å…¥çœŸå®å§“å");
     enrollAdviserHandler.errorType.realName = true;
     return false;
   }
-  // Éí·İÖ¤ºÅ
+  // èº«ä»½è¯å·
   var idNumber = $("#enroll-1-idNum").val();
   if(!validIdNum(idNumber)) {
-    $('#enroll-1-error').html("ÇëÊäÈëÕıÈ·Éí·İÖ¤ºÅ");
+    $('#enroll-1-error').html("è¯·è¾“å…¥æ­£ç¡®èº«ä»½è¯å·");
     enrollAdviserHandler.errorType.idNum = true;
     return false;
   }
-  // Ö´Òµ±àÂë
+  // æ‰§ä¸šç¼–ç 
   var licenceCode = $("#enroll-1-proCode").val();
   if(!validProCode(licenceCode)) {
-    $('#enroll-1-error').html("ÇëÊäÈëÖ´Òµ±àÂë");
+    $('#enroll-1-error').html("è¯·è¾“å…¥æ‰§ä¸šç¼–ç ");
     enrollAdviserHandler.errorType.proCode = true;
     return false;
   }
-  // ËùÊô»ú¹¹
+  // æ‰€å±æœºæ„
   var oId = $("#enroll-1-org-id").val();
   if(!oId){
-    $('#enroll-1-error').html("ÇëÑ¡Ôñ»ú¹¹");
+    $('#enroll-1-error').html("è¯·é€‰æ‹©æœºæ„");
     enrollAdviserHandler.errorType.oId = true;
     return false;
   }
-  // ËùÊôÓªÒµ²¿
+  // æ‰€å±è¥ä¸šéƒ¨
   var dept = $("#enroll-1-office").val();
   if(!dept){
-    $('#enroll-1-error').html("ÇëÊäÈëËùÊôÓªÒµ²¿");
+    $('#enroll-1-error').html("è¯·è¾“å…¥æ‰€å±è¥ä¸šéƒ¨");
     enrollAdviserHandler.errorType.office = true;
     return false;
   }
-  // ËùÔÚ³ÇÊĞ
+  // æ‰€åœ¨åŸå¸‚
   var cityId = $("#enroll-1-city-id").val();
   if(!cityId){
-    $('#enroll-1-error').html("ÇëÑ¡Ôñ³ÇÊĞ");
+    $('#enroll-1-error').html("è¯·é€‰æ‹©åŸå¸‚");
     enrollAdviserHandler.errorType.cityId = true;
     return false;
   }
-  // Í·Ïñ
+  // å¤´åƒ
   var certImgs = $("#enroll-1-img").val();
   if(!certImgs) {
-    $('#enroll-1-error').html("ÇëÉÏ´«Í·Ïñ");
+    $('#enroll-1-error').html("è¯·ä¸Šä¼ å¤´åƒ");
     enrollAdviserHandler.errorType.img = true;
     return false;
   }
   // cId
   var cId = $.cookie("fachinaId");
   if(!cId){
-    $('#enroll-1-error').html("ÇëµÇÂ¼");
+    $('#enroll-1-error').html("è¯·ç™»å½•");
     return false;
   }
-  // ·µ»ØÊı¾İ
+  // è¿”å›æ•°æ®
   var param = {};
   param['cId'] = cId;
   param['realName'] = realName;
@@ -102,11 +102,11 @@ function validForm(){
 
 var enrollAdviserHandler = window.enrollAdviserHandler || {};
 
-// ±¨Ãû²ÎÈüÌø×ª
+// æŠ¥åå‚èµ›è·³è½¬
 enrollAdviserHandler.api = "index.html";
-// ³ÇÊĞÃû³Æ
+// åŸå¸‚åç§°
 enrollAdviserHandler.cityName = "";
-// ´íÎóÀàĞÍ
+// é”™è¯¯ç±»å‹
 enrollAdviserHandler.errorType = {
   realName: false,
   idNum: false,
@@ -117,7 +117,7 @@ enrollAdviserHandler.errorType = {
   img: false
 }
 
-// Í¶¹Ë
+// æŠ•é¡¾
 enrollAdviserHandler.adviserInit = function () {
   enrollAdviserHandler.chooseOrg();
   enrollAdviserHandler.chooseCity();
@@ -127,30 +127,30 @@ enrollAdviserHandler.adviserInit = function () {
   enrollAdviserHandler.upload();
 };
 
-// Çå³ıÑéÖ¤ÌáÊ¾ĞÅÏ¢
+// æ¸…é™¤éªŒè¯æç¤ºä¿¡æ¯
 enrollAdviserHandler.clearErrorMsg = function() {
-  // ÕæÊµĞÕÃû
+  // çœŸå®å§“å
   $("#enroll-1-name").focus(function() {
     if(enrollAdviserHandler.errorType.realName) {
       enrollAdviserHandler.errorType.realName = false;
       $('#enroll-1-error').html("");
     }
   });
-  // Éí·İÖ¤ºÅ
+  // èº«ä»½è¯å·
   $("#enroll-1-idNum").focus(function() {
     if(enrollAdviserHandler.errorType.idNum) {
       enrollAdviserHandler.errorType.idNum = false;
       $('#enroll-1-error').html("");
     }
   });
-  // Ö´Òµ±àºÅ
+  // æ‰§ä¸šç¼–å·
   $("#enroll-1-proCode").focus(function() {
     if(enrollAdviserHandler.errorType.proCode) {
       enrollAdviserHandler.errorType.proCode = false;
       $('#enroll-1-error').html("");
     }
   });
-  // ËùÊôÓªÒµ²¿
+  // æ‰€å±è¥ä¸šéƒ¨
   $("#enroll-1-office").focus(function() {
     if(enrollAdviserHandler.errorType.office) {
       enrollAdviserHandler.errorType.office = false;
@@ -159,7 +159,7 @@ enrollAdviserHandler.clearErrorMsg = function() {
   })
 };
 
-// Ìá½»ÉêÇë
+// æäº¤ç”³è¯·
 enrollAdviserHandler.apply = function() {
   $("#enroll-apply").click(function() {
     var $this = $(this);
@@ -167,19 +167,19 @@ enrollAdviserHandler.apply = function() {
     if(!param) {
       return ;
     }
-    // ·ÀÖØ·¢
+    // é˜²é‡å‘
     if($this.hasClass('locked')){
       return ;
     }
     $this.addClass('locked');
-    // ¼ÓÔØ¶¯»­
+    // åŠ è½½åŠ¨ç”»
     J_app.loading(true);
 
     J_app.ajax(J_app.api.verify, param, function(data) {
       $this.removeClass('locked');
       J_app.loading(false);
       if(data.code === 0) {
-        J_app.alert("ÒÑÌá½»ÉóºË");
+        J_app.alert("å·²æäº¤å®¡æ ¸");
         setTimeout(function(){
           window.location.href = enrollAdviserHandler.api;
         }, 1000);
@@ -189,70 +189,69 @@ enrollAdviserHandler.apply = function() {
     }, function(){
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert("ÈÏÖ¤Ê§°Ü");
+      J_app.alert("è¯·æ±‚å¤±è´¥");
     });
   });
 
 }
 
-// °ó¶¨Í·²¿backÊÂ¼ş
+// ç»‘å®šå¤´éƒ¨backäº‹ä»¶
 enrollAdviserHandler.back = function() {
-  // Ê¡ÊĞÁĞ±í
+  // çœå¸‚åˆ—è¡¨
   $("#enroll-pro-back").click(function() {
-    // ÏÔÊ¾ĞÅÏ¢ÁĞ±í
+    // æ˜¾ç¤ºä¿¡æ¯åˆ—è¡¨
     $("#info").show();
-    // Òş²ØÊ¡ÊĞ¡¢³ÇÊĞÁĞ±í
+    // éšè—çœå¸‚ã€åŸå¸‚åˆ—è¡¨
     $("#pro").hide();
     $("#city").hide();
   });
-  // ³ÇÊĞÁĞ±í
+  // åŸå¸‚åˆ—è¡¨
   $("#enroll-city-back").click(function() {
-    // ÏÔÊ¾Ê¡ÊĞÁĞ±í
+    // æ˜¾ç¤ºçœå¸‚åˆ—è¡¨
     $("#pro").show();
-    // Òş²ØĞÅÏ¢¡¢³ÇÊĞÁĞ±í
+    // éšè—ä¿¡æ¯ã€åŸå¸‚åˆ—è¡¨
     $("#info").hide();
     $("#city").hide();
   });
-  // »ú¹¹ÁĞ±í
+  // æœºæ„åˆ—è¡¨
   $("#enroll-org-back").click(function() {
-    // ÏÔÊ¾ĞÅÏ¢ÁĞ±í
+    // æ˜¾ç¤ºä¿¡æ¯åˆ—è¡¨
     $("#info").show();
-    // Òş²ØÊ¡ÊĞ¡¢³ÇÊĞÁĞ±í
+    // éšè—çœå¸‚ã€åŸå¸‚åˆ—è¡¨
     $("#org").hide();
   });
 };
 
-// Ñ¡Ôñ»ú¹¹
+// é€‰æ‹©æœºæ„
 enrollAdviserHandler.chooseOrg = function() {
   $("#enroll-org-btn").click(function() {
     var $this = $(this);
-    // È¥µôÑéÖ¤ĞÅÏ¢
+    // å»æ‰éªŒè¯ä¿¡æ¯
     if(enrollAdviserHandler.errorType.oId) {
       enrollAdviserHandler.errorType.oId = false;
       $('#enroll-1-error').html("");
     }
-    // »ñÈ¡»ú¹¹Êı¾İ
+    // è·å–æœºæ„æ•°æ®
     var param = {};
     param['cId'] = $.cookie("fachinaId");
-    // ·ÀÖØ·¢
+    // é˜²é‡å‘
     if($this.hasClass('locked')){
       return ;
     }
     $this.addClass('locked');
-    // ¼ÓÔØ¶¯»­
+    // åŠ è½½åŠ¨ç”»
     J_app.loading(true);
-
     J_app.ajax(J_app.api.organization, param, function (data) {
       $this.removeClass('locked');
       J_app.loading(false);
       if (data.code === 0) {
-        // ÏÔÊ¾»ú¹¹ÁĞ±í£¬Òş²ØĞÅÏ¢ÁĞ±í
+        // æ˜¾ç¤ºæœºæ„åˆ—è¡¨ï¼Œéšè—ä¿¡æ¯åˆ—è¡¨
         var $ul = $("#org ul");
         var _html = enrollAdviserHandler.orgList(data.result.datas);
         $ul.html(_html);
         $("#org").show();
         $("#info").hide();
-        // °ó¶¨µã»÷»ú¹¹µÄÊÂ¼ş
+        // ç»‘å®šç‚¹å‡»æœºæ„çš„äº‹ä»¶
         enrollAdviserHandler.clickOrg();
       } else {
         J_app.alert(data.message);
@@ -260,41 +259,41 @@ enrollAdviserHandler.chooseOrg = function() {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('ÇëÇóÊ§°Ü£¡');
+      J_app.alert('è¯·æ±‚å¤±è´¥ï¼');
     });
   });
 };
 
-// Ñ¡Ôñ³ÇÊĞ
+// é€‰æ‹©åŸå¸‚
 enrollAdviserHandler.chooseCity = function () {
   $("#enroll-city-btn").click(function () {
     var $this = $(this);
-    // È¥µôÑéÖ¤ĞÅÏ¢
+    // å»æ‰éªŒè¯ä¿¡æ¯
     if(enrollAdviserHandler.errorType.cityId) {
       enrollAdviserHandler.errorType.cityId = false;
       $('#enroll-1-error').html("");
     }
-    // »ñÈ¡Ê¡·İÊı¾İ
+    // è·å–çœä»½æ•°æ®
     var param = {};
     param['cId'] = $.cookie("fachinaId");
-    // ·ÀÖØ·¢
+    // é˜²é‡å‘
     if($this.hasClass('locked')){
       return ;
     }
     $this.addClass('locked');
-    // ¼ÓÔØ¶¯»­
+    // åŠ è½½åŠ¨ç”»
     J_app.loading(true);
     J_app.ajax(J_app.api.province, param, function (data) {
       $this.removeClass('locked');
       J_app.loading(false);
       if (data.code === 0) {
-        // ÏÔÊ¾Ê¡·İÁĞ±í£¬Òş²ØĞÅÏ¢ÁĞ±í
+        // æ˜¾ç¤ºçœä»½åˆ—è¡¨ï¼Œéšè—ä¿¡æ¯åˆ—è¡¨
         var $ul = $("#pro ul");
         var _html = enrollAdviserHandler.proList(data.result.datas,"provId");
         $ul.html(_html);
         $("#pro").show();
         $("#info").hide();
-        // °ó¶¨µã»÷Ê¡ÊĞµÄÊÂ¼ş
+        // ç»‘å®šç‚¹å‡»çœå¸‚çš„äº‹ä»¶
         enrollAdviserHandler.clickPro();
       } else {
         J_app.alert(data.message);
@@ -302,12 +301,12 @@ enrollAdviserHandler.chooseCity = function () {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('ÇëÇóÊ§°Ü£¡');
+      J_app.alert('è¯·æ±‚å¤±è´¥');
     });
   });
 };
 
-// Éú³ÉÊ¡ÊĞ»ò³ÇÊĞÁĞ±í
+// ç”Ÿæˆçœå¸‚æˆ–åŸå¸‚åˆ—è¡¨
 enrollAdviserHandler.proList = function (list,id) {
   if (list.length <= 0) {
     return null;
@@ -326,7 +325,7 @@ enrollAdviserHandler.proList = function (list,id) {
   return _html;
 };
 
-// Éú³É»ú¹¹ÁĞ±í
+//ç”Ÿæˆæœºæ„åˆ—è¡¨
 enrollAdviserHandler.orgList = function (list) {
   if (list.length <= 0) {
     return null;
@@ -340,58 +339,58 @@ enrollAdviserHandler.orgList = function (list) {
   return _html;
 };
 
-// °ó¶¨µã»÷»ú¹¹ÊÂ¼ş
+// ç»‘å®šç‚¹å‡»æœºæ„äº‹ä»¶
 enrollAdviserHandler.clickOrg = function() {
   var orgs = $("#org .enroll-address-row");
 
   orgs.click(function() {
-    // µÃµ½»ú¹¹idºÍÃû×Ö
+    // å¾—åˆ°æœºæ„idå’Œåå­—
     var oId = $(this).data("id");
     var oName = $(this).html();
-    // ½«»ú¹¹idºÍÃû×Ö¸³Öµ¸øinput
+    // å°†æœºæ„idå’Œåå­—èµ‹å€¼ç»™input
     $("#enroll-1-org-id").val(oId);
     $("#enroll-1-org").val(oName);
-    // ÏÔÊ¾ĞÅÏ¢ÁĞ±í£¬Òş²Ø»ú¹¹ÁĞ±í
+    // æ˜¾ç¤ºä¿¡æ¯åˆ—è¡¨ï¼Œéšè—æœºæ„åˆ—è¡¨
     $("#enroll-1-org").show();
     $("#info").show();
     $("#org").hide();
   })
 };
 
-// °ó¶¨µã»÷Ê¡ÊĞÊÂ¼ş
+// ç»‘å®šç‚¹å‡»çœå¸‚äº‹ä»¶
 enrollAdviserHandler.clickPro = function() {
   var pros = $("#pro .enroll-address-row");
 
   pros.click(function () {
     var $this = $(this);
     var $li = $(this);
-    // µÃµ½Ê¡ÊĞid
+    // å¾—åˆ°çœå¸‚id
     var proId = $li.data("id");
-    // »ñÈ¡³ÇÊĞÁĞ±í
+    // è·å–åŸå¸‚åˆ—è¡¨
     var param = {};
     param['cId'] = $.cookie("fachinaId");
     param['provId'] = proId;
-    // ·ÀÖØ·¢
+    // é˜²é‡å‘
     if($this.hasClass('locked')){
       return ;
     }
     $this.addClass('locked');
-    // ¼ÓÔØ¶¯»­
+    // åŠ è½½åŠ¨ç”»
     J_app.loading(true);
     J_app.ajax(J_app.api.city, param, function (data) {
       $this.removeClass('locked');
       J_app.loading(false);
       if (data.code === 0) {
-        // ÏÔÊ¾³ÇÊĞÁĞ±í£¬Òş²ØÊ¡ÊĞÁĞ±í¡¢ĞÅÏ¢ÁĞ±í
+        // ç¤ºåŸå¸‚åˆ—è¡¨ï¼Œéšè—çœå¸‚åˆ—è¡¨ã€ä¿¡æ¯åˆ—è¡¨
         var $ul = $("#city ul");
         var _html = enrollAdviserHandler.proList(data.result.datas,"cityId");
         $ul.html(_html);
         $("#city").show();
         $("#pro").hide();
         $("#info").hide();
-        // ½«Ê¡ÊĞÃû¸³Öµ¸ø³ÇÊĞÃû³Æ
+        // å°†çœå¸‚åèµ‹å€¼ç»™åŸå¸‚åç§°
         enrollAdviserHandler.cityName = $li.html();
-        // °ó¶¨³ÇÊĞµã»÷ÊÂ¼ş
+        // ç»‘å®šåŸå¸‚ç‚¹å‡»äº‹ä»¶
         enrollAdviserHandler.clickCity();
       } else {
         J_app.alert(data.message);
@@ -399,23 +398,23 @@ enrollAdviserHandler.clickPro = function() {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('ÇëÇóÊ§°Ü£¡');
+      J_app.alert('è¯·æ±‚å¤±è´¥');
     });
   });
 };
 
-// °ó¶¨µã»÷³ÇÊĞÊÂ¼ş
+// ç»‘å®šç‚¹å‡»åŸå¸‚äº‹ä»¶
 enrollAdviserHandler.clickCity = function() {
   var citys = $("#city .enroll-address-row");
   citys.click(function() {
-    // µÃµ½³ÇÊĞidºÍÃû×Ö
+    // å¾—åˆ°åŸå¸‚idå’Œåå­—
     var cityId = $(this).data("id");
     var cityName = $(this).html();
     enrollAdviserHandler.cityName += ' ' + cityName;
-    // ½«³ÇÊĞidºÍÃû×Ö¸³Öµ¸øinput
+    // å°†åŸå¸‚idå’Œåå­—èµ‹å€¼ç»™input
     $("#enroll-1-city-id").val(cityId);
     $("#enroll-1-city").val(enrollAdviserHandler.cityName);
-    // ÏÔÊ¾ĞÅÏ¢ÁĞ±í£¬Òş²ØÊ¡ÊĞºÍ³ÇÊĞÁĞ±í
+    // æ˜¾ç¤ºä¿¡æ¯åˆ—è¡¨ï¼Œéšè—çœå¸‚å’ŒåŸå¸‚åˆ—è¡¨
     $("#enroll-1-city").show();
     $("#info").show();
     $("#pro").hide();
@@ -423,84 +422,79 @@ enrollAdviserHandler.clickCity = function() {
   });
 };
 
-// ÉÏ´«Í¼Æ¬
+// ä¸Šä¼ å›¾ç‰‡
 enrollAdviserHandler.upload = function() {
-  // Çå¿ÕÍ¼Æ¬Òş²ØÓòÖµ
+  // æ¸…ç©ºå›¾ç‰‡éšè—åŸŸå€¼
   $("#enroll-1-img").val("");
-
-  // ¶¨ÒåÉÏ´«¶ÔÏó
+  // å®šä¹‰ä¸Šä¼ å¯¹è±¡
   var uploader = WebUploader.create({
-    auto: true, // ×Ô¶¯ÉÏ´«
-    swf: '../../static/common/js/libs/webuploader/Uploader.swf', // swfÎÄ¼şÂ·¾¶(ÒÔfalsh·½Ê½Ö§³ÖIEÉÏ´«)
-    server: J_app.api.image, // ÎÄ¼ş½ÓÊÕ·şÎñ¶Ë
+    auto: true, // è‡ªåŠ¨ä¸Šä¼ 
+    swf: '../../static/common/js/libs/webuploader/Uploader.swf', // swfæ–‡ä»¶è·¯å¾„(ä»¥falshæ–¹å¼æ”¯æŒIEä¸Šä¼ )
+    server: J_app.api.image, // æ–‡ä»¶æ¥æ”¶æœåŠ¡ç«¯
     pick: '#enroll-upload-btn',
-    // Ö»ÔÊĞíÑ¡ÔñÎÄ¼ş£¬¿ÉÑ¡¡£
+    // åªå…è®¸é€‰æ‹©æ–‡ä»¶ï¼Œå¯é€‰ã€‚
     accept: {
       title: 'Images',
       extensions: 'gif,jpg,jpeg,bmp,png',
       mimeTypes: 'image/*'
     },
     //sendAsBinary: true,
-    fileNumLimit: 1, //ÎÄ¼ş×î¶àÊıÁ¿
-    fileSingleSizeLimit: 5 * 1024 * 1024, // µ¥¸öÎÄ¼ş´óĞ¡ÏŞÖÆ:2 M
+    fileNumLimit: 1, //æ–‡ä»¶æœ€å¤šæ•°é‡
+    fileSingleSizeLimit: 5 * 1024 * 1024, // å•ä¸ªæ–‡ä»¶å¤§å°é™åˆ¶:2 M
     thumb: {
       width: 120,
       height: 120,
-      quality: 50, // Í¼Æ¬ÖÊÁ¿£¬Ö»ÓĞtypeÎª`image/jpeg`µÄÊ±ºò²ÅÓĞĞ§
-      allowMagnify: false, // ÊÇ·ñÔÊĞí·Å´ó£¬Èç¹ûÏëÒªÉú³ÉĞ¡Í¼µÄÊ±ºò²»Ê§Õæ£¬´ËÑ¡ÏîÓ¦¸ÃÉèÖÃÎªfalse
-      crop: true, // ÊÇ·ñÔÊĞí²Ã¼ô
-      type: 'image/jpeg' // Îª¿ÕµÄ»°Ôò±£ÁôÔ­ÓĞÍ¼Æ¬¸ñÊ½£¬·ñÔòÇ¿ÖÆ×ª»»³ÉÖ¸¶¨µÄÀàĞÍ
+      quality: 50, // å›¾ç‰‡è´¨é‡ï¼Œåªæœ‰typeä¸º`image/jpeg`çš„æ—¶å€™æ‰æœ‰æ•ˆ
+      allowMagnify: false, // æ˜¯å¦å…è®¸æ”¾å¤§ï¼Œå¦‚æœæƒ³è¦ç”Ÿæˆå°å›¾çš„æ—¶å€™ä¸å¤±çœŸï¼Œæ­¤é€‰é¡¹åº”è¯¥è®¾ç½®ä¸ºfalse
+      crop: true, // æ˜¯å¦å…è®¸è£å‰ª
+      type: 'image/jpeg' // ä¸ºç©ºçš„è¯åˆ™ä¿ç•™åŸæœ‰å›¾ç‰‡æ ¼å¼ï¼Œå¦åˆ™å¼ºåˆ¶è½¬æ¢æˆæŒ‡å®šçš„ç±»å‹
     },
-    duplicate: true //Ä¬ÈÏÎªundefined£¬ÊÇ·ñÔÊĞíÖØ¸´ÎÄ¼ş£¨trueÎªÍ¬Ò»ÎÄ¼ş¿ÉÒÔÖØ¸´ÉÏ´«£¬falseÍ¬Ò»¸öÎÄ¼şÖ»ÔÊĞíÉÏ´«Ò»´Î£©
+    duplicate: true //é»˜è®¤ä¸ºundefinedï¼Œæ˜¯å¦å…è®¸é‡å¤æ–‡ä»¶ï¼ˆtrueä¸ºåŒä¸€æ–‡ä»¶å¯ä»¥é‡å¤ä¸Šä¼ ï¼ŒfalseåŒä¸€ä¸ªæ–‡ä»¶åªå…è®¸ä¸Šä¼ ä¸€æ¬¡ï¼‰
   });
-
-  // ¿ªÊ¼ÉÏ´«Ê±£¬°Ñ½ø¶ÈÌõÖÃÎª0
+  // å¼€å§‹ä¸Šä¼ æ—¶ï¼ŒæŠŠè¿›åº¦æ¡ç½®ä¸º0
   uploader.on('uploadBeforeSend', function() {
-    // È¥µôÑéÖ¤ĞÅÏ¢
+    // å»æ‰éªŒè¯ä¿¡æ¯
     if(enrollAdviserHandler.errorType.img) {
       enrollAdviserHandler.errorType.img = false;
       $('#enroll-1-error').html("");
     }
     $("#enroll-bar").css('width',0);
   });
-
   uploader.on("error", function (type) {
     if (type == "Q_TYPE_DENIED") {
-      J_app.alert("ÇëÉÏ´«JPG¡¢PNG¸ñÊ½ÎÄ¼ş");
+      J_app.alert("è¯·ä¸Šä¼ JPGã€PNGæ ¼å¼æ–‡ä»¶");
     } else if (type == "F_EXCEED_SIZE") {
-      J_app.alert("ÎÄ¼ş´óĞ¡²»ÄÜ³¬¹ı5M");
+      J_app.alert("æ–‡ä»¶å¤§å°ä¸èƒ½è¶…è¿‡5M");
     }
   });
-  // ÉÏ´«³É¹¦
+  // ä¸Šä¼ æˆåŠŸ
   uploader.on('uploadSuccess', function (file, response) {
     if (response.code === 0) {
       var $img = $("#enroll-upload-img");
       var height = $img.height();
       var width = $img.width();
-      // ´´½¨ËõÂÔÍ¼
+      // åˆ›å»ºç¼©ç•¥å›¾
       uploader.makeThumb(file, function (error, src) {
         if (error) {
-          $img.replaceWith('<span>²»ÄÜÔ¤ÀÀ</span>');
+          $img.replaceWith('<span>ä¸èƒ½é¢„è§ˆ</span>');
           return;
         }
         $img.attr('src', src);
       }, width, height);
-
       $("#enroll-1-img").val(response.result.urls);
     } else {
-      J_app.alert("ÉÏ´«Ê§°Ü");
+      J_app.alert("ä¸Šä¼ å¤±è´¥");
     }
-
   });
-  // ÉÏ´«Ê§°Ü
+  // ä¸Šä¼ å¤±è´¥
   uploader.on('uploadError', function (file) {
-    J_app.alert("ÉÏ´«Ê§°Ü");
+    J_app.alert("ä¸Šä¼ å¤±è´¥");
   });
-  // ½ø¶ÈÌõ
+  // è¿›åº¦æ¡
   uploader.on("uploadProgress", function(file,percentage) {
     $("#enroll-bar").css('width', percentage * 100 + '%');
   });
-  // Íê³ÉÉÏ´«
+  // å®Œæˆä¸Šä¼ 
   uploader.on( 'uploadComplete', function(file) {
     uploader.removeFile(file);
   });

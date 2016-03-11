@@ -34,14 +34,14 @@ var stkComplete = {
         params['cId'] = J_app.param.cId;
         params['condition'] = o.data('code').substr(0,6);
         params['flag'] = 1;
-        params['pageSize'] = 3;
+        params['pageSize'] = 6;
         J_app.ajax(J_app.api.searchMkt,params,stkComplete.displayStks);
       }else{
         var params = {};
         params['cId'] = J_app.param.cId;
         params['condition'] = t;
         params['flag'] = 1;
-        params['pageSize'] = 3;
+        params['pageSize'] = 6;
         J_app.ajax(J_app.api.searchMkt,params,stkComplete.displayStks);
         o.data('stk', '');
       }
@@ -104,11 +104,9 @@ var stkComplete = {
         }else{
           $('#searchInput').data('code',$(this).data('code')).val(stk);
           stkComplete.hideResult();
-          handler.getFiveBets();
 
-          // 如果用户重新选择，将数据清空
-          $('#stkPrice').val(0);
-          $('#ableQuantity').html(0);
+          // 重新选择
+          handler.keyWordsChange();
         }
       }
     });
@@ -134,9 +132,18 @@ var stkComplete = {
 
 var handler = window.handler || {};
 
+// 价格变换基数
 handler.priceUnit = 0.01;
 
-handler.cash = 100000; // 测试现金
+// 测试现金
+handler.cash = 0;
+
+// 刷新五档定时器
+handler.timer = null;
+
+// 五档跌停涨停
+handler.limitdown = 0;
+handler.limitup = 0;
 
 // 初始化
 handler.init = function() {
@@ -146,8 +153,9 @@ handler.init = function() {
   handler.selectPtfStks();
   handler.priceOper();
   handler.quantityOper();
-  handler.buySubmit();
   stkComplete.inputChange();
+  handler.clickSubmitBtn();
+  handler.insistTouch();
 };
 
 // 加载持仓详情
@@ -162,14 +170,39 @@ handler.loadPtfDetail = function() {
 
     if(data.code === 0){
       if(data.result){
-        listHtml = template('panel/panelTake', data.result);
+
+        var stks = data.result.stks;
+        handler.cash = stks[stks.length-1].tBal;
+        stks.pop();
+
+        for(var i=0; i<stks.length; i++){
+          if(stks[i].incBal > 0){
+            stks[i]['yieldColor'] = 'text-red';
+          } else if(stks[i].incBal < 0){
+            stks[i]['yieldColor'] = 'text-green';
+          } else {
+            stks[i]['yieldColor'] = '';
+          }
+        }
+
+        listHtml = template('panel/panelTake', { stks: stks});
       }
     } else{
-      listHtml = template('common/error', data);
+      J_app.alert(data.message);
     }
 
     $('#ptfDetail').empty().append(listHtml);
   });
+};
+
+// 搜索条件改变，价格和数量清0
+handler.keyWordsChange = function() {
+  clearInterval(handler.timer);
+  handler.getFiveBets();
+  $('#stkPrice').val(0);
+  $('#ableQuantity').html(0);
+
+  handler.timer = setInterval(handler.getFiveBets, 10000);
 };
 
 // 选择持仓中的股票
@@ -177,12 +210,22 @@ handler.selectPtfStks = function() {
 
   $('#ptfDetail').on('click', 'tr', function() {
     var code = $(this).data('id').substr(0,6);
-    $('#searchInput').val(code);
+    $('#searchInput').val(code).trigger('focus');
   });
 };
 
-// 获取五档信息
+// 获取五档行情
 handler.getFiveBets = function() {
+
+  function color(d,b){
+    if(d > b){
+      return 'text-red';
+    } else if(d < b){
+      return 'text-green';
+    } else {
+      return 'text-gray';
+    }
+  }
 
   var params = {};
   params['cId'] = J_app.param.cId;
@@ -190,34 +233,50 @@ handler.getFiveBets = function() {
 
   J_app.ajax(J_app.api.fiveBets, params, function(data){
     if(data.code === 0){
-      var datas = data.result;
 
       // 调价级别
-      handler.priceUnit = datas.priceUnit;
+      handler.priceUnit = data.result.priceUnit;
 
       // 涨停 跌停
-      $('#priceFall').html(datas.limitdown);
-      $('#priceRise').html(datas.limitup);
+      $('#priceFall').html(data.result.limitdown);
+      $('#priceRise').html(data.result.limitup);
+      handler.limitdown = data.result.limitdown;
+      handler.limitup = data.result.limitup;
+
+      $('#stkPrice').val(data.result.price);
 
       // 显示五档
-      var ulHtmls1 = '<ul class="trade-five_bets">';
-      var ulHtmls2 = '<ul class="trade-five_bets">';
-      for(var i,i=0; i<5; i++){
-        ulHtmls1 += '<li data-price="' + datas.bid.price[i] + '"><span>买' + i + '</span>'
-              + '<span class="text-red">' + datas.bid.price[i] + '</span>'
-              + '<span>' + datas.bid.vol[i] + '</span></li>';
-        ulHtmls2 += '<li data-price="' + datas.ask.price[i] + '"><span>卖' + i + '</span>'
-              + '<span class="text-green">' + datas.ask.price[i] + '</span>'
-              + '<span>' + datas.ask.vol[i] + '</span></li>';
+      var ask = data.result.ask,
+          bid = data.result.bid;
+
+      var ulHtmls1 = [],
+          ulHtmls2 = [];
+
+      ulHtmls1.push('<ul class="panel-five-bets">');
+      ulHtmls2.push('<ul class="panel-five-bets">');
+
+      for(var i=0; i<5; i++){
+
+        ulHtmls1.push('<li data-price="' + ask.price[i] + '">');
+        ulHtmls1.push('<span>卖' + (5-i) + '</span>');
+        ulHtmls1.push('<span class="' + color(ask.price[i], data.result.price) + '">' + ask.price[i] + '</span>');
+        ulHtmls1.push('<span>' + ask.vol[i] + '</span></li>');
+
+        ulHtmls2.push('<li data-price="' + bid.price[i] + '">');
+        ulHtmls2.push('<span>买' + (i+1) + '</span>');
+        ulHtmls2.push('<span class="' + color(bid.price[i], data.result.price) + '">' + bid.price[i] + '</span>');
+        ulHtmls2.push('<span>' + bid.vol[i] + '</span></li>');
       }
-      ulHtmls1 += '</ul>';
-      ulHtmls2 += '</ul>';
-      $('#fiveBetsBox').empty().append(ulHtmls1 + ulHtmls2);
+
+      ulHtmls1.push('</ul>');
+      ulHtmls1.push('</ul>');
+
+      $('#fiveBetsBox').empty().append(ulHtmls1.join('') + ulHtmls2.join(''));
 
       // 执行选择五档
       handler.selectFiveBets();
     } else{
-      console.log('行情连接失败！');
+      J_app.alert(data.message);
     }
   });
 };
@@ -242,19 +301,27 @@ handler.selectFiveBets = function() {
 
 // 价格修改
 handler.priceOper = function() {
-  $(document).on('click','#quantityForm li', function(){
+  $('#quantityForm').on('click', 'li', function(){
     var $this = $(this),
         input = $this.siblings('.input').find('input'),
-        val = parseFloat(input.val());
+        val = parseFloat(input.val()),
+        limit = handler.priceUnit.toString().split('.')[1].length;
 
     // 增加
     if($this.data('type') === 'add'){
-      val += handler.priceUnit;
+      val = (val + handler.priceUnit).toFixed(limit);
     }
 
     // 减少
     if($this.data('type') === 'reduce'){
-      val -= handler.priceUnit;
+      val = (val - handler.priceUnit).toFixed(limit);
+    }
+
+
+    if(parseFloat(val) > handler.limitup){
+      val = handler.limitup;
+    } else if(parseFloat(val) < handler.limitdown){
+      val = handler.limitdown;
     }
 
     input.val(val);
@@ -263,6 +330,21 @@ handler.priceOper = function() {
 
   // 手动填写价格
   $('#stkPrice').on('blur', handler.ableQuantity);
+};
+
+// 模拟长按事件
+handler.insistTouch = function() {
+
+  var timer = null;
+
+  $('#quantityForm li').on('touchstart mousedown', function(){
+    var $this = $(this);
+    timer = setInterval(function(){
+      $this.trigger('click');
+    },250);
+  }).on('touchend mouseup', function(){
+    clearInterval(timer);
+  });
 };
 
 // 计算数量
@@ -288,7 +370,7 @@ handler.quantityOper = function() {
   });
 };
 
-// 买入
+// 点击买入
 handler.clickSubmitBtn = function() {
 
   // 需要加入确认弹窗
@@ -299,9 +381,25 @@ handler.clickSubmitBtn = function() {
       number : $('#stkQuantity').val(),
       price : $('#stkPrice').val()
     };
+
+    if(!data.asset){
+      J_app.alert('请输入股票');
+      return false;
+    }
+
+    if(data.price === '0') {
+      J_app.alert('请输入价格');
+      return false;
+    }
+
+    if(!data.number){
+      J_app.alert('请输入数量');
+      return false;
+    }
+
     var option = {
       title: '委托买单确认',
-      main: template('panel/dialogBuy', data),
+      main: template('panel/dialogBS', data),
       sure: handler.buySubmit
     };
     J_app.confirm(option);
@@ -324,20 +422,29 @@ handler.buySubmit = function() {
   var params = {};
 
   params['cId'] = J_app.param.cId;
-  params['stkCode'] = $('#searchInput').data('code');
+  params['stkCode'] = $('#searchInput').data('code').substr(0,6);
   params['ordQty'] = $('#stkQuantity').val();
   params['ordPrc'] = $('#stkPrice').val();
   params['ordBS'] = 'B';
   params['ordProp'] = 'L';
-  params['exchType'] = 'SA';
+  params['exchType'] = getExchType($('#searchInput').data('code'));
 
   console.log(params['stkCode']);
 
   J_app.ajax(J_app.api.simuOrder, params, function(data){
     if(data.code === 0){
-
+      handler.clearInput();
+      handler.loadPtfDetail();
+    } else{
+      J_app.alert(data.message);
     }
   });
+};
+
+// 将数组清0
+handler.clearInput = function() {
+  $('#searchInput').val('').data('code', '');
+  handler.keyWordsChange();
 };
 
 $(function() {

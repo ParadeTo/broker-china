@@ -53,7 +53,7 @@ template.helper('rate', function(data) {
   if(data){
     return (data * 100).toFixed(2) + '%';
   } else{
-    return '--';
+    return '0.00%';
   }
 });
 
@@ -107,4 +107,22 @@ template.helper('ordStat', function(data) {
 /*判断为空*/
 template.helper('isNull', function(val) {
   return val ? val : '--';
+});
+
+/*价格格式化*/
+template.helper('price', function(val) {
+  if(val){
+    return val.toFixed(2);
+  } else{
+    return '--';
+  }
+});
+
+/*转换*/
+template.helper('notNull', function(val) {
+  if(val === null){
+    return 0;
+  } else{
+    return val;
+  }
 });

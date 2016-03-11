@@ -1,17 +1,17 @@
 ﻿@charset "UTF-8";
 
 //增减框
-.quantity-form {
+.ui-quantity-form {
   display: block;
-  padding-left: pxToRem(40px);
-  padding-right: pxToRem(40px);
+  padding-left: pxToRem(30px);
+  padding-right: pxToRem(30px);
   @include clearfix();
 
   .minus-btn,
   .plus-btn {
     display: block;
-    width: pxToRem(40px);
-    height: pxToRem(40px);
+    width: pxToRem(30px);
+    height: pxToRem(30px);
     background-image: url(../images/icon_quantity.png);
     background-color: $border-color;
     background-repeat: no-repeat;
@@ -20,31 +20,31 @@
   }
   .minus-btn {
     float: left;
-    margin-left: pxToRem(-40px);
+    margin-left: pxToRem(-30px);
     border-top-left-radius: pxToRem(4px);
     border-bottom-left-radius: pxToRem(4px);
     background-position: 0 0;
   }
   .plus-btn {
     float: right;
-    margin-right: pxToRem(-40px);
+    margin-right: pxToRem(-30px);
     background-color: $bg-red;
     border-top-right-radius: pxToRem(4px);
     border-bottom-right-radius: pxToRem(4px);
-    background-position: 0 pxToRem(-40px);
+    background-position: 0 pxToRem(-30px);
   }
   .input {
     float: left;
     width: 100%;
-    height: pxToRem(40px);
+    height: pxToRem(30px);
     border: pxToRem(1px) solid $border-color;
 
     input {
       width: 100%;
-      height: pxToRem(38px);
+      height: pxToRem(28px);
       background-color: #fff;
       border: 0 none;
-      font-size: pxToRem(18px);
+      font-size: pxToRem(12px);
       vertical-align: middle;
       text-align: center;
       color: $black;

@@ -136,32 +136,11 @@
 
 .index-ranking-content {
   display: none;
-
-  table {
-    width: 100%;
-  }
-
-  tr {
-    border: 1px solid $border-color;
-
-    &:last-child {
-      border: 0 none;
-    }
-  }
+  padding-bottom: pxToRem(20px);
 
   th {
-    padding: pxToRem(6px) 0;
-    background: $bg-color;
-    font-size: pxToRem(12px);
-    text-align: center;
-    color: $gray;
-  }
-
-  td {
-    padding: pxToRem(6px) 0;
-    font-size: pxToRem(12px);
-    text-align: center;
-    color: $black;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
