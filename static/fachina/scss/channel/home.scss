@@ -24,6 +24,7 @@
 
 .home-statis {
   padding: pxToRem(10px) 0;
+  height: pxToRem(60px);
 
   .ui-col {
     width: 33.33333%;
@@ -39,4 +40,9 @@
   .ui-col + .ui-col {
     border-left: 1px solid $border-color;
   }
+}
+
+.home-vote-box,
+.home-invite-box {
+  border-bottom: 0 none;
 }

@@ -100,6 +100,9 @@
     //获取省、直辖市列表
     province: (development ? devHost : host) + "/g_adviser_api/fetch_province",
 
+    //广告
+    advert: (development ? devHost : host) + "/ad_api/fetch_ad_link_list_noapp",
+
     //获取城市列表
     city: (development ? devHost : host) + "/g_adviser_api/fetch_city"
   };
@@ -167,13 +170,35 @@
     ajax: function (url, data, callback, error) {
 
       var params = {};
-      params['params'] = data;
+      params['params'] = {};
+      params['params']['cId'] = J_app.param.cId;
       params['id'] = J_app.onlyNum();
+      $.extend(params['params'], data);
 
       $.ajax({
         type: "POST",
         url: url,
         data: JSON.stringify(params),
+        dataType: "json",
+        contentType: "application/json",
+        success: callback,
+        error: function () {
+          if (error) {
+            error();
+          } else {
+            console.log("请求失败");
+          }
+        }
+      });
+    },
+
+    /*AJAX请求封装，data需传递对象,没有封装请求参数*/
+    ajaxa: function (url, data, callback, error) {
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
         success: callback,
@@ -535,7 +560,9 @@
     },
 
     // 广告栏
-    ad: function (p) {
+    // @position:广告位。首页：2201，榜单页：2202
+    adverst: function (position) {
+
       // 滑动切换效果
       function addSwiping() {
         var options = {
@@ -549,40 +576,27 @@
             autoplay: 5000,
             autoplayDisableOnInteraction: false
           },
-          swiper = new Swiper('#adDiscover', options);
+        adSwiper = new Swiper('#adDiscover', options);
       }
 
-      // 测试
-      $.ajax({
-        type: 'GET',
-        url: '../ad_api/fetch_ad_link_list.json',
-        dataType: 'json',
-        contentType: 'application/json',
-        success: function (data) {
-          if (data.code === 0) {
-            if (data.result && data.result.datas) {
+      var params = {};
+      params['positionGroup'] = position;
+      params['count'] = 5;
 
-              var ads = data.result.datas;
-              var imgsHtml = [];
+      J_app.ajaxa(J_app.api.advert, params, function(data){
+        if (data.code === 0) {
+          if (data.result) {
+            $('#adImages').empty().append(template('common/adverst', data));
 
-              for (var i = 0; i < ads.length; i++) {
-
-                imgsHtml.push('<div class="swiper-slide">');
-                imgsHtml.push('<a id="' + ads[i].adId + '" href="' + ads[i].adUrl + '" style="background-image:url(' + ads[i].adImg + ')"></a>');
-                imgsHtml.push('</div>');
-              }
-              $('#adImages').empty().append(imgsHtml.join(''));
-
-              if (ads.length > 1) {
-                addSwiping();
-              }
-              setTimeout(function () {
-                $('#adCtrls').fadeIn(1000);
-              }, 500);
+            if (data.result.length > 1) {
+              addSwiping();
             }
-          } else {
-            console.log(data.message);
+            setTimeout(function () {
+              $('#adCtrls').fadeIn(1000);
+            }, 500);
           }
+        } else {
+          console.log(data.message);
         }
       });
     }
@@ -689,7 +703,7 @@
       }
     });
     // 回到首页
-    $(document).on('click', '.J-home', function(){
+    $('.J-home').on('click', '.J-home', function(){
       window.location.href = "./index.html";
     });
     // 刷新

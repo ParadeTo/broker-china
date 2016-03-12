@@ -231,35 +231,55 @@
   }
 }
 
-.panel {
+.index-event-date {
   margin-top: pxToRem(15px);
 
   table {
     width: 100%;
 
-    th {
+    th,
+    td {
       border: 1px solid $border-color;
-      line-height: pxToRem(16px);
-      font-size: pxToRem(12px);
       text-align: center;
       background: $bg-color;
       color: $light;
+    }
 
-      &.active {
+    th {
+      line-height: pxToRem(16px);
+      font-size: pxToRem(12px);
+    }
+
+    td {
+      line-height: pxToRem(22px);
+      font-size: pxToRem(10px);
+    }
+  }
+
+  &.date-1 {
+    tr {
+      th:nth-child(2),
+      td:nth-child(2) {
         background: $white;
         color: $black;
       }
     }
+  }
 
-    td {
-      border: 1px solid $border-color;
-      line-height: pxToRem(22px);
-      font-size: pxToRem(10px);
-      text-align: center;
-      background: $bg-color;
-      color: $light;
+  &.date-2 {
+    tr {
+      th:nth-child(3),
+      td:nth-child(3) {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
 
-      &.active {
+  &.date-3 {
+    tr {
+      th:nth-child(4),
+      td:nth-child(4) {
         background: $white;
         color: $black;
       }

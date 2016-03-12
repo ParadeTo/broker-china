@@ -1,7 +1,7 @@
 {{each datas as item}}
 <tr>
   <td>
-    <i class="icon-rank rank-{{item.rank}}"><em></em>{{item.rank}}</i>
+    <i class="icon-rank"><em></em>{{item.rank}}</i>
   </td>
   <td>
     <div class="user-info-box">

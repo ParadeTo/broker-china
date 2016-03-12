@@ -3,30 +3,33 @@
  * author： qinxingjun
  */
 
-var rankHandler = window.rankHandler || {};
+var handler = window.handler || {};
 
 // 初始化
-rankHandler.init = function() {
-  // 广告
-  J_app.ad();
-  J_app.ad();
+handler.init = function() {
 
   // 赛事直播动画
   $('#eventRadio').muSlideUp({time:3000});
-  $('#rankTab').muTabs($('#rankContent'),rankHandler.loadRankList);
+  $('#rankTab').muTabs($('#rankContent'),handler.loadRankList);
+
+  // 请求广告
+  J_app.adverst(2202);
 
   // 请求观点列表
-  rankHandler.loadEventDetail();
-  rankHandler.loadEventRadio();
-  rankHandler.loadRankList();
-  //rankHandler.voteActive();
-  //rankHandler.joinActive();
-  rankHandler.inviteActive();
-  rankHandler.loadListMore();
-  rankHandler.loadUserInfo();
+  handler.loadEventDetail();
+  handler.loadEventRadio();
+  handler.loadRankList();
+  //handler.voteActive();
+  //handler.joinActive();
+  handler.inviteActive();
+  handler.loadListMore();
+  handler.loadUserInfo();
+  handler.swiperVertical();
+  handler.loadInviteUserInfo();
 };
+
 // 获取赛事信息
-rankHandler.loadEventDetail = function() {
+handler.loadEventDetail = function() {
   var params = {};
 
   J_app.ajax(J_app.api.eventDetail, params, function(data){
@@ -34,7 +37,7 @@ rankHandler.loadEventDetail = function() {
     var detailHtml;
 
     if(data.code === 0){
-      detailHtml = template('index/eventDetail', data);
+      detailHtml = template('common/eventDetail', data);
     } else{
       detailHtml = template('common/error', data);
     }
@@ -44,7 +47,7 @@ rankHandler.loadEventDetail = function() {
 };
 
 // 获取赛事直播
-rankHandler.loadEventRadio = function() {
+handler.loadEventRadio = function() {
 
   var params = {};
 
@@ -75,28 +78,44 @@ rankHandler.loadEventRadio = function() {
 };
 
 // 获取用户信息
-rankHandler.loadUserInfo = function() {
+handler.loadUserInfo = function() {
 
-  var params = {};
+  if(J_app.param.cId){
+    J_app.ajax(J_app.api.joinDetail, {}, function(data){
+      if(data.code === 0){
+        if(data.result.joinStatus === 0){
+        // 如果没参赛，显示报名按钮
+          $('#swiperMain').append(template('ranking/enrollBtn'));
+        } else{
+          $('#swiperMain').append(template('ranking/userInfo', data));
+        }
+      } else{
+        console.log(data.message);
+      }
+    });
+  }
+};
 
-  params['joinId'] = 7;
+// 获取分享用户的信息
+handler.loadInviteUserInfo = function() {
 
-  J_app.ajax(J_app.api.joinDetail, params, function(data){
+  var joinId = J_app.getUrlParam('joinId');
 
-    var html;
-
-    if(data.code === 0){
-      html = template('ranking/userInfo', data);
-    } else{
-      console.log(data.message);
-    }
-
-    $('#userInfo').empty().append(html);
-  });
+  if(joinId) {
+    var params = {};
+    params['joinId'] = joinId;
+    J_app.ajax(J_app.api.joinDetail, params, function(data){
+      if(data.code === 0){
+        $('#swiperMain').append(template('ranking/userInfo', data));
+      } else{
+        console.log(data.message);
+      }
+    });
+  };
 };
 
 // 获取榜单
-rankHandler.loadRankList = function(obj,readId,more) {
+handler.loadRankList = function(obj,readId,more) {
 
   var type = obj ? obj.data('type') : 'A',
       readId = readId ? readId : 0,
@@ -147,16 +166,16 @@ rankHandler.loadRankList = function(obj,readId,more) {
 };
 
 // 加载更多
-rankHandler.loadListMore = function() {
+handler.loadListMore = function() {
   $(document).on('click', '.ui-more', function(){
     var readId = $(this).data('readId');
 
-    rankHandler.loadRankList($(this), readId, true);
+    handler.loadRankList($(this), readId, true);
   });
 };
 
 // 我要参赛
-//rankHandler.joinActive = function() {
+//handler.joinActive = function() {
 //
 //  $('#joinEvent').on('click', function(){
 //    J_app.checkSign(function(){
@@ -166,7 +185,7 @@ rankHandler.loadListMore = function() {
 //};
 
 // 转发邀请
-rankHandler.inviteActive = function() {
+handler.inviteActive = function() {
   $('#inviteEvent').on('click', function(){
     J_app.checkSign(function(){
       console.log('弹出分享提示');
@@ -175,7 +194,7 @@ rankHandler.inviteActive = function() {
 };
 
 // 投票
-//rankHandler.voteActive = function() {
+//handler.voteActive = function() {
 //
 //  $(document).on('click', '.J-vote', function() {
 //
@@ -221,13 +240,34 @@ rankHandler.inviteActive = function() {
 //};
 
 // 拉票
-rankHandler.voteShareActive = function() {
+handler.voteShareActive = function() {
 
   $(document).on('click', '.J-vote-share', function(){
     // 修改微信分享地址；
 
     // 弹出分享提示
   });
+};
+
+//主屏区向上翻滚
+handler.swiperVertical = function() {
+  // 滑动切换效果
+ // function addSwiping() {
+    var options = {
+        direction: 'vertical',
+        loop: true,
+        pagination: '#swiperCtrls',
+        nextButton: '#swiperNext',
+        prevButton: '#swiperPrev',
+        paginationClickable: false,
+        spaceBetween: 0,
+        centeredSlides: true,
+        autoplay: 5000,
+        autoplayDisableOnInteraction: false
+      },
+    swiperVer = new Swiper('#swiperBox', options);
+ // }
+  //addSwiping();
 };
 
 $(function() {
@@ -250,5 +290,5 @@ $(function() {
     });
   }
 
-  rankHandler.init();
+  handler.init();
 });

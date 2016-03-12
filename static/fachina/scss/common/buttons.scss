@@ -57,3 +57,8 @@ a.btn.disabled {
     background-color: transparent;
   }
 }
+
+.btn-fixed-large {
+  width: pxToRem(220px);
+  @include button-size(pxToRem(10px), pxToRem(10px), pxToRem(14px), pxToRem(4px));
+}

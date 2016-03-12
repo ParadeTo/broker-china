@@ -3,86 +3,98 @@
  * author： qinxingjun
  */
 
-var homeHandler = window.homeHandler || {};
+var handler = window.handler || {};
+
+// 邀请的投顾阅读id
+handler.readId = 0;
 
 // 初始化
-homeHandler.init = function() {
+handler.init = function() {
 
-  homeHandler.loadVoteList();
-  homeHandler.loadInviteList();
-  homeHandler.loadUserInfo();
+  handler.loadUserInfo();
+  handler.loadVoteList();
+  handler.loadInviteList();
+  handler.moreInviteList();
 };
 
 // 获取投顾信息
-homeHandler.loadUserInfo = function() {
+handler.loadUserInfo = function() {
 
-  var params = {};
-
- // params['cId'] = $.cookie("fachinaId");
-  params['joinId'] = 1;
-
-  J_app.ajax(J_app.api.joinDetail, params, function(data){
+  // 传空请求
+  J_app.ajax(J_app.api.joinDetail, {}, function(data){
 
     if(data.code === 0){
-      $('#homeBanner').empty().append(template('home/userInfo', data));
-      $('#homeStatis').empty().append(template('home/userStatis', data));
+      $('#banner').empty().append(template('home/userInfo', data));
+
+      if(data.result.joinStatus === 0){
+        // 如果没参赛，显示报名按钮
+        $('#statis').append(template('home/enrollBtn'));
+      } else{
+        $('#statis').append(template('home/userStatis', data));
+      }
     } else{
       J_app.alert(data.message);
     }
   });
 };
 
-// 获取
-homeHandler.loadVoteList = function() {
+// 投票投顾
+handler.loadVoteList = function() {
 
-  var type = 'V',
-      params = {};
+  var params = {};
 
-  params['type'] = type;
+  params['type'] = 'V';
   params['count'] = 5;
   params['readId'] = 0;
 
   J_app.ajax(J_app.api.joinList, params, function(data){
-
-    var trHtml;
-
     if(data.code === 0){
-      trHtml = template('home/list', data.result);
-    } else{
-      trHtml = template('common/error', data);
+      if(data.result.datas){
+        $('#voteList').empty().append(template('home/list', data.result));
+        $('#voteBox').show();
+      }
+    }else{
+      J_app.alert(data.message);
     }
-
-    $('#myVoteAdviser').empty().append(trHtml);
-  }, function(){
-    $('#myVoteAdviser').empty().append(template('common/loadFail'));
   });
 };
 
-homeHandler.loadInviteList = function() {
+// 邀请投顾
+handler.loadInviteList = function() {
 
-  var type = 'I',
-      params = {};
+  var params = {};
 
-  params['type'] = type;
+  params['type'] = 'I';
   params['count'] = 5;
-  params['readId'] = 0;
+  params['readId'] = handler.readId;
 
   J_app.ajax(J_app.api.joinList, params, function(data){
-
-    var trHtml;
-
     if(data.code === 0){
-      trHtml = template('home/list', data.result);
-    } else{
-      trHtml = template('common/error', data);
-    }
 
-    $('#myInviteAdviser').empty().append(trHtml);
-  }, function(){
-    $('#myInviteAdviser').empty().append(template('common/loadFail'));
+      // 是否有数据
+      if(data.result.datas){
+        $('#inviteList').append(template('home/list', data.result));
+
+        if($('#inviteBox').is(':hidden')){
+          $('#inviteBox').show();
+        }
+      }
+
+      //是否有分页
+      $('#inviteMore').css('display', (data.result.hasNext ? 'block' : 'none'));
+
+      handler.readId = data.result.readId;
+    }else{
+      J_app.alert(data.message);
+    }
   });
+};
+
+// 加载更多邀请投顾
+handler.moreInviteList = function() {
+  $('#inviteMore').on('click', handler.loadInviteList);
 };
 
 $(function() {
-  homeHandler.init();
+  handler.init();
 });

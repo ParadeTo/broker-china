@@ -155,7 +155,8 @@ body {
   display: inline-block;
   width: pxToRem(40px);
   height: pxToRem(40px);
-  background: transparent;
+  background: url(../images/icon_guest.png) no-repeat 0 0;
+  background-size: 100% 100%;
   border: pxToRem(2px) solid $border-color;
   border-radius: 50%;
   overflow: hidden;

@@ -51,36 +51,11 @@
 
     <!-- 参赛 -->
     <div class="ui-box ranking-action-wrap">
-      <div class="ui-container bg-white ranking-action-box clearfix">
-        <div class="ranking-user-info">
-          <div class="ui-avatar">
-            <img src="../../static/fachina/images/pic_demo_user.jpg">
-          </div>
-          <div>
-            某某人*
-          </div>
-        </div>
-        <!-- <div class="ranking-btn-box">
-          <button class="btn btn-red">我要参赛</button>
-          <a href="#">查看规则</a>
-        </div> -->
-        <div class="ranking-btn-box" id="userInfo">
-          <ul class="ui-row">
-            <li class="ui-col">
-              <span>综合排名</span>
-              <span>1234</span>
-            </li>
-            <li class="ui-col">
-              <span>赛季收益率</span>
-              <span>4.38%</span>
-            </li>
-            <li class="ui-col">
-              <span>得票数</span>
-              <span>2392</span>
-            </li>
-          </ul>
-          <button class="btn btn-red">投票</button>
-        </div>
+      <div class="swiper-container" id="swiperBox">
+        <div class="swiper-wrapper" id="swiperMain"><!-- 主内容 --></div>
+        <div class="swiper-pagination" id="swiperCtrls"><!-- 控制圆点 --></div>
+        <a href="javascript:;" class="swiper-button-next" id="swiperPrev"></a>
+        <a href="javascript:;" class="swiper-button-prev" id="swiperNext"></a>
       </div>
     </div>
 
@@ -157,6 +132,9 @@
       </div>
     </div>
   </main>
+
+  <!-- footer -->
+  @@include('_footer.html')
 
   <!-- 下载一起牛-->
   @@include('_download.html')
