@@ -4,22 +4,21 @@
  */
 var searchHandler = window.searchHandler || {};
 searchHandler.lastId = 0;
+// 判断是否是第一次搜索，从其他页面跳转过来
+searchHandler.keyword = "";
 
 // 搜索
-searchHandler.search = function() {
-  $("#search-more").hide();
-  // 得到url参数
-  var keyword = J_app.getUrlParam("keyword");
-  // 将关键词赋值为input
-  $("#search-keyword").val(keyword);
+searchHandler.search = function(keyword) {
   // 加载动画
   J_app.loading(true);
   // 请求数据
+  searchHandler.firstSearch = false;
   var param = {};
   param['keyword'] = keyword;
   param['count'] = 10;
   param['readId'] = searchHandler.lastId;
   J_app.ajax(J_app.api.searchJoin, param, function(data) {
+    console.log(data);
     $("#search-more").removeClass("locked");
     J_app.loading(false);
     var trHtml = "";
@@ -38,8 +37,9 @@ searchHandler.search = function() {
     }
   }, function() {
     J_app.loading(false);
-    J_app.alert("请求数据失败")
+    J_app.alert("请求数据失败");
   });
+
 };
 
 // 点击获取更多
@@ -52,11 +52,38 @@ searchHandler.more = function() {
     }
     $this.addClass('locked');
 
-    searchHandler.search();
+    searchHandler.search(searchHandler.keyword);
   });
 };
 
+// 绑定点击搜索事件，不刷新页面
+searchHandler.searchBtnClick = function() {
+  $("#search-btn").on("click", function() {
+    // 获取关键词
+    var  keyword = $("#search-keyword").val();
+    // 检查关键词
+    if (!keyword) {
+      J_app.alert("请输入关键词");
+      return ;
+    }
+
+    // 初始化状态
+    $("#rankAdviser").html("");
+    searchHandler.lastId = 0;
+    $("#search-more").hide();
+
+    searchHandler.keyword = keyword;
+    searchHandler.search(keyword);
+  });
+}
+
 $(function() {
-  searchHandler.search();
+  // 获取url中的关键词搜索，只执行一次
+  var keyword = J_app.getUrlParam("keyword");
+  searchHandler.keyword = keyword;
+  $("#search-keyword").val(keyword);
+  searchHandler.search(keyword);
+
   searchHandler.more();
+  searchHandler.searchBtnClick();
 });

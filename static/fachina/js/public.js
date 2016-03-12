@@ -527,7 +527,7 @@
         // 获取搜索关键字
         var keyword = $("#search-keyword").val();
         if (keyword) {
-          window.location.href = "search.html?keyword=" + keyword;
+          window.location.href = encodeURI("search.html?keyword=" + keyword);
         } else {
           J_app.alert("请输入关键词");
         }
@@ -680,8 +680,8 @@
   //头部固定栏跳转
   (function($) {
     // back
-    $(document).on('click', '.J-back', function(){
-      var href = $(this).data('src');
+    $('.J-back').on('click', function(){
+      var href = $(this).data('href');
       if(href){
         window.location.href = href;
       } else{
@@ -689,11 +689,11 @@
       }
     });
     // 回到首页
-    $(document).on('click', '.J-home', function(){
+    $('.J-home').on('click', function(){
       window.location.href = "./index.html";
     });
     // 刷新
-    $(document).on('click', '.J-refresh', function(){
+    $('.J-refresh').on('click', function(){
       window.location.reload();
     });
   })(jQuery);
