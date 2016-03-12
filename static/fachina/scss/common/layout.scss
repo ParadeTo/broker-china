@@ -348,3 +348,73 @@ body {
     }
   }
 }
+
+// 底部下载一起牛悬浮栏
+.fixed-footer {
+  position: fixed;
+  z-index: 99;
+  bottom: 0px;
+  height: pxToRem(60px);
+  background-color: $bg-black;
+  min-width: 320px;
+  padding: pxToRem(10px);
+  img {
+    height: pxToRem(40px);
+    width: pxToRem(40px);
+    float: left;
+  }
+  .fixed-footer-text {
+    width: pxToRem(200px);
+    float: left;
+    padding-left: pxToRem(10px);
+    padding-top: pxToRem(5px);
+    span {
+      font-size: pxToRem(13px);
+      color: $white;
+    }
+    p {
+      font-size: pxToRem(9px);
+      color: $light;
+    }
+  }
+  a {
+    border-radius: pxToRem(4px);
+    line-height: pxToRem(29px);
+    text-align: center;
+    display: block;
+    background-color: $bg-red;
+    height: pxToRem(29px);
+    width: pxToRem(60px);
+    color: $white;
+    margin-top: pxToRem(6px);
+    float: right;
+    font-size: pxToRem(12px);
+    &:active {
+      background-color: $bg-red-active;
+    }
+  }
+}
+
+// 我要参赛悬浮栏
+.join-event-bg {
+  height: pxToRem(60px);
+  position: fixed;
+  bottom: 0;
+  background-color: $bg-black;
+  width: pxToRem(320px);
+}
+
+.join-event-btn {
+  margin: pxToRem(10px) auto;
+  color: $white;
+  background-color: $bg-red;
+  text-align: center;
+  line-height: pxToRem(40px);
+  height: pxToRem(40px);
+  width: pxToRem(150px);
+  border-radius: pxToRem(3px);
+  font-size: pxToRem(16px);
+  &.active {
+    background-color: $bg-red-active;
+  }
+}

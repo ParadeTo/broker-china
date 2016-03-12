@@ -2,7 +2,7 @@
 
 // 规则页
 .rules-page {
-  padding: pxToRem(45px) pxToRem(12px) pxToRem(12px) pxToRem(12px);
+  padding: 0  pxToRem(12px);
   h1 {
     text-align: center;
   }
@@ -20,19 +20,4 @@
   }
 }
 
-#joinEvent {
-  background-color: $bg-red;
-  color: $white;
-  text-align: center;
-  line-height: pxToRem(40px);
-  height: pxToRem(40px);
-  width: pxToRem(150px);
-  margin: 0 auto;
-  margin-bottom: pxToRem(20px);
-  text-align: center;
-  border-radius: pxToRem(3px);
-  font-size: pxToRem(16px);
-  &.active {
-    background-color: $bg-red-active;
-  }
-}
+

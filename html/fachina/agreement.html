@@ -5,11 +5,14 @@
 </head>
 <body>
   <!-- 头部固定栏-->
-  @@include('_back_home.html',{"title":"用户协议"})
+  @@include('_back_home.html',{"title":"用户协议","back-href":""})
 
-  <div class="agreement-page"></div>
 
-  <div class="J-touch agreement-join" id="joinEvent">我要参赛</div>
+    <div class="agreement-page"></div>
+
+  <!-- 我要参赛-->
+  @@include("_join_event.html")
+
   <!-- script -->
   @@include('_scripts.html')
   <script>
