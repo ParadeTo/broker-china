@@ -12,13 +12,11 @@ searchHandler.search = function(keyword) {
   // 加载动画
   J_app.loading(true);
   // 请求数据
-  searchHandler.firstSearch = false;
   var param = {};
   param['keyword'] = keyword;
   param['count'] = 10;
   param['readId'] = searchHandler.lastId;
   J_app.ajax(J_app.api.searchJoin, param, function(data) {
-    console.log(data);
     $("#search-more").removeClass("locked");
     J_app.loading(false);
     var trHtml = "";
@@ -83,7 +81,7 @@ $(function() {
   searchHandler.keyword = keyword;
   $("#search-keyword").val(keyword);
   searchHandler.search(keyword);
-
+  // 绑定事件
   searchHandler.more();
   searchHandler.searchBtnClick();
 });

@@ -124,6 +124,7 @@ enrollAdviserHandler.adviserInit = function () {
   enrollAdviserHandler.back();
   enrollAdviserHandler.apply();
   enrollAdviserHandler.clearErrorMsg();
+  //enrollAdviserHandler.uploadDebug();
   enrollAdviserHandler.upload();
 };
 
@@ -420,6 +421,52 @@ enrollAdviserHandler.clickCity = function() {
     $("#pro").hide();
     $("#city").hide();
   });
+};
+
+// 上传图片-调试版
+enrollAdviserHandler.uploadDebug = function() {
+  var options = {
+    dataType: 'json',
+    success: function (data) {
+              alert(data.code);
+              $("#enroll-upload-img").attr("src",data.result.urls);
+              $("#enroll-1-img").val(data.result.urls);
+    }
+  };
+
+  // ajaxForm
+  //$("#roll-upload-form").ajaxForm(options);
+
+  // ajaxSubmit
+  $("#submitDebug").click(function () {
+    alert(1);
+    $("#enroll-upload-form").submit(function() {
+      $(this).ajaxSubmit({
+        type: 'post',
+        url: "http://192.168.1.19/common_api/upload_image",
+        dataType: 'json',
+        success: function(data) {
+          alert(data.code);
+          $("#enroll-upload-img").attr("src", data.result.urls);
+          $("#enroll-1-img").val(data.result.urls);
+        },
+        error: function(XmlHttpRequest, textStatus, errorThrown) {
+          alert(textStatus);
+        }
+      });
+    });
+  });
+
+  //$("#enroll-upload-btn").change(function() {
+  //  $("#enroll-upload-form").attr("action",J_app.api.image).ajaxSubmit({
+  //      dataType: 'json',
+  //      success: function(data) {
+  //        alert(data.code);
+  //        $("#enroll-upload-img").attr("src",data.result.urls);
+  //        $("#enroll-1-img").val(data.result.urls);
+  //    }
+  //  });
+  //});
 };
 
 // 上传图片

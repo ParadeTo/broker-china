@@ -42,15 +42,15 @@
         </p>
 
         <input id="enroll-1-img" type="hidden"/>
-        <a id="enroll-upload-btn">上传</a>
+        <!--<a id="enroll-upload-btn">上传</a>-->
 
         <!--<label id="enroll-upload-btn-fake" for="enroll-upload-btn">上传</label>-->
-        <!--<form action="" method="post" enctype="multipart/form-data" id="enroll-upload-form" target="hidden_frame">-->
-          <!--<input id="enroll-upload-cId" name="cId" type="hidden" style="display: none"/>-->
-          <!--<input id="enroll-upload-btn" name="file" type="file" style="display: block"/>-->
-          <!--<button id="submitDebug" >提交</button>-->
-          <!--<iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>-->
-        <!--</form>-->
+        <form action="http://192.168.1.19/common_api/upload_image" method="post" enctype="multipart/form-data" id="enroll-upload-form" target="hidden_frame">
+          <input id="enroll-upload-cId" name="cId" type="hidden" style="display: none"/>
+          <input id="enroll-upload-btn" name="file" type="file" style="display: block"/>
+          <!--<input type="submit" value="提交">-->
+          <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
+        </form>
       </div>
       <div id="enroll-bar"></div>
     </div>
@@ -111,7 +111,6 @@
 
   <!-- script -->
   @@include('_scripts.html')
-  <script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script>
   <script src="../../static/common/js/libs/webuploader/webuploader.js?ver=@@pageVersion"></script>
   <script src="../../static/fachina/js/enroll_adviser.js?ver=@@pageVersion"></script>
 </body>
