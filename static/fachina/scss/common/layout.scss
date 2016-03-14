@@ -3,6 +3,7 @@
 body {
   background: $bg-color;
   padding-bottom: pxToRem(70px);
+  padding-top: pxToRem(43px);
 }
 
 // 对齐方式
@@ -83,6 +84,10 @@ body {
 }
 
 .ui-header {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  width: pxToRem(320px);
   padding-left: pxToRem(48px);
   padding-right: pxToRem(48px);
   height: pxToRem(43px);

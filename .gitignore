@@ -3,3 +3,5 @@ dist/
 node_modules/
 .sass-cache/
 data/
+*test.js
+*test.html

@@ -2,7 +2,7 @@
 
 // 观点
 .page {
-  padding-top: pxToRem(43px);
+  padding-top: pxToRem(0px);
 }
 
 .viewpoint-item {
@@ -90,10 +90,8 @@
 }
 
 .view-more {
-  margin-top: pxToRem(-10px);
-  margin-bottom: pxToRem(0px);
-  height: pxToRem(60px);
-  line-height: pxToRem(60px);
+  height: pxToRem(40px);
+  line-height: pxToRem(40px);
   text-align: center;
 }
 

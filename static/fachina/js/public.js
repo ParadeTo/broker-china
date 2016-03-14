@@ -576,14 +576,14 @@
             autoplay: 5000,
             autoplayDisableOnInteraction: false
           },
-        adSwiper = new Swiper('#adDiscover', options);
+          adSwiper = new Swiper('#adDiscover', options);
       }
 
       var params = {};
       params['positionGroup'] = position;
       params['count'] = 5;
 
-      J_app.ajaxa(J_app.api.advert, params, function(data){
+      J_app.ajaxa(J_app.api.advert, params, function (data) {
         if (data.code === 0) {
           if (data.result) {
             $('#adImages').empty().append(template('common/adverst', data));
@@ -602,7 +602,7 @@
     }
   };
 
- // Jquery扩展方法
+  // Jquery扩展方法
   (function ($) {
     /*
      * muSlideUp：向上定时无缝滚动动画
@@ -663,9 +663,59 @@
         })
       });
     };
+    /*checkFileTypeAndSize: 上传图片类型判断*/
+    $.fn.checkFileTypeAndSize = function (options) {
+      //默认设置
+      var defaults = {
+        allowedExtensions: 'jpeg,jpg,png',
+        maxSize: 2 * 1024 * 1024, //单位是byte
+        success: function () {
+        },
+        extensionerror: function () {
+        },
+        sizeerror: function () {
+        }
+      };
+      //合并设置
+      options = $.extend(defaults, options);
+      //遍历元素
+      return this.each(function () {
+        $(this).on('change', function () {
+          //获取文件路径
+          var filePath = $(this).val();
+          //小写字母的文件路径
+          var fileLowerPath = filePath.toLowerCase();
+          //获取文件的后缀名
+          var extension = fileLowerPath.substring(fileLowerPath.lastIndexOf('.') + 1);
+          //判断后缀名是否包含在预先设置的、所允许的后缀名数组中
+          if ($.inArray(extension, options.allowedExtensions.split(",")) == -1) {
+            options.extensionerror();
+            $(this).focus();
+          } else {
+            try {
+              var size = 0;
+              if ($.browser && $.browser.msie) {//ie旧版浏览器
+                var fileMgr = new ActiveXObject("Scripting.FileSystemObject");
+                var fileObj = fileMgr.getFile(filePath);
+                size = fileObj.size; //byte
+              } else {//其它浏览器
+                size = $(this)[0].files[0].size;//byte
+              }
+              if (size > options.maxSize) {
+                options.sizeerror();
+              } else {
+                options.success();
+              }
+            } catch (e) {
+              J_app.alert("错误：" + e);
+            }
+          }
+        });
+      });
+    };
   })(jQuery);
 
- // 使用rem初始化页面,自执行
+  // 使用rem初始化页面,自执行
   (function () {
     var page = this;
     var html = document.getElementsByTagName("html")[0];
@@ -684,7 +734,7 @@
     }, false);
   })();
 
- // 事件绑定
+  // 事件绑定
   (function ($) {
     J_app.joinEvent();  // 报名参赛
     J_app.vote(); // 投票
@@ -692,22 +742,22 @@
   })(jQuery);
 
   //头部固定栏跳转
-  (function($) {
+  (function ($) {
     // back
-    $('.J-back').on('click', function(){
+    $('.J-back').on('click', function () {
       var href = $(this).data('href');
-      if(href){
+      if (href) {
         window.location.href = href;
-      } else{
+      } else {
         window.history.back();
       }
     });
     // 回到首页
-    $('.J-home').on('click', function(){
+    $('.J-home').on('click', function () {
       window.location.href = "./index.html";
     });
     // 刷新
-    $('.J-refresh').on('click', function(){
+    $('.J-refresh').on('click', function () {
       window.location.reload();
     });
   })(jQuery);
@@ -721,7 +771,7 @@
     });
   })(jQuery);
 
- //用户登录状态
+  //用户登录状态
   (function ($) {
     if ($.cookie('fachinaStatus')) {
       $('#userStatus').addClass('status-' + $.cookie('fachinaStatus'));
@@ -730,7 +780,7 @@
     }
   })(jQuery);
 
- //回到顶部
+  //回到顶部
   (function ($) {
     $(window).scroll(function () {
       if ($(this).scrollTop() > 400) {
@@ -746,7 +796,7 @@
     });
   })(jQuery);
 
- //抛出对象
+  //抛出对象
   factory && (global.J_app = J_app);
 })
 ;

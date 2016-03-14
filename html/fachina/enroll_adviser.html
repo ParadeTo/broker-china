@@ -36,22 +36,26 @@
         <input id="enroll-1-city" type="text" readonly="readonly" style="display: none"/>
       </div>
       <div class="enroll-upload">
-        <img id="enroll-upload-img" src="../../static/fachina/images/pic_identity.jpg?ver=@@pageVersion" alt=""/>
+        <img id="enroll-upload-preview" src="../../static/fachina/images/pic_identity.jpg?ver=@@pageVersion" alt=""/>
         <p>
           温馨提示：请本人手持身份证照片，需保证头像和身份证上的信息清晰可见。
         </p>
 
-        <input id="enroll-1-img" type="hidden"/>
-        <a id="enroll-upload-btn">上传</a>
-
-        <!--<label id="enroll-upload-btn-fake" for="enroll-upload-btn">上传</label>-->
-        <!--<form action="" method="post" enctype="multipart/form-data" id="enroll-upload-form" target="hidden_frame">-->
-          <!--<input id="enroll-upload-cId" name="cId" type="hidden" style="display: none"/>-->
-          <!--<input id="enroll-upload-btn" name="file" type="file" style="display: block"/>-->
-          <!--<button id="submitDebug" >提交</button>-->
-          <!--<iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>-->
-        <!--</form>-->
+        <!-- ios上传采用百度webuploader-->
+        <div id="enroll-upload-ios" class="enroll-upload-btn-container">
+          <a id="enroll-upload-ios-btn">上传</a>
+        </div>
+        <!-- android上传图片采用ajax-->
+        <div id="enroll-upload-android" class="enroll-upload-btn-container">
+          <label id="enroll-upload-btn-fake" class="enroll-upload-btn" for="enroll-upload-android-btn">上传</label>
+          <form action="" method="post" enctype="multipart/form-data" id="enroll-upload-form">
+            <input id="enroll-upload-android-btn" name="file" type="file" style="display: none"/>
+          </form>
+        </div>
+        <!-- 文件路径隐藏域-->
+        <input type="hidden" id="#enroll-1-img"/>
       </div>
+      <!-- ios上传图片进度条-->
       <div id="enroll-bar"></div>
     </div>
     <!-- 验证信息-->
@@ -111,8 +115,7 @@
 
   <!-- script -->
   @@include('_scripts.html')
-  <script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script>
-  <script src="../../static/common/js/libs/webuploader/webuploader.js?ver=@@pageVersion"></script>
+  <script src="../../static/common/js/libs/webuploader/webuploader.min.js?ver=@@pageVersion"></script>
   <script src="../../static/fachina/js/enroll_adviser.js?ver=@@pageVersion"></script>
 </body>
 </html>

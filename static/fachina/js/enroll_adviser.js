@@ -101,7 +101,10 @@ function validForm(){
 }
 
 var enrollAdviserHandler = window.enrollAdviserHandler || {};
-
+// 上传头像大小限制,单位byte
+enrollAdviserHandler.imgSize = 2 * 1024 * 1024;
+// 上传头像文件类型
+enrollAdviserHandler.imgExt = 'gif,jpg,jpeg,bmp,png';
 // 报名参赛跳转
 enrollAdviserHandler.api = "index.html";
 // 城市名称
@@ -124,8 +127,6 @@ enrollAdviserHandler.adviserInit = function () {
   enrollAdviserHandler.back();
   enrollAdviserHandler.apply();
   enrollAdviserHandler.clearErrorMsg();
-  //enrollAdviserHandler.uploadDebug();
-  enrollAdviserHandler.upload();
 };
 
 // 清除验证提示信息
@@ -423,54 +424,65 @@ enrollAdviserHandler.clickCity = function() {
   });
 };
 
-// 上传图片-调试版
-enrollAdviserHandler.uploadDebug = function() {
-  var options = {
-    dataType: 'json',
-    success: function (data) {
-              alert(data.code);
-              $("#enroll-upload-img").attr("src",data.result.urls);
-              $("#enroll-1-img").val(data.result.urls);
+// 上传图片-Android版
+enrollAdviserHandler.uploadAndroid = function() {
+  // 进度条函数
+  function onProgress(file) {
+    if(file.lengthComputable) {
+      var per = Math.floor(100 * file.loaded / file.total);
+      $("#enroll-bar").css('width', per  + '%');
     }
-  };
-
-  // ajaxForm
-  //$("#roll-upload-form").ajaxForm(options);
-
-  // ajaxSubmit
-  $("#submitDebug").click(function () {
-    alert(1);
-    $("#enroll-upload-form").submit(function() {
-      $(this).ajaxSubmit({
-        type: 'post',
-        url: "http://192.168.1.19/common_api/upload_image",
-        dataType: 'json',
-        success: function(data) {
-          alert(data.code);
-          $("#enroll-upload-img").attr("src", data.result.urls);
-          $("#enroll-1-img").val(data.result.urls);
+  }
+  // 带图片验证的上传
+  $('#enroll-upload-android-btn').checkFileTypeAndSize({
+    allowedExtensions: enrollAdviserHandler.imgExt,
+    maxSize: enrollAdviserHandler.imgSize, //单位是byte
+    success: function() {
+      $("#enroll-bar").css('width',0);
+      var fileObj = document.getElementById("enroll-upload-android-btn").files[0]; // 获取文件对象
+      var form = new FormData();
+      form.append("file", fileObj); // 文件对象添加到form表单中
+      $.ajax({
+        url: J_app.api.image,
+        type: 'POST',
+        data: form,
+        async: true, // 进度条需要异步上传
+        cache: false,
+        contentType: false,
+        processData: false,
+        xhr: function () { // 进度条
+          var xhr = $.ajaxSettings.xhr();
+          if(onProgress && xhr.upload) {
+            xhr.upload.addEventListener("progress", onProgress, false);
+            return xhr;
+          }
         },
-        error: function(XmlHttpRequest, textStatus, errorThrown) {
-          alert(textStatus);
+        success: function (data) {
+          if (data.code === 0) {
+            $("#enroll-upload-preview").attr('src', data.result.urls);
+            $("#enroll-1-img").val(response.result.urls);
+          } else {
+            J_app.alert(data.message);
+          }
+        },
+        error: function (error) {
+          J_app.alert(error);
         }
       });
-    });
+    },
+    extensionerror: function() {
+      J_app.alert('允许的图片格式为：' + enrollAdviserHandler.imgExt);
+      return;
+    },
+    sizeerror: function() {
+      J_app.alert('允许的图片大小为：' + enrollAdviserHandler.imgSize / 1024 / 1024 + "m");
+      return;
+    }
   });
-
-  //$("#enroll-upload-btn").change(function() {
-  //  $("#enroll-upload-form").attr("action",J_app.api.image).ajaxSubmit({
-  //      dataType: 'json',
-  //      success: function(data) {
-  //        alert(data.code);
-  //        $("#enroll-upload-img").attr("src",data.result.urls);
-  //        $("#enroll-1-img").val(data.result.urls);
-  //    }
-  //  });
-  //});
 };
 
-// 上传图片
-enrollAdviserHandler.upload = function() {
+// 上传图片-IOS版
+enrollAdviserHandler.uploadIOS = function() {
   // 清空图片隐藏域值
   $("#enroll-1-img").val("");
   // 定义上传对象
@@ -478,16 +490,16 @@ enrollAdviserHandler.upload = function() {
     auto: true, // 自动上传
     swf: '../../static/common/js/libs/webuploader/Uploader.swf', // swf文件路径(以falsh方式支持IE上传)
     server: J_app.api.image, // 文件接收服务端
-    pick: '#enroll-upload-btn',
+    pick: '#enroll-upload-ios-btn',
+
     // 只允许选择文件，可选。
     accept: {
       title: 'Images',
-      extensions: 'gif,jpg,jpeg,bmp,png',
+      extensions: enrollAdviserHandler.imgExt, // 上传文件类型
       mimeTypes: 'image/*'
     },
-    //sendAsBinary: true,
     fileNumLimit: 1, //文件最多数量
-    fileSingleSizeLimit: 5 * 1024 * 1024, // 单个文件大小限制:2 M
+    fileSingleSizeLimit: enrollAdviserHandler.imgSize, // 上传文件大小
     thumb: {
       width: 120,
       height: 120,
@@ -509,15 +521,15 @@ enrollAdviserHandler.upload = function() {
   });
   uploader.on("error", function (type) {
     if (type == "Q_TYPE_DENIED") {
-      J_app.alert("请上传JPG、PNG格式文件");
+      J_app.alert('允许的图片格式为：' + enrollAdviserHandler.imgExt);
     } else if (type == "F_EXCEED_SIZE") {
-      J_app.alert("文件大小不能超过5M");
+      J_app.alert('允许的图片大小为：' + enrollAdviserHandler.imgSize / 1024 / 1024 + "m");
     }
   });
   // 上传成功
   uploader.on('uploadSuccess', function (file, response) {
     if (response.code === 0) {
-      var $img = $("#enroll-upload-img");
+      var $img = $("#enroll-upload-preview");
       var height = $img.height();
       var width = $img.width();
       // 创建缩略图
@@ -550,5 +562,18 @@ enrollAdviserHandler.upload = function() {
 $(function () {
   J_app.checkSign(function() {
     enrollAdviserHandler.adviserInit();
+    // 根据手机调用不同的上传图片的函数
+    var ua = navigator.userAgent.toLowerCase(),
+      isAndroid = -1 != ua.indexOf('android'), // 安卓版
+      isIos = -1 != ua.indexOf('iphone') || -1 != ua.indexOf('ipad'); // IOS版
+    if (isAndroid) {
+      $("#enroll-upload-ios").hide();
+      $("#enroll-upload-android").show();
+      enrollAdviserHandler.uploadAndroid();
+    } else {
+      $("#enroll-upload-android").hide();
+      $("#enroll-upload-ios").show();
+      enrollAdviserHandler.uploadIOS();
+    }
   });
 });
