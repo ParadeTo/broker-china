@@ -2,16 +2,16 @@
 
 // 报名参赛-入口
 .enroll-title {
-  height: pxToRem(153px);
-  padding-top: pxToRem(53px);
+  padding-top: pxToRem(36px);
   text-align: center;
   span {
-    font-size: pxToRem(20px);
+    font-size: pxToRem(16px);
     color: $red;
   }
   p {
-    font-size: pxToRem(14px);
+    font-size: pxToRem(11px);
     color: $light;
+    margin-bottom: pxToRem(37px);
   }
 }
 
@@ -85,7 +85,7 @@
 
 // 报名参赛-投顾
 .enroll-1-page {
-  padding-top: pxToRem(45px);
+  padding-top: pxToRem(3px);
   padding-left: pxToRem(12px);
   padding-right: pxToRem(12px);
   background-color: $white;
@@ -122,6 +122,7 @@
     img {
       float: left;
       width: pxToRem(50px);
+      height: pxToRem(57px);
     }
     p {
       padding-left: pxToRem(10px);
@@ -129,17 +130,26 @@
       display: block;
       float: left;
     }
-    #enroll-upload-btn {
+    // 上传按钮样式，其中webuploader样式见webuploader.scss
+    .enroll-upload-btn-container {
       display: block;
       float: right;
-      width: pxToRem(60px);
       height: 100%;
-      line-height: pxToRem(25px);
+      width: pxToRem(60px);
       text-align: center;
       font-size: pxToRem(14px);
-      padding-top: pxToRem(10px);
+      padding-top: pxToRem(12px);
     }
-
+    .enroll-upload-btn {
+      color: $white;
+      text-align: center;
+      line-height: pxToRem(30px);
+      display: block;
+      width: 100%;
+      height: pxToRem(30px);
+      background-color: $bg-red;
+      border-radius: pxToRem(3px);
+    }
   }
   #enroll-bar {
     height: pxToRem(2px);
@@ -225,7 +235,7 @@
 
 // 报名参赛-小白
 .enroll-2-page {
-  padding-top: pxToRem(43px);
+  padding-top: pxToRem(0px);
 }
 .enroll-2-name {
   border: solid $border-color 1px;

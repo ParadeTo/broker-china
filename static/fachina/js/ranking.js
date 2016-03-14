@@ -177,5 +177,27 @@ handler.voteShareActive = function() {
 
 // 执行
 $(function() {
+<<<<<<< HEAD
+=======
+
+  ///*测试登录代码*/
+  //if(!$.cookie("fachinaId")){
+  //  var params = {};
+  //  params['certType'] = '0';
+  //  params['certCode'] = '13402810264';
+  //  params['pwd'] = '666666';
+  //
+  //  J_app.ajax(J_app.api.login, params, function(data){
+  //
+  //    if(data.code === 0){
+  //      $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
+  //      console.log('登录成功！');
+  //    } else{
+  //      J_app.alert(data.message);
+  //    }
+  //  });
+  //}
+
+>>>>>>> ae0be77046595c08e1c9fba42018a3c55936151b
   handler.init();
 });
