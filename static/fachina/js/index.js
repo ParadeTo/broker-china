@@ -168,22 +168,22 @@ handler.voteShareActive = function() {
 $(function() {
 
   /*测试登录代码*/
-  if(!$.cookie("fachinaId")){
-    var params = {};
-    params['certType'] = '0';
-    params['certCode'] = '15878763719';
-    params['pwd'] = '666666';
-
-    J_app.ajax(J_app.api.login, params, function(data){
-
-      if(data.code === 0){
-        $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        console.log('登录成功！');
-      } else{
-        J_app.alert(data.message);
-      }
-    });
-  }
+  //if(!$.cookie("fachinaId")){
+  //  var params = {};
+  //  params['certType'] = '0';
+  //  params['certCode'] = '15878763719';
+  //  params['pwd'] = '666666';
+  //
+  //  J_app.ajax(J_app.api.login, params, function(data){
+  //
+  //    if(data.code === 0){
+  //      $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
+  //      console.log('登录成功！');
+  //    } else{
+  //      J_app.alert(data.message);
+  //    }
+  //  });
+  //}
 
   // 用户状态
   if(!$.cookie("fachinaId")){

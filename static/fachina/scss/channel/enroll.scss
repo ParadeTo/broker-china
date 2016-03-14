@@ -2,16 +2,16 @@
 
 // 报名参赛-入口
 .enroll-title {
-  height: pxToRem(153px);
-  padding-top: pxToRem(10px);
+  padding-top: pxToRem(36px);
   text-align: center;
   span {
-    font-size: pxToRem(20px);
+    font-size: pxToRem(16px);
     color: $red;
   }
   p {
-    font-size: pxToRem(14px);
+    font-size: pxToRem(11px);
     color: $light;
+    margin-bottom: pxToRem(37px);
   }
 }
 
