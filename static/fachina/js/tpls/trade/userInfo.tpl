@@ -8,7 +8,7 @@
   <li class="ui-col">
     <dl>
       <dt>赛季收益率</dt>
-      <dd>{{ result.yield | isNull }}</dd>
+      <dd>{{ result.yield | rate }}</dd>
     </dl>
   </li>
   <li class="ui-col">

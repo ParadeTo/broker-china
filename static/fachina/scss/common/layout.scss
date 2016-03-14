@@ -418,3 +418,23 @@ body {
     background-color: $bg-red-active;
   }
 }
+
+//微信分享提示
+.top-wrap.wx-share{
+    background: #fff;
+
+   .text {
+      padding: pxToRem(10px);
+      font-size: pxToRem(14px);
+      color: $orange;
+    }
+}
+.top-wrap.wx-share .arrows {
+  position: absolute;
+  top: pxToRem(5px);
+  right: pxToRem(10px);
+  width: pxToRem(30px);
+  height: pxToRem(30px);
+  background: url(../images/icon_share_arrows.png) no-repeat 0 0;
+  background-size: 100% 100%;
+}

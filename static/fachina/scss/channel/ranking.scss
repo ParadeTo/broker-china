@@ -4,8 +4,6 @@
 .ranking-action-wrap {
   padding: pxToRem(10px);
   border-bottom: 0 none;
-  //height: pxToRem(120px);
-  //overflow: hidden;
 }
 
 .ranking-action-box {
@@ -24,14 +22,13 @@
 .ranking-btn-box {
   padding: pxToRem(10px);
   font-size: pxToRem(12px);
-
-  .btn-red {
-    width: 100%;
-    height: pxToRem(40px);
-  }
 }
 .ranking-tabs {
   li {
     background: $white;
   }
+}
+
+.ranking-list-box {
+  border: 0 none;
 }

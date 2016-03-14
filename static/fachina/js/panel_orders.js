@@ -95,6 +95,7 @@ handler.loadHistoryOrder = function() {
   });
 };
 
+// 执行
 $(function() {
   handler.init();
 });

@@ -6,6 +6,6 @@
     {{/if}}
   </div>
   <div class="home-user-name">{{ result.uName | isNull }}</div>
-  <div class="home-user-org">{{ result.adviserOrg | isNull }}</div>
+  <div class="home-user-org">{{ result.adviserOrg }}</div>
 </div>
 {{/if}}

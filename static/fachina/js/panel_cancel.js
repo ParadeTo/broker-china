@@ -74,6 +74,7 @@ handler.cancelAction = function() {
   });
 };
 
+// 撤单提交
 handler.cancelSubmit = function(data) {
 
   function getExchType(code){
@@ -102,6 +103,7 @@ handler.cancelSubmit = function(data) {
   });
 };
 
+// 执行
 $(function() {
   handler.init();
 });

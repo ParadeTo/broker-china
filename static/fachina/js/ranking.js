@@ -14,18 +14,15 @@ handler.init = function() {
 
   // 请求广告
   J_app.adverst(2202);
+  J_app.inviteOrg($('#rankOrg'));
 
   // 请求观点列表
   handler.loadEventDetail();
   handler.loadEventRadio();
-  handler.loadRankList();
-  //handler.voteActive();
-  //handler.joinActive();
-  handler.inviteActive();
-  handler.loadListMore();
   handler.loadUserInfo();
-  handler.swiperVertical();
-  handler.loadInviteUserInfo();
+  handler.loadRankList();
+  handler.loadListMore();
+  handler.inviteActive();
 };
 
 // 获取赛事信息
@@ -77,41 +74,26 @@ handler.loadEventRadio = function() {
   });
 };
 
-// 获取用户信息
+// 获取用户信息,分享用户优先级高!
 handler.loadUserInfo = function() {
 
-  if(J_app.param.cId){
-    J_app.ajax(J_app.api.joinDetail, {}, function(data){
-      if(data.code === 0){
-        if(data.result.joinStatus === 0){
-        // 如果没参赛，显示报名按钮
-          $('#swiperMain').append(template('ranking/enrollBtn'));
-        } else{
-          $('#swiperMain').append(template('ranking/userInfo', data));
-        }
+  var params = {};
+  params['joinId'] = J_app.getUrlParam('joinId');
+
+  J_app.ajax(J_app.api.joinDetail, params, function(data){
+    if(data.code === 0){
+
+      // 判断显示的是谁，用于区分按钮行为
+      if(J_app.getUrlParam('joinId')){
+        data.result.identity = 'I';
       } else{
-        console.log(data.message);
+        data.result.identity = 'M';
       }
-    });
-  }
-};
-
-// 获取分享用户的信息
-handler.loadInviteUserInfo = function() {
-
-  var joinId = J_app.getUrlParam('joinId');
-
-  if(joinId) {
-    var params = {};
-    params['joinId'] = joinId;
-    J_app.ajax(J_app.api.joinDetail, params, function(data){
-      if(data.code === 0){
-        $('#swiperMain').append(template('ranking/userInfo', data));
-      } else{
-        console.log(data.message);
-      }
-    });
-  };
+      $('#userInfo').append(template('ranking/userInfo', data));
+    } else{
+      console.log(data.message);
+    }
+  });
 };
 
 // 获取榜单
@@ -174,16 +156,6 @@ handler.loadListMore = function() {
   });
 };
 
-// 我要参赛
-//handler.joinActive = function() {
-//
-//  $('#joinEvent').on('click', function(){
-//    J_app.checkSign(function(){
-//      window.location.href = './enroll_entry.html';
-//    })
-//  });
-//};
-
 // 转发邀请
 handler.inviteActive = function() {
   $('#inviteEvent').on('click', function(){
@@ -192,52 +164,6 @@ handler.inviteActive = function() {
     })
   });
 };
-
-// 投票
-//handler.voteActive = function() {
-//
-//  $(document).on('click', '.J-vote', function() {
-//
-//    var _this = $(this);
-//
-//    J_app.checkSign(function(){
-//
-//      var numberBox = _this.parent().find('.total-number'),
-//        number = parseInt(numberBox.html()),
-//        params = {};
-//
-//      if(_this.hasClass('J-locked')){
-//        return;
-//      }
-//      _this.addClass('J-locked');
-//
-//      params['joinId'] = _this.data('id');
-//
-//      J_app.ajax(J_app.api.vote, params, function(data){
-//
-//        _this.removeClass('J-locked');
-//
-//        if(data.code === 0){
-//
-//          J_app.alert('投票成功！');
-//
-//          numberBox.html(++number);
-//
-//          if(data.result.voteCount === 1){
-//            _this.html('再投一票');
-//          } else{
-//            _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
-//          }
-//        } else{
-//          J_app.alert(data.message);
-//        }
-//      },function(){
-//        J_app.alert('请求失败！');
-//        _this.removeClass('J-locked');
-//      });
-//    });
-//  });
-//};
 
 // 拉票
 handler.voteShareActive = function() {
@@ -249,46 +175,7 @@ handler.voteShareActive = function() {
   });
 };
 
-//主屏区向上翻滚
-handler.swiperVertical = function() {
-  // 滑动切换效果
- // function addSwiping() {
-    var options = {
-        direction: 'vertical',
-        loop: true,
-        pagination: '#swiperCtrls',
-        nextButton: '#swiperNext',
-        prevButton: '#swiperPrev',
-        paginationClickable: false,
-        spaceBetween: 0,
-        centeredSlides: true,
-        autoplay: 5000,
-        autoplayDisableOnInteraction: false
-      },
-    swiperVer = new Swiper('#swiperBox', options);
- // }
-  //addSwiping();
-};
-
+// 执行
 $(function() {
-
-  /*测试登录代码*/
-  if(!$.cookie("fachinaId")){
-    var params = {};
-    params['certType'] = '0';
-    params['certCode'] = '13402810264';
-    params['pwd'] = '666666';
-
-    J_app.ajax(J_app.api.login, params, function(data){
-
-      if(data.code === 0){
-        $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        console.log('登录成功！');
-      } else{
-        J_app.alert(data.message);
-      }
-    });
-  }
-
   handler.init();
 });

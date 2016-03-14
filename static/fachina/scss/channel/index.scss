@@ -136,8 +136,6 @@
 
 .index-ranking-content {
   display: none;
-  padding-bottom: pxToRem(20px);
-
   th {
     padding-left: 0;
     padding-right: 0;
@@ -156,10 +154,6 @@
   .list-item {
     padding: pxToRem(10px) pxToRem(10px) pxToRem(10px) pxToRem(32px);
     border-bottom: 1px solid $border-color;
-
-    &:last-child {
-      border-bottom: 0 none;
-    }
 
     .icon-good {
       display: block;
@@ -204,7 +198,6 @@
 }
 
 .index-link-more {
-  border-top: 1px solid $border-color;
   padding: pxToRem(10px) 0;
 }
 

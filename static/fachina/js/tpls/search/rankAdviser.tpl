@@ -29,12 +29,14 @@
   <td class="col5">
     <div class="index-td-btn">
       <span class="total-number">{{item.voteCount}}</span>
-      {{if item.voteCode === 0}}
-        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-vote">投票</a>
-      {{else if item.voteCode === 1}}
-        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-vote">再投一票</a>
+      {{if remainVote === 0}}
+        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-orange J-vote-share">帮TA拉票</a>
       {{else}}
-        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-vote-share">帮TA拉票</a>
+        {{if item.isVote === 1}}
+          <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-vote">再投1票</a>
+        {{else}}
+          <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-vote">投票</a>
+        {{/if}}
       {{/if}}
     </div>
   </td>

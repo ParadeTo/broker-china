@@ -14,15 +14,37 @@ handler.init = function() {
 
   // 请求广告
   J_app.adverst(2201);
+  J_app.inviteOrg($('#rankOrg'));
 
   // 请求观点列表
+  handler.loadUserInfo();
   handler.loadEventDetail();
   handler.loadEventRadio();
-  handler.loadViewpointList();
   handler.loadRankList();
-  //handler.voteActive();
-  //handler.joinActive();
+  handler.loadViewpointList();
   handler.inviteActive();
+};
+
+// 获取用户信息
+handler.loadUserInfo = function() {
+  if(!J_app.param.cId){
+    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+  } else{
+    J_app.ajax(J_app.api.joinDetail, {}, function(data){
+      if(data.code === 0){
+        if(data.result.joinStatus === 0){
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+        } else if(data.result.joinStatus === 1) {
+          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
+        } else if(data.result.joinStatus === 2) {
+          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
+        } else {
+          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
+        }
+        $('#joinBtnBox').empty().append(template('index/joinBtn', data));
+      }
+    });
+  }
 };
 
 // 获取赛事信息
@@ -147,15 +169,16 @@ handler.loadViewpointList = function() {
 
 // 转发邀请
 handler.inviteActive = function() {
-
   $('#inviteEvent').on('click', function(){
     J_app.checkSign(function(){
-      console.log('弹出分享提示');
+
+      // 需要区分在一起牛或者微信
+      J_app.wxShareNotice();
     })
   });
 };
 
-// 拉票
+// 投顾拉票
 handler.voteShareActive = function() {
 
   $(document).on('click', '.J-vote-share', function(){
@@ -166,50 +189,5 @@ handler.voteShareActive = function() {
 };
 
 $(function() {
-
-  /*测试登录代码*/
-  if(!$.cookie("fachinaId")){
-    var params = {};
-    params['certType'] = '0';
-    params['certCode'] = '15878763719';
-    params['pwd'] = '666666';
-
-    J_app.ajax(J_app.api.login, params, function(data){
-
-      if(data.code === 0){
-        $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        console.log('登录成功！');
-      } else{
-        J_app.alert(data.message);
-      }
-    });
-  }
-
-  // 用户状态
-  if(!$.cookie("fachinaId")){
-    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
-  } else{
-    var params = {};
-
-    //params['cId'] = $.cookie("fachinaId");
-    params['joinId'] = 1;
-
-    J_app.ajax(J_app.api.joinDetail, params, function(data){
-
-      if(data.code === 0){
-
-        if(data.result.joinStatus === 0){
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
-        } else if(data.result.joinStatus === 1) {
-          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
-        } else if(data.result.joinStatus === 2) {
-          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
-        } else {
-          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
-        }
-      }
-    });
-  }
-
   handler.init();
 });

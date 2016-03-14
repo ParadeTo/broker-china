@@ -441,12 +441,13 @@ handler.buySubmit = function() {
   });
 };
 
-// 将数组清0
+// 将数据清零
 handler.clearInput = function() {
   $('#searchInput').val('').data('code', '');
   handler.keyWordsChange();
 };
 
+// 执行
 $(function() {
   handler.init();
 });

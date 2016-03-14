@@ -23,8 +23,12 @@
   </td>
   <td>
     <div class="index-td-btn">
-      <span class="total-number">{{item.voteCount}}</span>
-      <a href="javascript:;" class="btn btn-red">关注</a>
+      <span class="total-number">{{item.favCount}}</span>
+      {{if item.isFav === 1}}
+        <a href="javascript:;" class="btn btn-gray disabled">已关注</a>
+      {{else}}
+        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-fav">关注</a>
+      {{/if}}
     </div>
   </td>
 </tr>

@@ -16,6 +16,7 @@
     isAndroid = -1 != ua.indexOf("android"), // 安卓版
     isIos = -1 != ua.indexOf("iphone") || -1 != ua.indexOf("ipad"), // IOS版
     isYiqiniu = -1 != ua.indexOf("yiqiniu"), // 一起牛APP
+    isWeixin = -1 != ua.indexOf("micromessenger"), // 一起牛APP
     host = window.location.protocol + "//" + window.location.host;
 
   // 需要配置的地方
@@ -57,6 +58,9 @@
 
     //投票
     vote: (development ? devHost : host) + "/g_adviser_api/save_vote",
+
+    //关注
+    fav: (development ? devHost : host) + "/g_adviser_api/ptf_fav",
 
     //订阅组合
     pay: (development ? devHost : host) + "/g_adviser_api/pay_request",
@@ -112,7 +116,15 @@
   };
 
   var params = {
-    cId: $.cookie("fachinaId")
+    cId: $.cookie("fachinaId"),
+    status : $.cookie('fachinaStatus')
+  };
+
+  var uAgent = {
+    android : isAndroid,
+    ios : isIos,
+    yiqiniu : isYiqiniu,
+    weixin : isWeixin
   };
 
   // 抛出对象
@@ -129,6 +141,9 @@
 
     // 公用参数
     param: params,
+
+    // 浏览器
+    agent : uAgent,
 
     /*获取url中的参数*/
     getUrlParam: function (name) {
@@ -172,7 +187,9 @@
       var params = {};
       params['params'] = {};
       params['params']['cId'] = J_app.param.cId;
+      params['params']['uAgent'] = isWeixin ? 'WX' : (isYiqiniu ? 'QN' : 'O');
       params['id'] = J_app.onlyNum();
+      params['src'] = 'GA'; // 投顾大赛来源
       $.extend(params['params'], data);
 
       $.ajax({
@@ -484,7 +501,7 @@
 
     // 判断是否登录公用方法
     checkSign: function (callback) {
-      if (!$.cookie("fachinaId")) {
+      if (!params.cId) {
         window.location.href = J_app.link.register;
       } else {
         callback();
@@ -502,47 +519,87 @@
     },
 
     // 投票
-    vote: function () {
+    voteAction: function () {
       $(document).on('click', '.J-vote', function () {
 
-        var _this = $(this);
+        var $this = $(this);
 
         J_app.checkSign(function () {
 
-          var numberBox = _this.parent().find('.total-number'),
+          var numberBox = $this.parent().find('.total-number'),
             number = parseInt(numberBox.html()),
             params = {};
 
-          if (_this.hasClass('J-locked')) {
+          if ($this.hasClass('J-locked')) {
             return;
           }
-          _this.addClass('J-locked');
+          $this.addClass('J-locked');
 
-          params['joinId'] = _this.data('id');
-
+          params['joinId'] = $this.data('id');
           J_app.ajax(J_app.api.vote, params, function (data) {
 
-            _this.removeClass('J-locked');
+            $this.removeClass('J-locked');
 
             if (data.code === 0) {
-
-              J_app.alert('投票成功！');
-
               numberBox.html(++number);
-
-              if (data.result.voteCount === 1) {
-                _this.html('再投一票');
-              } else {
-                _this.removeClass('J-vote').addClass('J-vote-share').html('帮TA拉票');
+              if(data.result.voteCount === 0){
+                $('.J-vote').removeClass('btn-red J-vote').addClass('btn-orange J-invite').html('帮TA拉票');
+              } else{
+                $this.html('再投1票');
               }
             } else {
               J_app.alert(data.message);
             }
           }, function () {
             J_app.alert('请求失败！');
-            _this.removeClass('J-locked');
+            $this.removeClass('J-locked');
           });
         });
+      });
+    },
+
+    // 拉票
+    inviteAction: function() {
+
+    },
+
+    // 关注
+    favAction: function() {
+      $(document).on('click', '.J-fav', function(){
+        var $this = $(this);
+
+        J_app.checkSign(function () {
+
+          var params = {};
+
+          if ($this.hasClass('J-locked')) {
+            return;
+          }
+          $this.addClass('J-locked');
+
+          params['joinId'] = $this.data('id');
+          J_app.ajax(J_app.api.fav, params, function (data) {
+
+            $this.removeClass('J-locked');
+
+            if (data.code === 0) {
+              $this.removeClass('btn-red J-fav').addClass('btn-gray disabled').html('已关注');
+            } else {
+              J_app.alert(data.message);
+            }
+          }, function () {
+            J_app.alert('请求失败！');
+            $this.removeClass('J-locked');
+          });
+        });
+      });
+    },
+
+    // 机构
+    inviteOrg: function(box) {
+      $(box).on('click', 'tr', function(){
+        var org = $(this).data('org') ? $(this).data('org') : '证券';
+        window.location.href = encodeURI("./search.html?keyword=" + org);
       });
     },
 
@@ -552,14 +609,14 @@
         // 获取搜索关键字
         var keyword = $("#search-keyword").val();
         if (keyword) {
-          window.location.href = encodeURI("search.html?keyword=" + keyword);
+          window.location.href = encodeURI("./search.html?keyword=" + keyword);
         } else {
           J_app.alert("请输入关键词");
         }
       });
     },
 
-    // 广告栏
+    // 广告
     // @position:广告位。首页：2201，榜单页：2202
     adverst: function (position) {
 
@@ -598,6 +655,16 @@
         } else {
           console.log(data.message);
         }
+      });
+    },
+
+    //分享提示
+    wxShareNotice : function(){
+      $(".dialog").remove();
+      $('body').append(template('common/wxShare'));
+      $(".dialog").fadeIn();
+      $(".dialog").on("click",function(){
+        $(this).remove();
       });
     }
   };
@@ -686,8 +753,9 @@
 
  // 事件绑定
   (function ($) {
+    J_app.favAction();  // 关注达人
     J_app.joinEvent();  // 报名参赛
-    J_app.vote(); // 投票
+    J_app.voteAction(); // 投票
     J_app.search(); // 搜索
   })(jQuery);
 
@@ -723,10 +791,8 @@
 
  //用户登录状态
   (function ($) {
-    if ($.cookie('fachinaStatus')) {
-      $('#userStatus').addClass('status-' + $.cookie('fachinaStatus'));
-    } else {
-      console.log('登录出错');
+    if (params.cId && params.status) {
+      $('#userStatus').addClass('status-' + params.cId);
     }
   })(jQuery);
 

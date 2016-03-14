@@ -33,6 +33,9 @@ a.btn.disabled {
 .btn-blue {
   @include button-variant($white, $bg-blue, $bg-blue);
 }
+.btn-orange {
+  @include button-variant($white, $bg-orange, $bg-orange);
+}
 .btn-white{
   @include button-variant($gray, $white, $border-color);
 }
