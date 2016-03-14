@@ -82,14 +82,12 @@ function validForm() {
     return false;
   }
   // cId
-  var cId = $.cookie("fachinaId");
-  if (!cId) {
+  if (!J_app.param.cId) {
     $('#enroll-1-error').html("请登录");
     return false;
   }
   // 返回数据
   var param = {};
-  param['cId'] = cId;
   param['realName'] = realName;
   param['idNumber'] = idNumber;
   param['licenceCode'] = licenceCode;
@@ -252,9 +250,6 @@ enrollAdviserHandler.chooseOrg = function () {
       enrollAdviserHandler.errorType.oId = false;
       $('#enroll-1-error').html("");
     }
-    // 获取机构数据
-    var param = {};
-    param['cId'] = $.cookie("fachinaId");
     // 防重发
     if ($this.hasClass('locked')) {
       return;
@@ -262,7 +257,7 @@ enrollAdviserHandler.chooseOrg = function () {
     $this.addClass('locked');
     // 加载动画
     J_app.loading(true);
-    J_app.ajax(J_app.api.organization, param, function (data) {
+    J_app.ajax(J_app.api.organization, {}, function (data) {
       $this.removeClass('locked');
       J_app.loading(false);
       if (data.code === 0) {
@@ -296,9 +291,6 @@ enrollAdviserHandler.chooseCity = function () {
       enrollAdviserHandler.errorType.cityId = false;
       $('#enroll-1-error').html("");
     }
-    // 获取省份数据
-    var param = {};
-    param['cId'] = $.cookie("fachinaId");
     // 防重发
     if ($this.hasClass('locked')) {
       return;
@@ -306,7 +298,7 @@ enrollAdviserHandler.chooseCity = function () {
     $this.addClass('locked');
     // 加载动画
     J_app.loading(true);
-    J_app.ajax(J_app.api.province, param, function (data) {
+    J_app.ajax(J_app.api.province, {}, function (data) {
       $this.removeClass('locked');
       J_app.loading(false);
       if (data.code === 0) {
@@ -396,7 +388,6 @@ enrollAdviserHandler.clickPro = function () {
     var proId = $li.data("id");
     // 获取城市列表
     var param = {};
-    param['cId'] = $.cookie("fachinaId");
     param['provId'] = proId;
     // 防重发
     if ($this.hasClass('locked')) {

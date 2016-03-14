@@ -106,7 +106,12 @@ template.helper('ordStat', function(data) {
 
 /*判断为空*/
 template.helper('isNull', function(val) {
-  return val ? val : '--';
+
+  if((typeof val === 'undefined') || val === null ){
+    return '--';
+  } else{
+    return val;
+  }
 });
 
 /*价格格式化*/

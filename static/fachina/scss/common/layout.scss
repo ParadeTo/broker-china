@@ -3,7 +3,6 @@
 body {
   background: $bg-color;
   padding-bottom: pxToRem(70px);
-  padding-top: pxToRem(43px);
 }
 
 // 对齐方式
@@ -179,6 +178,7 @@ body {
 
 .ui-header-top {
   padding: pxToRem(6px) pxToRem(10px);
+  border-top: 0 none;
 }
 
 .ui-user-status {

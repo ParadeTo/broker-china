@@ -23,8 +23,6 @@ enrollRookieHandler.rookieInit = function () {
   // 绑定报名参赛跳转
   $('#enroll-2-btn').click(function () {
     var $this = $(this);
-    // 得到cId
-    var cId = $.cookie("fachinaId");
     // 得到真实姓名
     var realName = $('#enroll-2-name').val();
     // 验证姓名
@@ -41,7 +39,6 @@ enrollRookieHandler.rookieInit = function () {
     J_app.loading(true);
     // 报名
     var params = {};
-    params['cId'] = cId;
     params['realName'] = realName;
     J_app.ajax(J_app.api.join, params, function (data) {
       $this.removeClass('locked');

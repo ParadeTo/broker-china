@@ -11,8 +11,8 @@
   </div>
   {{if result.joinStatus===0}}
   <div class="ranking-btn-box">
-    <button class="btn btn-red">我要参赛</button>
-    <a href="#">查看规则</a>
+    <a href="./enroll_entry.html" class="btn btn-red">我要参赛</a>
+    <a href="./rules.html">查看规则</a>
   </div>
   {{else if result.joinStatus===1}}
   <div class="ranking-btn-box">
@@ -23,14 +23,14 @@
       </li>
       <li class="ui-col">
         <span>赛季收益率</span>
-        <span>{{ result.uName | isNull }}</span>
+        <span>{{ result.yield | rate }}</span>
       </li>
       <li class="ui-col">
         <span>得票数</span>
         <span>{{ result.voteCount | isNull }}</span>
       </li>
     </ul>
-    <button class="btn btn-red disabled">审核中</button>
+    <button class="btn btn-gray disabled">审核中</button>
   </div>
   {{else}}
   <div class="ranking-btn-box">
@@ -41,7 +41,7 @@
       </li>
       <li class="ui-col">
         <span>赛季收益率</span>
-        <span>{{ result.uName | isNull }}</span>
+        <span>{{ result.yield | rate }}</span>
       </li>
       <li class="ui-col">
         <span>得票数</span>
@@ -50,9 +50,9 @@
     </ul>
 
     {{if result.identity === 'M'}}
-      <button class="btn btn-red">转发拉票</button>
+      <button class="btn btn-orange J-invite">转发拉票</button>
     {{else}}
-      <button class="btn btn-red">投票</button>
+      <button class="btn btn-red J-vote">投票</button>
     {{/if}}
   </div>
   {{/if}}

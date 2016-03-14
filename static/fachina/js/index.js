@@ -181,61 +181,14 @@ handler.inviteActive = function() {
 // 投顾拉票
 handler.voteShareActive = function() {
 
-  $(document).on('click', '.J-vote-share', function(){
+  $(document).on('click', '.J-invite', function(){
     // 修改微信分享地址；
 
     // 弹出分享提示
+    J_app.wxShareNotice();
   });
 };
 
 $(function() {
-<<<<<<< HEAD
-=======
-
-  /*测试登录代码*/
-  //if(!$.cookie("fachinaId")){
-  //  var params = {};
-  //  params['certType'] = '0';
-  //  params['certCode'] = '15878763719';
-  //  params['pwd'] = '666666';
-  //
-  //  J_app.ajax(J_app.api.login, params, function(data){
-  //
-  //    if(data.code === 0){
-  //      $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-  //      console.log('登录成功！');
-  //    } else{
-  //      J_app.alert(data.message);
-  //    }
-  //  });
-  //}
-
-  // 用户状态
-  if(!$.cookie("fachinaId")){
-    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
-  } else{
-    var params = {};
-
-    //params['cId'] = $.cookie("fachinaId");
-    params['joinId'] = 1;
-
-    J_app.ajax(J_app.api.joinDetail, params, function(data){
-
-      if(data.code === 0){
-
-        if(data.result.joinStatus === 0){
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
-        } else if(data.result.joinStatus === 1) {
-          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
-        } else if(data.result.joinStatus === 2) {
-          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
-        } else {
-          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
-        }
-      }
-    });
-  }
-
->>>>>>> ae0be77046595c08e1c9fba42018a3c55936151b
   handler.init();
 });

@@ -841,8 +841,9 @@
 
   //用户登录状态
   (function ($) {
-    if (params.cId && params.status) {
-      $('#userStatus').addClass('status-' + params.cId);
+    if (params.status) {
+      $('#userStatus').addClass('status-' + params.status);
+      $('#navbar').empty().append(template('common/navbar', { status:params.status }));
     }
   })(jQuery);
 
@@ -864,5 +865,4 @@
 
   //抛出对象
   factory && (global.J_app = J_app);
-})
-;
+});

@@ -72,9 +72,7 @@ handler.loadEventRadio = function() {
 // 获取个人资产
 handler.loadUserAssets = function() {
 
-  var params = {};
-  params['cId'] = $.cookie("fachinaId");
-  J_app.ajax(J_app.api.ptfDetail, params, function(data){
+  J_app.ajax(J_app.api.ptfDetail, {}, function(data){
     if(data.code === 0){
       if(data.result) {
         var cash = 0,
@@ -105,28 +103,5 @@ handler.loadUserAssets = function() {
 
 // 执行
 $(function() {
-<<<<<<< HEAD
   handler.init();
-=======
-
-  /*测试登录代码*/
-  //if(!$.cookie("fachinaId")){
-  //  var params = {};
-  //  params['certType'] = '0';
-  //  params['certCode'] = '13402810264';
-  //  params['pwd'] = '666666';
-  //
-  //  J_app.ajax(J_app.api.login, params, function(data){
-  //
-  //    if(data.code === 0){
-  //      $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-  //      console.log('登录成功！');
-  //    } else{
-  //      J_app.alert(data.message);
-  //    }
-  //  });
-  //}
-
-  tradeHandler.init();
->>>>>>> ae0be77046595c08e1c9fba42018a3c55936151b
 });
