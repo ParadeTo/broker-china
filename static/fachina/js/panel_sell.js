@@ -27,13 +27,12 @@ handler.init = function() {
   handler.priceOper();
   handler.clickSubmitBtn();
   handler.insistTouch();
+  handler.quantityOper();
 };
 
 // 加载持仓详情
 handler.loadPtfDetail = function() {
   var params = {};
-
-  params['cId'] = J_app.param.cId;
 
   J_app.ajax(J_app.api.ptfDetail, params, function(data){
 
@@ -103,7 +102,6 @@ handler.getFiveBets = function() {
   }
 
   var params = {};
-  params['cId'] = J_app.param.cId;
   params['assetId'] = $('#searchInput').data('code');
 
   J_app.ajax(J_app.api.fiveBets, params, function(data){
@@ -207,6 +205,18 @@ handler.priceOper = function() {
   $('#stkPrice').on('blur', handler.ableQuantity);
 };
 
+// 仓位选择
+handler.quantityOper = function() {
+  $('#quantitySpace').on('click', 'li', function() {
+    var tBal = parseInt($('#ableQuantity').html()),
+        position = $(this).data('den'),
+        ableBal = 0;
+    ableBal = Math.floor(tBal/(100*position))*100;
+
+    $('#stkQuantity').val(ableBal);
+  });
+};
+
 // 模拟长按事件
 handler.insistTouch = function() {
 
@@ -273,15 +283,12 @@ handler.sellSubmit = function() {
   // 需要加入确认弹窗
   var params = {};
 
-  params['cId'] = J_app.param.cId;
   params['stkCode'] = $('#searchInput').data('code').substr(0,6);
   params['ordQty'] = $('#stkQuantity').val();
   params['ordPrc'] = $('#stkPrice').val();
   params['ordBS'] = 'S';
   params['ordProp'] = 'L';
   params['exchType'] = getExchType($('#searchInput').data('code'));
-
-  console.log(params['stkCode']);
 
   J_app.ajax(J_app.api.simuOrder, params, function(data){
     if(data.code === 0){

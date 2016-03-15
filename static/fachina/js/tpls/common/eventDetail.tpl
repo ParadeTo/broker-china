@@ -5,14 +5,14 @@
     <div class="main">
       {{ if result.eventStatus === 0}}
         <div class="status">
-          距离开赛<span>{{result.day}}</span>天
+          距离开赛<span>{{result.betweenDay}}</span>天
         </div>
         <div class="number">
           参赛投顾：<span>{{result.voteCount}}</span>人
         </div>
       {{else if result.eventStatus === 1}}
         <div class="status">
-          距离结束<span>{{result.day}}</span>天
+          距离结束<span>{{result.betweenDay}}</span>天
         </div>
         <div class="number">
           累计投票：<span>{{result.voteCount}}</span>

@@ -7,37 +7,40 @@
   width: 100%;
   height: pxToRem(100px);
   overflow: hidden;
+  background: $white;
 }
 .index-advert {
   height: 100%;
-  background: url(../images/pic_banner_1.jpg) no-repeat center center;
-  background-size: auto 100%;
 }
 .index-event-info {
   position: absolute;
-  top: pxToRem(10px);
-  right: pxToRem(10px);
+  top: pxToRem(9px);
+  right: pxToRem(6px);
   z-index: 1;
   padding: pxToRem(1px);
   width: pxToRem(107px);
   background: $white;
   border-radius: pxToRem(4px);
 
-  .season {
-    font-size: pxToRem(14px);
+  h2.season {
+    padding-top: pxToRem(5px);
+    line-height: pxToRem(14px);
+    font-weight: 400;
+    font-size: pxToRem(12px);
     color: $red;
     text-align: center;
   }
 
   .date {
     display: block;
-    font-size: pxToRem(12px);
+    line-height: pxToRem(16px);
+    font-size: pxToRem(10px);
     color: $red;
     text-align: center;
   }
 
   .main {
-    padding: pxToRem(2px) 0;
+    padding-bottom: pxToRem(5px);
     color: $white;
     background: $bg-red;
     border-bottom-left-radius: pxToRem(4px);
@@ -59,6 +62,7 @@
   }
 
   .number {
+    line-height: pxToRem(16px);
     font-size: pxToRem(10px);
     text-align: center;
 
@@ -68,8 +72,11 @@
     }
   }
 }
+
 .index-join {
-  padding: pxToRem(10px) pxToRem(10px) 0 pxToRem(10px);
+  padding-top: pxToRem(10px);
+  padding-right: pxToRem(10px);
+  padding-left: pxToRem(10px);
 
   .prize {
     text-align: center;
@@ -80,20 +87,110 @@
     }
   }
 
-  .index-link-more {
-    border-top: 0 none;
+  .text-box {
+    padding: pxToRem(4px) 0;
+    font-size: pxToRem(12px);
+    color: $gray;
+
+    span {
+      margin: 0 pxToRem(2px);
+      color: $red;
+    }
   }
 }
+.index-join-event,
+.index-invite-event {
+  display: block;
+  margin: 0 auto;
+  width: pxToRem(250px);
+  height: pxToRem(38px);
+  background-image: url(../images/icon_btn_group.png);
+  background-repeat: no-repeat;
+  background-size: pxToRem(250px) auto;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+.index-join-event {
+  background-position: 0 0;
 
+  &.active {
+    background-position: 0 pxToRem(-38px);
+  }
+}
+.index-invite-event {
+  background-position: 0 pxToRem(-76px);
+
+  &.active {
+    background-position: 0 pxToRem(-114px);
+  }
+}
+.index-to-rules {
+  border-top: 0 none;
+}
+.index-event-date {
+  margin-top: pxToRem(20px);
+
+  table {
+    width: 100%;
+
+    th,
+    td {
+      border: 1px solid $border-color;
+      text-align: center;
+      background: $bg-color;
+      color: $light;
+    }
+
+    th {
+      line-height: pxToRem(18px);
+      font-size: pxToRem(12px);
+    }
+
+    td {
+      line-height: pxToRem(23px);
+      font-size: pxToRem(10px);
+    }
+  }
+
+  &.date-1 {
+    tr {
+      th:nth-child(2),
+      td:nth-child(2) {
+        background: $white;
+        color: $gray;
+      }
+    }
+  }
+
+  &.date-2 {
+    tr {
+      th:nth-child(3),
+      td:nth-child(3) {
+        background: $white;
+        color: $gray;
+      }
+    }
+  }
+
+  &.date-3 {
+    tr {
+      th:nth-child(4),
+      td:nth-child(4) {
+        background: $white;
+        color: $gray;
+      }
+    }
+  }
+}
+.index-viewpoint,
 .index-ranking {
-
   .module-title {
     border-bottom: 1px solid $border-color;
   }
 }
-
 .index-tabs {
-  padding: pxToRem(10px);
+  padding: pxToRem(7px) pxToRem(10px);
 
   .ui-col {
     width: 33.333333%;
@@ -104,7 +201,7 @@
     .nav-link,
     a {
       display: inline-block;
-      padding: pxToRem(10px) 0;
+      padding: pxToRem(6px) 0 pxToRem(4px);
       color: $gray;
       border-bottom: pxToRem(2px) solid $white;
     }
@@ -133,22 +230,9 @@
     border-bottom-right-radius: pxToRem(20px);
   }
 }
-
 .index-ranking-content {
   display: none;
-  th {
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
-
-.index-viewpoint {
-
-  .module-title {
-    border-bottom: 1px solid $border-color;
-  }
-}
-
 .index-viewpoint-list {
 
   .list-item {
@@ -196,140 +280,6 @@
     }
   }
 }
-
-.index-link-more {
-  padding: pxToRem(10px) 0;
-}
-
-.text-box {
-  padding: pxToRem(4px) 0;
-  font-size: pxToRem(12px);
-  color: $black;
-  text-align: center;
-
-  span {
-    margin: 0 pxToRem(2px);
-    color: $red;
-  }
-}
-
-.btn-box {
-  text-align: center;
-
-  button {
-    width: pxToRem(250px);
-    height: pxToRem(38px);
-    font-size: pxToRem(16px);
-    background: #ccc;
-  }
-}
-
-.index-event-date {
-  margin-top: pxToRem(15px);
-
-  table {
-    width: 100%;
-
-    th,
-    td {
-      border: 1px solid $border-color;
-      text-align: center;
-      background: $bg-color;
-      color: $light;
-    }
-
-    th {
-      line-height: pxToRem(16px);
-      font-size: pxToRem(12px);
-    }
-
-    td {
-      line-height: pxToRem(22px);
-      font-size: pxToRem(10px);
-    }
-  }
-
-  &.date-1 {
-    tr {
-      th:nth-child(2),
-      td:nth-child(2) {
-        background: $white;
-        color: $black;
-      }
-    }
-  }
-
-  &.date-2 {
-    tr {
-      th:nth-child(3),
-      td:nth-child(3) {
-        background: $white;
-        color: $black;
-      }
-    }
-  }
-
-  &.date-3 {
-    tr {
-      th:nth-child(4),
-      td:nth-child(4) {
-        background: $white;
-        color: $black;
-      }
-    }
-  }
-}
-
-.module-title {
-  padding: pxToRem(10px);
-
-  .title {
-    width: pxToRem(220px);
-  }
-
-  h2 {
-    padding-left: pxToRem(6px);
-    height: pxToRem(16px);
-    line-height: pxToRem(16px);
-    font-size: pxToRem(16px);
-    color: $black;
-    border-left: pxToRem(2px) solid $red;
-  }
-
-  .ui-more {
-    width: pxToRem(80px);
-    font-size: pxToRem(12px);
-    text-align: right;
-
-    a {
-      color: $light;
-
-      &.active {
-        color: $black;
-      }
-    }
-  }
-}
-.foot {
-  margin-top: pxToRem(10px);
-  padding: pxToRem(10px);
-
-  .foot-text {
-    margin-bottom: pxToRem(10px);
-    font-size: pxToRem(12px);
-    color: $gray;
-    line-height: pxToRem(16px);
-
-    &.last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  a {
-    color: $black;
-  }
-}
-
 .index-td-btn {
   display: inline-block;
   position: relative;
@@ -345,85 +295,5 @@
     font-size: pxToRem(8px);
     color: $light;
     text-align: center;
-  }
-}
-
-.foot-phone {
-
-  a {
-    font-size: pxToRem(12px);
-    color: $black;
-  }
-
-  i {
-    display: inline-block;
-    width: 1px;
-    height: pxToRem(12px);
-    background: $border-color;
-    margin: 0 pxToRem(10px);
-  }
-}
-
-.foot-copyright {
-  padding: pxToRem(10px) 0 pxToRem(20px);
-  font-size: pxToRem(10px);
-  color: $light;
-  text-align: center;
-}
-
-.user-info-box {
-  padding-left: pxToRem(33px);
-
-  .user-img {
-    float: left;
-    margin-left: pxToRem(-33px);
-    width: pxToRem(28px);
-    height: pxToRem(28px);
-    overflow: hidden;
-    border-radius: 50%;
-  }
-
-  .user-info {
-
-    dt {
-      text-align: left;
-      font-size: pxToRem(12px);
-    }
-
-    dd {
-      text-align: left;
-      font-size: pxToRem(10px);
-      color: $light;
-    }
-  }
-}
-
-.index-join-event,
-.index-invite-event {
-  display: block;
-  margin: 0 auto;
-  width: pxToRem(250px);
-  height: pxToRem(38px);
-  background-image: url(../images/icon_btn_group.png);
-  background-repeat: no-repeat;
-  background-size: pxToRem(250px) auto;
-  font-size: 0;
-  line-height: 0;
-  overflow: hidden;
-}
-
-.index-join-event {
-  background-position: 0 0;
-
-  &.active {
-    background-position: 0 pxToRem(-38px);
-  }
-}
-
-.index-invite-event {
-  background-position: 0 pxToRem(-76px);
-
-  &.active {
-    background-position: 0 pxToRem(-114px);
   }
 }

@@ -17,8 +17,6 @@ handler.init = function() {
 handler.loadTodayOrder = function() {
   var params = {};
 
-  params['cId'] = J_app.param.cId;
-
   J_app.ajax(J_app.api.todayOrders, params, function(data){
 
     var trHtml;
@@ -62,7 +60,6 @@ handler.loadHistoryOrder = function() {
 
     J_app.loading(true);
 
-    params['cId'] = J_app.param.cId;
     params['pageSize'] = readId;
     params['pagerId'] = 10;
 

@@ -50,7 +50,7 @@ handler.loadVoteList = function() {
   J_app.ajax(J_app.api.joinList, params, function(data){
     if(data.code === 0){
       if(data.result.datas){
-        $('#voteList').empty().append(template('home/list', data.result));
+        $('#voteList').empty().append(template('home/list', J_app.tmpData(data.result)));
         $('#voteBox').show();
       }
     }else{
@@ -73,7 +73,7 @@ handler.loadInviteList = function() {
 
       // 是否有数据
       if(data.result.datas){
-        $('#inviteList').append(template('home/list', data.result));
+        $('#inviteList').append(template('home/list', J_app.tmpData(data.result)));
 
         if($('#inviteBox').is(':hidden')){
           $('#inviteBox').show();

@@ -1,1 +1,1 @@
-<div class="ui-load-fail">请求数据失败！</div>
+<div class="text-light font-12">请求数据失败！</div>

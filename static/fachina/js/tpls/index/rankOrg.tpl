@@ -15,7 +15,7 @@
   <td>
     <div class="index-td-btn">
       <span class="total-number">{{item.voteCount}}</span>
-      <a href="javascript:;" class="btn btn-orange">拉票</a>
+      <a href="javascript:;" class="btn btn-orange btn-fixed-small">拉票</a>
     </div>
   </td>
 </tr>

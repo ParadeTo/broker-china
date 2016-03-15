@@ -2,7 +2,11 @@
 
 body {
   background: $bg-color;
-  padding-bottom: pxToRem(70px);
+  padding-bottom: pxToRem(10px);
+
+  &.fixed-header-body {
+    padding-top: pxToRem(43px);
+  }
 }
 
 // 对齐方式
@@ -45,6 +49,10 @@ body {
 .ui-more {
   padding: pxToRem(2px) 0;
   text-align: center;
+
+  &.large {
+    padding: pxToRem(10px) 0;
+  }
 
   a {
     display: block;
@@ -178,7 +186,6 @@ body {
 
 .ui-header-top {
   padding: pxToRem(6px) pxToRem(10px);
-  border-top: 0 none;
 }
 
 .ui-user-status {
@@ -210,10 +217,11 @@ body {
 }
 
 .ui-search-box {
+  margin-left: pxToRem(5px);
 
   input {
     padding: 0 pxToRem(5px);
-    width: pxToRem(200px);
+    width: pxToRem(195px);
     height: pxToRem(30px);
     line-height: pxToRem(30px);
     border: 1px solid $border-color;
@@ -230,7 +238,7 @@ body {
 }
 
 .ui-event-radio {
-  padding: pxToRem(6px) pxToRem(10px);
+  padding: pxToRem(7px) pxToRem(10px);
 
   dt {
     width: pxToRem(53px);
@@ -263,6 +271,8 @@ body {
 
 .ui-navbar {
   border-top: 1px solid $border-color;
+  height: pxToRem(36px);
+  background: $white;
 
   .ui-col {
     width: 25%;
@@ -271,9 +281,10 @@ body {
     a {
       display: inline-block;
       padding: pxToRem(10px) 0;
+      line-height: pxToRem(14px);
       font-size: pxToRem(14px);
       color: $gray;
-      cursor: position;
+      cursor: pointer;
       text-align: center;
 
       &.active {
@@ -442,4 +453,107 @@ body {
   height: pxToRem(30px);
   background: url(../images/icon_share_arrows.png) no-repeat 0 0;
   background-size: 100% 100%;
+}
+
+.module-title {
+  padding: pxToRem(10px);
+
+  .title {
+    width: pxToRem(220px);
+  }
+
+  h2 {
+    padding-left: pxToRem(6px);
+    height: pxToRem(16px);
+    line-height: pxToRem(16px);
+    font-weight: 400;
+    font-size: pxToRem(16px);
+    color: $black;
+    border-left: pxToRem(2px) solid $red;
+  }
+
+  .ui-more {
+    width: pxToRem(80px);
+    font-size: pxToRem(12px);
+    text-align: right;
+
+    a {
+      color: $light;
+
+      &.active {
+        color: $black;
+      }
+    }
+  }
+}
+.user-info-box {
+  padding-left: pxToRem(33px);
+
+  .user-img {
+    float: left;
+    margin-left: pxToRem(-33px);
+    width: pxToRem(28px);
+    height: pxToRem(28px);
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .user-info {
+    dt {
+      text-align: left;
+      font-size: pxToRem(12px);
+    }
+
+    dd {
+      text-align: left;
+      font-size: pxToRem(10px);
+      color: $light;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.foot {
+  margin-top: pxToRem(10px);
+  padding: pxToRem(10px);
+
+  .foot-text {
+    margin-bottom: pxToRem(10px);
+    font-size: pxToRem(12px);
+    color: $gray;
+    line-height: pxToRem(16px);
+
+    &.last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: $black;
+  }
+}
+
+.foot-phone {
+
+  a {
+    font-size: pxToRem(12px);
+    color: $black;
+  }
+
+  i {
+    display: inline-block;
+    width: 1px;
+    height: pxToRem(12px);
+    background: $border-color;
+    margin: 0 pxToRem(10px);
+  }
+}
+
+.foot-copyright {
+  padding: pxToRem(10px) 0 pxToRem(20px);
+  font-size: pxToRem(10px);
+  color: $light;
+  text-align: center;
 }

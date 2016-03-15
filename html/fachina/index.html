@@ -30,7 +30,20 @@
     @@include('_radio.html')
 
     <!-- 导航 -->
-    <ul class="ui-container bg-white ui-row ui-navbar" id="navbar"></ul>
+    <ul class="ui-row ui-navbar">
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link active">大赛首页</a>
+      </li>
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link" id="navHome">个人中心</a>
+      </li>
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link" id="navTrade">模拟交易</a>
+      </li>
+      <li class="ui-col">
+        <a href="./ranking.html" class="nav-link">排行榜</a>
+      </li>
+    </ul>
 
     <!-- 参赛 -->
     <div class="ui-box bg-white index-join">
@@ -40,20 +53,20 @@
         <img src="../../static/fachina/images/pic_prize_banner.jpg">
       </div>
 
-      <div class="text-box">
+      <div class="center text-box">
         每赛季<span>综合排名</span>前<span>5</span>名，获得<span>金牌投顾</span>称号<br>
         （综合得分=<span>70%</span>投资收益+<span>30%</span>得票数）
       </div>
 
-      <div class="btn-box" id="joinBtnBox">
-        <!-- <a href="javascript:;" id="joinEvent" class="index-join-event J-touch">我要参赛</a> -->
+      <div class="center btn-box" id="joinBtnBox">
+        <!-- <a href="javascript:;" class="index-join-event J-touch">我要参赛</a> -->
       </div>
 
-      <div class="text-box m-t-10">
+      <div class="center text-box m-t-10">
         邀请投顾参赛获奖，可获得 <span class="text-danger">2000</span>元
       </div>
 
-      <div class="btn-box">
+      <div class="center btn-box">
         <a href="javascript:;" id="inviteEvent" class="index-invite-event J-touch">邀请好友参赛</a>
       </div>
 
@@ -84,7 +97,7 @@
         </table>
       </div>
 
-      <div class="ui-more index-link-more">
+      <div class="ui-more large index-to-rules">
         <a href="./rules.html">查看规则详情 <em>&gt;</em></a>
       </div>
     </div>
@@ -167,7 +180,7 @@
       </div>
 
       <!-- 加载更多 -->
-      <div class="ui-more index-link-more">
+      <div class="ui-more large index-link-more">
         <a href="./ranking.html">查看更多 <em>&gt;</em></a>
       </div>
     </div>
@@ -189,7 +202,7 @@
       <ul class="index-viewpoint-list" id="viewpointList"></ul>
 
       <!-- 加载更多 -->
-      <div class="ui-more index-link-more">
+      <div class="ui-more large index-link-more">
         <a href="./viewpoint.html">查看更多 <em>&gt;</em></a>
       </div>
     </div>
@@ -197,9 +210,6 @@
 
   <!-- footer -->
   @@include('_footer.html')
-
-  <!-- 下载一起牛-->
-  @@include('_download.html')
 
   <!-- widget -->
   @@include('_gotop.html')

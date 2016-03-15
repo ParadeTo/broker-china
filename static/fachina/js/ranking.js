@@ -8,8 +8,7 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
-  // 赛事直播动画
-  $('#eventRadio').muSlideUp({time:3000});
+  // tab切换
   $('#rankTab').muTabs($('#rankContent'),handler.loadRankList);
 
   // 请求广告
@@ -17,12 +16,26 @@ handler.init = function() {
   J_app.inviteOrg($('#rankOrg'));
 
   // 请求观点列表
+  handler.loadUserInfo();
   handler.loadEventDetail();
   handler.loadEventRadio();
   handler.loadUserInfo();
   handler.loadRankList();
   handler.loadListMore();
   handler.inviteActive();
+};
+
+// 获取用户信息
+handler.loadUserInfo = function() {
+  if(!J_app.param.cId){
+    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+  } else{
+    J_app.ajax(J_app.api.joinDetail, {}, function(data){
+      if(data.code === 0){
+        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+      }
+    });
+  }
 };
 
 // 获取赛事信息
@@ -69,6 +82,7 @@ handler.loadEventRadio = function() {
     }
 
     $('#eventRadio').empty().append(listHtml);
+    $('#eventRadio').muSlideUp({time:3000});
   },function(){
     $('#eventRadio').empty().append(template('common/loadFail'));
   });
@@ -89,7 +103,7 @@ handler.loadUserInfo = function() {
       } else{
         data.result.identity = 'M';
       }
-      $('#userInfo').append(template('ranking/userInfo', data));
+      $('#userInfo').empty().append(template('ranking/userInfo', data));
     } else{
       console.log(data.message);
     }
@@ -125,7 +139,7 @@ handler.loadRankList = function(obj,readId,more) {
     var trHtml;
 
     if(data.code === 0){
-      trHtml = template('ranking/' + tplName, data.result);
+      trHtml = template('ranking/' + tplName, J_app.tmpData(data.result));
 
       if(data.result.hasNext === 1){
         $('#' + viewId).closest('.index-ranking-content').find('.ui-more').show();

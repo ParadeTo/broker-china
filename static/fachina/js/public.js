@@ -185,12 +185,11 @@
     ajax: function (url, data, callback, error) {
 
       var params = {};
-      params['params'] = {};
-      params['params']['cId'] = J_app.param.cId;
-      params['params']['uAgent'] = isWeixin ? 'WX' : (isYiqiniu ? 'QN' : 'O');
       params['id'] = J_app.onlyNum();
       params['src'] = 'GA'; // 投顾大赛来源
-      $.extend(params['params'], data);
+      params['cId'] = J_app.param.cId; // cId
+      params['uAgent'] = isWeixin ? 'WX' : (isYiqiniu ? 'QN' : 'O'); // 浏览器标识
+      params['params'] = data;
 
       $.ajax({
         type: "POST",
@@ -442,8 +441,8 @@
       _html.push('<div class="dialog-title">' + option.title + '</div>');
       _html.push('<div class="dialog-main">' + option.main + '</div>');
       _html.push('<div class="dialog-action ui-row">');
-      _html.push('<div class="ui-col col-2"><button class="btn btn-gray J-dialog-cancel">' + option.cancelBtnText + '</button></div>');
-      _html.push('<div class="ui-col col-2"><button class="btn btn-red J-dialog-sure">' + option.sureBtnText + '</button></div>');
+      _html.push('<div class="ui-col col-2"><button class="btn btn-gray btn-fixed-dialog J-dialog-cancel">' + option.cancelBtnText + '</button></div>');
+      _html.push('<div class="ui-col col-2"><button class="btn btn-red btn-fixed-dialog J-dialog-sure">' + option.sureBtnText + '</button></div>');
       _html.push('</div></div>');
 
       $('body').append(_html.join(''));
@@ -508,6 +507,14 @@
       }
     },
 
+    // 将用户状态带入模板参数
+    tmpData: function(data) {
+      if(typeof data !== 'object'){
+        data = {};
+      }
+      return $.extend({userStatus: params.status},data);
+    },
+
     // 我要参赛
     joinEvent: function () {
       $("#joinEvent").click(function () {
@@ -560,7 +567,24 @@
 
     // 拉票
     inviteAction: function() {
+      $(document).on('click', '.J-invite', function () {
 
+        var $this = $(this),
+            option = {
+              url: host + '/webstatic/fachina/ranking.html?joinId=' + $this.data('id'),
+              desc: '我参加了投顾大赛，快来帮我投票吧！',
+              title: $this.closest('tr').find('dt').html() + '邀你参加投顾大赛',
+              img: $this.closest('tr').find('img').attr('src')
+            };
+        if(isWeixin){
+          J_app.shareByWeixin(false, option.title, option.desc, option.url, option.img);
+          J_app.wxShareNotice();
+        } else if(isYiqiniu){
+          jYiqiniu.share(option);
+        } else{
+          J_app.alert('请关注券商中国');
+        }
+      });
     },
 
     // 关注
@@ -605,9 +629,9 @@
 
     // 搜索
     search: function () {
-      $("#global-search").click(function () {
+      $("#globalSearch").click(function () {
         // 获取搜索关键字
-        var keyword = $("#search-keyword").val();
+        var keyword = $("#searchKeyword").val();
         if (keyword) {
           window.location.href = encodeURI("./search.html?keyword=" + keyword);
         } else {
@@ -666,7 +690,30 @@
       $(".dialog").on("click",function(){
         $(this).remove();
       });
-    }
+    },
+
+    // 用户状态
+    fachinaStatus: function(status, type) {
+      if(type === 1){
+        if(status === 0){
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+        } else if(status === 2) {
+          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
+        } else {
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+        }
+      } else{
+        if(status === 0){
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+        } else if(status === 1) {
+          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
+        } else if(status === 2) {
+          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
+        } else {
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+        }
+      }
+   }
   };
 
   // Jquery扩展方法
@@ -700,7 +747,9 @@
       }
 
       //自动间隔时间向上滑动
-      timer = setInterval(slideUpAnimate, option.time);
+      if(scrollWrap.children().length > 1){
+        timer = setInterval(slideUpAnimate, option.time);
+      }
 
       //悬停时停止滑动，离开时继续执行
       scrollWrap.children().hover(function () {
@@ -806,6 +855,7 @@
     J_app.favAction();  // 关注达人
     J_app.joinEvent();  // 报名参赛
     J_app.voteAction(); // 投票
+    J_app.inviteAction(); // 拉票
     J_app.search(); // 搜索
   })(jQuery);
 
@@ -813,7 +863,7 @@
   (function ($) {
     // back
     $('.J-back').on('click', function () {
-      var href = $(this).data('href');
+      var href = $(this).data('src');
       if (href) {
         window.location.href = href;
       } else {
@@ -843,7 +893,35 @@
   (function ($) {
     if (params.status) {
       $('#userStatus').addClass('status-' + params.status);
-      $('#navbar').empty().append(template('common/navbar', { status:params.status }));
+
+      function navLink(home,trade) {
+        switch(params.status){
+          case '1':
+            $(home).attr('href','./register.html');
+            $(trade).attr('href','./register.html');
+            break;
+          case '2':
+            $(home).attr('href','./home.html');
+            $(trade).attr('href','./enroll_entry.html');
+            break;
+          case '3':
+            $(home).attr('href','./home');
+            $(trade).attr('href','./enroll_entry.html');
+            break;
+          case '4':
+            $(home).attr('href','./home.html');
+            $(trade).attr('href','./trade.html');
+            break;
+          case '5':
+            $(home).attr('href','./home.html');
+            $(trade).attr('href','./trade.html');
+            break;
+          default:
+            $(home).attr('href','./register.html');
+            $(trade).attr('href','./register.html');
+        }
+      }
+      navLink($('#navHome'),$('#navTrade'));
     }
   })(jQuery);
 

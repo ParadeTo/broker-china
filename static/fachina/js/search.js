@@ -21,7 +21,7 @@ searchHandler.search = function(keyword) {
     J_app.loading(false);
     var trHtml = "";
     if(data.code === 0) {
-      trHtml = template('search/rankAdviser', data.result);
+      trHtml = template('search/rankAdviser', J_app.tmpData(data.result));
       $("#rankAdviser").append(trHtml);
       if(data.result.hasNext === 0) {
         $("#search-more").hide();

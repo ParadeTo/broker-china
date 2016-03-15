@@ -3,7 +3,7 @@
 <head lang="en">
   @@include('_metas.html')
 </head>
-<body>
+<body class="fixed-header-body">
 
   <!-- header -->
   @@include('_back_refresh.html', {"title":"卖出", "src":"./trade.html"})
@@ -56,7 +56,12 @@
             <input type="text" class="form-control text sell" placeholder="数量(股)" id="stkQuantity">
             <div class="number">可卖：<span id="ableQuantity">0</span></div>
           </div>
-          <div style="margin-top: 0.44rem;">
+          <ul class="m-t-6 ui-row panel-select-btn sell" id="quantitySpace">
+            <li data-den="1" class="ui-col J-touch">全仓</li>
+            <li data-den="2" class="ui-col J-touch">1/2仓</li>
+            <li data-den="3" class="ui-col J-touch">1/3仓</li>
+          </ul>
+          <div class="m-t-6">
             <button class="btn btn-blue panel-submit" id="submitBtn">卖出</button>
           </div>
         </div>
@@ -134,9 +139,6 @@
       </div>
     </div>
   </main>
-
-  <!-- 下载一起牛-->
-  @@include('_download.html')
 
   <!-- script -->
   @@include('_scripts.html')

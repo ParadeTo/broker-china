@@ -17,8 +17,6 @@ handler.init = function() {
 handler.loadOrderList = function() {
   var params = {};
 
-  params['cId'] = J_app.param.cId;
-
   J_app.ajax(J_app.api.todayOrders, params, function(data){
 
     var trHtml;
@@ -86,7 +84,6 @@ handler.cancelSubmit = function(data) {
   };
 
   var params = {};
-  params['cId'] = J_app.param.cId;
   params['ptfTransId'] = data.tId;
   params['stkCode'] = data.code;
   params['ordSeq'] = data.seq;

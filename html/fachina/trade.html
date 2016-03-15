@@ -42,7 +42,20 @@
   <!-- main -->
   <main>
     <!-- 导航 -->
-    <ul class="ui-container bg-white ui-row ui-navbar" id="navbar"></ul>
+    <ul class="ui-row ui-navbar">
+      <li class="ui-col">
+        <a href="./index.html" class="nav-link">大赛首页</a>
+      </li>
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link" id="navHome">个人中心</a>
+      </li>
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link active" id="navTrade">模拟交易</a>
+      </li>
+      <li class="ui-col">
+        <a href="./ranking.html" class="nav-link">排行榜</a>
+      </li>
+    </ul>
 
     <!-- 个人资产 -->
     <div class="ui-box bg-white trade-assets-box">
@@ -113,9 +126,6 @@
       </table>
     </div>
   </main>
-
-  <!-- 下载一起牛-->
-  @@include('_download.html')
 
   <!-- gotop -->
   @@include('_gotop.html')

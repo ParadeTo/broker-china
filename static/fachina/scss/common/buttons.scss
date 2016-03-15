@@ -65,3 +65,18 @@ a.btn.disabled {
   width: pxToRem(220px);
   @include button-size(pxToRem(10px), pxToRem(10px), pxToRem(14px), pxToRem(4px));
 }
+
+.btn-fixed-middle {
+  width: pxToRem(200px);
+  @include button-size(pxToRem(10px), pxToRem(10px), pxToRem(14px), pxToRem(4px));
+}
+
+.btn-fixed-small {
+  @include button-size(pxToRem(4px), pxToRem(4px), pxToRem(12px), pxToRem(4px));
+  width: pxToRem(60px);
+}
+
+.btn-fixed-dialog {
+  width: pxToRem(120px);
+  @include button-size(pxToRem(6px), pxToRem(10px), pxToRem(14px), pxToRem(4px));
+}

@@ -24,7 +24,7 @@
 
 .home-statis {
   padding: pxToRem(10px) 0;
-  height: pxToRem(60px);
+  height: pxToRem(80px);
 
   .ui-col {
     width: 33.33333%;
@@ -32,8 +32,16 @@
     span {
       display: block;
       text-align: center;
-      font-size: pxToRem(12px);
       color: $gray;
+    }
+
+    .title {
+      padding: pxToRem(5px) 0;
+      font-size: pxToRem(16px);
+    }
+
+    .data {
+      font-size: pxToRem(22px);
     }
   }
 

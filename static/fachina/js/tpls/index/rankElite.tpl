@@ -18,16 +18,20 @@
   </td>
   <td>
     <div class="index-td-btn">
-      <a href="./home.html?id={{item.joinId}}" class="btn btn-white">查看</a>
+      {{if userStatus === '1'}}
+      <a href="./register.html" class="btn btn-white">查看</a>
+      {{else}}
+      <a href="./ptfshare/index.html?ptfId={{item.ptfId}}" class="btn btn-white">查看</a>
+      {{/if}}
     </div>
   </td>
   <td>
     <div class="index-td-btn">
       <span class="total-number">{{item.favCount}}</span>
       {{if item.isFav === 1}}
-        <a href="javascript:;" class="btn btn-gray disabled">已关注</a>
+        <a href="javascript:;" class="btn btn-gray btn-fixed-small disabled">已关注</a>
       {{else}}
-        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-fav">关注</a>
+        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red btn-fixed-small J-fav">关注</a>
       {{/if}}
     </div>
   </td>

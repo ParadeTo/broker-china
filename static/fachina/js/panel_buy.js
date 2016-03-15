@@ -31,14 +31,12 @@ var stkComplete = {
     if(t.length > 0){
       if(t.length > 6 && o.data('code')){
         var params = {};
-        params['cId'] = J_app.param.cId;
         params['condition'] = o.data('code').substr(0,6);
         params['flag'] = 1;
         params['pageSize'] = 6;
         J_app.ajax(J_app.api.searchMkt,params,stkComplete.displayStks);
       }else{
         var params = {};
-        params['cId'] = J_app.param.cId;
         params['condition'] = t;
         params['flag'] = 1;
         params['pageSize'] = 6;
@@ -162,8 +160,6 @@ handler.init = function() {
 handler.loadPtfDetail = function() {
   var params = {};
 
-  params['cId'] = J_app.param.cId;
-
   J_app.ajax(J_app.api.ptfDetail, params, function(data){
 
     var listHtml;
@@ -228,7 +224,6 @@ handler.getFiveBets = function() {
   }
 
   var params = {};
-  params['cId'] = J_app.param.cId;
   params['assetId'] = $('#searchInput').data('code');
 
   J_app.ajax(J_app.api.fiveBets, params, function(data){
@@ -421,7 +416,6 @@ handler.buySubmit = function() {
   // 需要加入确认弹窗
   var params = {};
 
-  params['cId'] = J_app.param.cId;
   params['stkCode'] = $('#searchInput').data('code').substr(0,6);
   params['ordQty'] = $('#stkQuantity').val();
   params['ordPrc'] = $('#stkPrice').val();

@@ -34,10 +34,23 @@
   <!-- main -->
   <main>
     <!-- 导航 -->
-    <ul class="ui-container bg-white ui-row ui-navbar" id="navbar"></ul>
+    <ul class="ui-row ui-navbar">
+      <li class="ui-col">
+        <a href="./index.html" class="nav-link">大赛首页</a>
+      </li>
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link" id="navHome">个人中心</a>
+      </li>
+      <li class="ui-col">
+        <a href="javascript:;" class="nav-link" id="navTrade">模拟交易</a>
+      </li>
+      <li class="ui-col">
+        <a href="./ranking.html" class="nav-link active">排行榜</a>
+      </li>
+    </ul>
 
     <!-- 参赛 -->
-    <div class="ui-box ranking-action-wrap" id="userInfo"><!-- 个人信息 --></div>
+    <div class="ui-box ranking-action" id="userInfo"><!-- 个人信息 --></div>
 
     <!-- tabs -->
     <div class="ui-container">
@@ -74,7 +87,9 @@
           </thead>
           <tbody id="rankAdviser"><!-- 投顾列表 --></tbody>
         </table>
-        <div data-type="A" class="ui-more">点击查看更多</div>
+        <div class="ui-more large" data-type="A" class="ui-more">
+          <a href="javascript:;">点击查看更多</a>
+        </div>
       </div>
 
       <!-- 机构 -->
@@ -91,7 +106,9 @@
           </thead>
           <tbody id="rankOrg"><!-- 机构列表 --></tbody>
         </table>
-        <div data-type="O" class="ui-more">点击查看更多</div>
+        <div class="ui-more large" data-type="O" class="ui-more">
+          <a href="javascript:;">点击查看更多</a>
+        </div>
       </div>
 
       <!-- 达人 -->
@@ -108,16 +125,15 @@
           </thead>
           <tbody id="rankElite"><!-- 达人列表 --></tbody>
         </table>
-        <div data-type="E" class="ui-more">点击查看更多</div>
+        <div class="ui-more large" data-type="E" class="ui-more">
+          <a href="javascript:;">点击查看更多</a>
+        </div>
       </div>
     </div>
   </main>
 
   <!-- footer -->
   @@include('_footer.html')
-
-  <!-- 下载一起牛-->
-  @@include('_download.html')
 
   <!-- gotop -->
   @@include('_gotop.html')

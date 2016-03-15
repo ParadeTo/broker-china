@@ -1,11 +1,12 @@
 ﻿@charset "UTF-8";
 
 // 榜单
-.ranking-action-wrap {
-  padding: pxToRem(10px);
+.ranking-action {
   border-bottom: 0 none;
 }
-
+.ranking-action-wrap {
+  padding: pxToRem(10px);
+}
 .ranking-action-box {
   padding: pxToRem(10px);
   padding-left: pxToRem(80px);
@@ -17,18 +18,54 @@
     margin-left: pxToRem(-80px);
     width: pxToRem(80px);
     text-align: center;
+
+    .name {
+      font-size: pxToRem(12px);
+      color: $light;
+    }
+
+    .org {
+      font-size: pxToRem(10px);
+      color: $light;
+    }
   }
 }
 .ranking-btn-box {
-  padding: pxToRem(10px);
   font-size: pxToRem(12px);
+
+  .ui-row {
+    height: pxToRem(45px);
+  }
+
+  .ui-col {
+    width: 33.33333%;
+    span {
+      display: block;
+      text-align: center;
+    }
+
+    .title {
+      color: $light;
+    }
+
+    .data {
+      margin-top: pxToRem(2px);
+      font-size: pxToRem(18px);
+      line-height: pxToRem(24px);
+    }
+  }
 }
 .ranking-tabs {
   li {
     background: $white;
   }
 }
-
 .ranking-list-box {
   border: 0 none;
+}
+
+.ranking-to-rules {
+  display: block;
+  padding: pxToRem(10px) 0 0;
+  color: $gray;
 }

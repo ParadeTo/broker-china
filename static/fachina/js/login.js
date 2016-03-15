@@ -66,7 +66,10 @@ loginHandler.login = function(){
 
       if(data.code === 0){
         $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        window.location.href = "index.html";
+
+        // 存储用户状态
+        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+        window.location.href = "./enroll_entry.html";
       } else {
         $("#validError").html("<p>" + data.message + "</p>");
       }

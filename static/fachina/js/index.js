@@ -8,8 +8,7 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
-  // 赛事直播动画
-  $('#eventRadio').muSlideUp({time:3000});
+  // tab切换
   $('#rankTab').muTabs($('#rankContent'),handler.loadRankList);
 
   // 请求广告
@@ -23,25 +22,19 @@ handler.init = function() {
   handler.loadRankList();
   handler.loadViewpointList();
   handler.inviteActive();
+  handler.inviteJoinGame();
 };
 
 // 获取用户信息
 handler.loadUserInfo = function() {
   if(!J_app.param.cId){
     $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+    $('#joinBtnBox').empty().append(template('index/joinBtn', {status: J_app.param.status}));
   } else{
     J_app.ajax(J_app.api.joinDetail, {}, function(data){
       if(data.code === 0){
-        if(data.result.joinStatus === 0){
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
-        } else if(data.result.joinStatus === 1) {
-          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
-        } else if(data.result.joinStatus === 2) {
-          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
-        } else {
-          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
-        }
-        $('#joinBtnBox').empty().append(template('index/joinBtn', data));
+        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+        $('#joinBtnBox').empty().append(template('index/joinBtn', {status: J_app.param.status, result: data.result}));
       }
     });
   }
@@ -92,6 +85,7 @@ handler.loadEventRadio = function() {
     }
 
     $('#eventRadio').empty().append(listHtml);
+    $('#eventRadio').muSlideUp({time:3000});
   },function(){
     $('#eventRadio').empty().append(template('common/loadFail'));
   });
@@ -125,7 +119,7 @@ handler.loadRankList = function(t) {
     var trHtml;
 
     if(data.code === 0){
-      trHtml = template('index/' + tplName, data.result);
+      trHtml = template('index/' + tplName, J_app.tmpData(data.result));
     } else{
       trHtml = template('common/error', data);
     }
@@ -167,25 +161,17 @@ handler.loadViewpointList = function() {
   });
 };
 
-// 转发邀请
-handler.inviteActive = function() {
-  $('#inviteEvent').on('click', function(){
-    J_app.checkSign(function(){
-
-      // 需要区分在一起牛或者微信
-      J_app.wxShareNotice();
-    })
-  });
-};
-
-// 投顾拉票
-handler.voteShareActive = function() {
-
+// 邀请好友参赛
+handler.inviteJoinGame = function() {
   $(document).on('click', '.J-invite', function(){
-    // 修改微信分享地址；
+    if(J_app.agent.isWeixin){
+      // 修改微信分享地址；
+      J_app.wxShareNotice();
+    } else if(J_app.agent.isYiqiniu){
 
-    // 弹出分享提示
-    J_app.wxShareNotice();
+    } else {
+      J_app.alert('请关注券商中国');
+    }
   });
 };
 

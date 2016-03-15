@@ -1,3 +1,3 @@
 {{each data as item}}
-  <a href="{{ urlHost }}/webstatic/viewpoint/index.html?viewpointId={{ item.viewpointId}}">{{ item.title }}</a>
+  <a href="{{ item.shareUrl }}">{{ item.title }}</a>
 {{/each}}

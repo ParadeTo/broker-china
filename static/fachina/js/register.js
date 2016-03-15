@@ -156,7 +156,8 @@ registerHandler.register = function() {
       if(data.code === 0) {
         // 注册成功，设置cookie，跳转到首页
         $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        window.location.href = "index.html";
+        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+        window.location.href = "./enroll_entry.html";
       } else {
         J_app.alert(data.message);
       }
