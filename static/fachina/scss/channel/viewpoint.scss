@@ -20,6 +20,7 @@
     }
     h4 {
       font-size: pxToRem(14px);
+      font-weight: normal;
       position: absolute;
       left: pxToRem(50px);
       top: pxToRem(3px);
@@ -53,6 +54,7 @@
         margin-right: pxToRem(5px);
       }
       h4 {
+        font-weight: normal;
         font-size: pxToRem(14px);
       }
     }
@@ -71,7 +73,6 @@
           max-height:100%;
         }
       }
-
     }
     .viewpoint-footer {
       height: pxToRem(10px);

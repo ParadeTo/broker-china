@@ -6,11 +6,14 @@
 var viewpointHandler = window.viewpointHandler || {};
 viewpointHandler.lastViewpointId = 0;
 
-// 处理时间
-function dealTime(data) {
+// 处理时间和分享链接
+function dealData(data) {
   var _data = data;
   for(var i=0;i<data.length;i++) {
     _data[i].viewpointTs = J_app.timeDifference(data[i].viewpointTs);
+    if(_data[i].targetId){
+      _data[i].shareUrl = _data[i].shareUrl + "&joinId=" + _data[i].targetId;
+    }
   }
   return _data;
 }
@@ -31,11 +34,11 @@ viewpointHandler.getList = function() {
     var listHtml;
     if(data.code === 0) {
       if(data.result.data.length>0) {
-        var list = dealTime(data.result.data);
+        var list = dealData(data.result.data);
         viewpointHandler.lastViewpointId = list[list.length-1].viewpointId;
         listHtml = template('viewpoint/viewpointList', {'list':list});
         $('.page').append(listHtml);
-        // 隐藏加载图片
+        // 显示点击查看更多
         $('#viewpoint-more').html("点击查看更多").show();
       } else { // 没有更多数据
         // 隐藏加载图片
@@ -72,6 +75,8 @@ viewpointHandler.getMore = function() {
 viewpointHandler.init = function() {
   // 清空观点列表
   $('.page').html("")
+  // 数据加载前点击查看更多不显示
+  $('#viewpoint-more').html("").show();
   // 获取列表
   viewpointHandler.getList();
 };
