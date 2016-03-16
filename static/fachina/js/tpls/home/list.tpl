@@ -26,7 +26,7 @@
       {{if userStatus === '1'}}
       <a href="./register.html?src=home" class="btn btn-white">查看</a>
       {{else}}
-      <a href="./ptfshare/index.html?ptfId={{item.ptfId}}" class="btn btn-white">查看</a>
+      <a href="../ptfshare/index.html?ptfId={{item.ptfId}}" class="btn btn-white">查看</a>
       {{/if}}
     </div>
   </td>
@@ -34,7 +34,7 @@
     <div class="index-td-btn">
       <span class="total-number">{{item.voteCount}}</span>
       {{if remainVote === 0}}
-        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-orange btn-fixed-small J-vote-share">帮TA拉票</a>
+        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-orange btn-fixed-small J-invite">帮TA拉票</a>
       {{else}}
         {{if item.isVote === 1}}
           <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red btn-fixed-small J-vote">再投1票</a>
