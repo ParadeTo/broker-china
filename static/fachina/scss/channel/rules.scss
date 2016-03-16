@@ -2,12 +2,19 @@
 
 // 规则页
 .rules-page {
-  padding: 0  pxToRem(12px);
+  padding: 0  pxToRem(12px) pxToRem(60px);
   h1 {
     text-align: center;
+    font-weight: 400;
+  }
+  h2 {
+    font-weight: 400;
+    font-size: pxToRem(14px);
   }
   p {
+    margin-bottom: pxToRem(10px);
     line-height: 150%;
+    font-size: pxToRem(12px);
   }
   .indent {
     text-indent: 2em;

@@ -14,12 +14,12 @@
     </div>
   </td>
   <td>
-    <span class="text-danger">{{item.yield | rate}}</span>
+    <span class="{{ item.yield | color }}">{{item.yield | rate}}</span>
   </td>
   <td>
     <div class="index-td-btn">
       {{if userStatus === '1'}}
-      <a href="./register.html" class="btn btn-white">查看</a>
+      <a href="./register.html?src=ranking" class="btn btn-white">查看</a>
       {{else}}
       <a href="./ptfshare/index.html?ptfId={{item.ptfId}}" class="btn btn-white">查看</a>
       {{/if}}

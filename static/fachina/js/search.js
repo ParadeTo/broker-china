@@ -2,20 +2,28 @@
  * 搜索结果
  * Created by ayou on 2016-03-09.
  */
-var searchHandler = window.searchHandler || {};
-searchHandler.lastId = 0;
+var handler = window.handler || {};
+handler.lastId = 0;
 // 判断是否是第一次搜索，从其他页面跳转过来
-searchHandler.keyword = "";
+handler.keyword = "";
+
+// 返回地址
+handler.goBack = function() {
+  var src = J_app.getUrlParam('src');
+  if(src){
+    $('#goBack').data('src', src + '.html');
+  }
+};
 
 // 搜索
-searchHandler.search = function(keyword) {
+handler.search = function(keyword) {
   // 加载动画
   J_app.loading(true);
   // 请求数据
   var param = {};
   param['keyword'] = keyword;
   param['count'] = 10;
-  param['readId'] = searchHandler.lastId;
+  param['readId'] = handler.lastId;
   J_app.ajax(J_app.api.searchJoin, param, function(data) {
     $("#search-more").removeClass("locked");
     J_app.loading(false);
@@ -29,7 +37,7 @@ searchHandler.search = function(keyword) {
       } else {
         $("#search-more").show();
       }
-      searchHandler.lastId = data.result.readId;
+      handler.lastId = data.result.readId;
     } else {
       J_app.alert(data.message);
     }
@@ -37,11 +45,10 @@ searchHandler.search = function(keyword) {
     J_app.loading(false);
     J_app.alert("请求数据失败");
   });
-
 };
 
 // 点击获取更多
-searchHandler.more = function() {
+handler.more = function() {
   $("#search-more").click(function() {
     var $this = $(this);
     // 防重发
@@ -50,15 +57,15 @@ searchHandler.more = function() {
     }
     $this.addClass('locked');
 
-    searchHandler.search(searchHandler.keyword);
+    handler.search(handler.keyword);
   });
 };
 
 // 绑定点击搜索事件，不刷新页面
-searchHandler.searchBtnClick = function() {
-  $("#search-btn").on("click", function() {
+handler.searchBtnClick = function() {
+  $("#searchBtn").on("click", function() {
     // 获取关键词
-    var  keyword = $("#search-keyword").val();
+    var  keyword = $("#searchKeyword").val();
     // 检查关键词
     if (!keyword) {
       J_app.alert("请输入关键词");
@@ -67,21 +74,22 @@ searchHandler.searchBtnClick = function() {
 
     // 初始化状态
     $("#rankAdviser").html("");
-    searchHandler.lastId = 0;
+    handler.lastId = 0;
     $("#search-more").hide();
 
-    searchHandler.keyword = keyword;
-    searchHandler.search(keyword);
+    handler.keyword = keyword;
+    handler.search(keyword);
   });
-}
+};
 
 $(function() {
+  handler.goBack();
   // 获取url中的关键词搜索，只执行一次
   var keyword = J_app.getUrlParam("keyword");
-  searchHandler.keyword = keyword;
-  $("#search-keyword").val(keyword);
-  searchHandler.search(keyword);
+  handler.keyword = keyword;
+  $("#searchKeyword").val(keyword);
+  handler.search(keyword);
   // 绑定事件
-  searchHandler.more();
-  searchHandler.searchBtnClick();
+  handler.more();
+  handler.searchBtnClick();
 });

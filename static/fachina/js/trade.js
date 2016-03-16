@@ -20,15 +20,12 @@ handler.init = function() {
 // 获取用户信息
 handler.loadUserInfo = function() {
 
-  var params = {};
-
-  params['joinId'] = 7;
-
-  J_app.ajax(J_app.api.joinDetail, params, function(data){
+  J_app.ajax(J_app.api.joinDetail, {}, function(data){
 
     var html;
 
     if(data.code === 0){
+      data.result.yieldColor = J_app.yieldColor(data.result.yield);
       html = template('trade/userInfo', data);
     } else{
       console.log(data.message);
@@ -75,27 +72,13 @@ handler.loadUserAssets = function() {
   J_app.ajax(J_app.api.ptfDetail, {}, function(data){
     if(data.code === 0){
       if(data.result) {
-        var cash = 0,
-          stks = data.result.stks;
+        var stks = data.result.stks;
 
-        cash = stks[stks.length-1].tBal;
+        data.result.cash = stks[stks.length-1].tBal;
         stks.pop();
 
-        for(var i=0; i<stks.length; i++){
-          if(stks[i].incBal > 0){
-            stks[i]['yieldColor'] = 'text-red';
-          } else if(stks[i].incBal < 0){
-            stks[i]['yieldColor'] = 'text-green';
-          } else {
-            stks[i]['yieldColor'] = '';
-          }
-        }
-
-        $('#totalAssets').html(data.result.mktVal);
-        $('#ableAssets').html(cash);
-        $('#totalYield').html(data.result.ttlIncRate);
-        $('#dayYield').html(data.result.tdIncRate);
         $('#stkList').append(template('trade/takeList', {stks:stks}));
+        $('#userAssets').empty().append(template('trade/userAssets', data));
       }
     }
   });

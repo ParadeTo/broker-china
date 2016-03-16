@@ -19,7 +19,7 @@
     </div>
   </td>
   <td class="col3">
-    <span class="text-danger">{{item.yield | rate}}</span>
+    <span class="{{item.yield | color}}">{{item.yield | rate}}</span>
   </td>
   <td class="col4">
     <div class="index-td-btn">
@@ -34,12 +34,12 @@
     <div class="index-td-btn">
       <span class="total-number">{{item.voteCount}}</span>
       {{if remainVote === 0}}
-        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-orange J-invite">帮TA拉票</a>
+        <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-orange btn-fixed-small J-invite">帮TA拉票</a>
       {{else}}
         {{if item.isVote === 1}}
-          <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-vote">再投1票</a>
+          <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red btn-fixed-small J-vote">再投1票</a>
         {{else}}
-          <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red J-vote">投票</a>
+          <a data-id="{{item.joinId}}" href="javascript:;" class="btn btn-red btn-fixed-small J-vote">投票</a>
         {{/if}}
       {{/if}}
     </div>

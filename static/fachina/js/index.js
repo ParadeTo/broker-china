@@ -29,6 +29,7 @@ handler.init = function() {
 handler.loadUserInfo = function() {
   if(!J_app.param.cId){
     $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+    $('#userStatus').addClass('status-1');
     $('#joinBtnBox').empty().append(template('index/joinBtn', {status: J_app.param.status}));
   } else{
     J_app.ajax(J_app.api.joinDetail, {}, function(data){

@@ -8,7 +8,7 @@
   <li class="ui-col">
     <dl>
       <dt>赛季收益率</dt>
-      <dd>{{ result.yield | rate }}</dd>
+      <dd class="{{ result.yieldColor }}">{{ result.yield | rate:true }}<em class="icon-symbol-per">%</em></dd>
     </dl>
   </li>
   <li class="ui-col">

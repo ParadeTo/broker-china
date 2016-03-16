@@ -35,11 +35,13 @@
 
     dt {
       font-size: pxToRem(14px);
-      color: $black;
+      line-height: pxToRem(16px);
+      color: $light;
     }
 
     dd {
-      font-size: pxToRem(14px);
+      font-size: pxToRem(18px);
+      line-height: pxToRem(22px);
     }
 
     dl + dl {

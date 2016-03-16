@@ -171,16 +171,6 @@ handler.loadPtfDetail = function() {
         handler.cash = stks[stks.length-1].tBal;
         stks.pop();
 
-        for(var i=0; i<stks.length; i++){
-          if(stks[i].incBal > 0){
-            stks[i]['yieldColor'] = 'text-red';
-          } else if(stks[i].incBal < 0){
-            stks[i]['yieldColor'] = 'text-green';
-          } else {
-            stks[i]['yieldColor'] = '';
-          }
-        }
-
         listHtml = template('panel/panelTake', { stks: stks});
       }
     } else{
@@ -191,7 +181,7 @@ handler.loadPtfDetail = function() {
   });
 };
 
-// 搜索条件改变，价格和数量清0
+// 搜索条件改变，价格和数量清零
 handler.keyWordsChange = function() {
   clearInterval(handler.timer);
   handler.getFiveBets();

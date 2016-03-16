@@ -3,32 +3,41 @@
 <head lang="en">
   @@include('_metas.html')
 </head>
-<body>
+<body class="fixed-header-body">
   <!-- 头部搜索栏-->
-  <div class="search-header">
-    <img class="J-touch J-back" id="fixed-header-back" data-back-href="./index.html" src="../../static/fachina/images/pic_back.png?ver=@@pageVersion"/>
-    <input id="search-keyword" type="text" class="form-control" placeholder="输入投顾／机构">
-    <button id="search-btn" class="btn btn-white search-btn" type="button">搜索</button>
-  </div>
+  <header>
+    <div class="ui-header search">
+      <div id="goBack" class="ui-header-left ui-back J-touch J-back" data-src="./index.html">返回</div>
+      <div class="ui-header-title ui-search-box">
+        <ul class="ui-row search-main">
+          <li class="ui-col">
+            <input id="searchKeyword" type="text" class="form-control" placeholder="输入投顾／机构">
+          </li>
+          <li class="ui-col">
+            <button id="searchBtn" class="btn btn-white" type="button">搜索</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
   <!-- 投顾列表-->
-  <div class="search-list index-ranking-content show" id="search-container">
-    <table class="ui-table">
+  <div class="ui-container">
+    <table class="ui-table span-block">
       <thead>
       <tr>
-        <th class="col1">综合<br/>排名</th>
-        <th class="col2">投顾<br/>机构</th>
-        <th class="col3">赛季<br/>收益率</th>
-        <th class="col4">当前持仓</th>
-        <th class="col5">投票数</th>
+        <th>综合<br/>排名</th>
+        <th>投顾<br/>机构</th>
+        <th>赛季<br/>收益率</th>
+        <th>当前持仓</th>
+        <th>投票数</th>
       </tr>
       </thead>
       <tbody id="rankAdviser"><!-- 投顾列表 --></tbody>
     </table>
   </div>
   <!-- 点击查看更多-->
-  <div id="search-more" class="view-more">
-    点击查看更多
-  </div>
+  <div id="search-more" class="view-more" style="display:none;">点击查看更多</div>
 
   <!-- script -->
   @@include('_scripts.html')

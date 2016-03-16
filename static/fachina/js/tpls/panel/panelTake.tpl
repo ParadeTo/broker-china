@@ -5,16 +5,16 @@
     <span class="font-10 text-light">{{ item.mktVal | price }}</span>
   </td>
   <td>
-    <span class="right {{ item.yieldColor }}">{{ item.incBal | price }}</span>
-    <span class="right {{ item.yieldColor }}">{{ item.hldYld | rate }}</span>
+    <span class="right {{ item.incBal | color }}">{{ item.incBal | price }}</span>
+    <span class="right {{ item.incBal | color }}">{{ item.hldYld | rate }}</span>
   </td>
   <td>
-    <span class="right {{ item.yieldColor }}">{{ item.tBal }}</span>
-    <span class="right {{ item.yieldColor }}">{{ item.aBal | notNull }}</span>
+    <span class="right {{ item.incBal | color }}">{{ item.tBal }}</span>
+    <span class="right {{ item.incBal | color }}">{{ item.aBal | notNull }}</span>
   </td>
   <td>
-    <span class="right {{ item.yieldColor }}">{{ item.costPrc }}</span>
-    <span class="right {{ item.yieldColor }}">{{ item.price }}</span>
+    <span class="right {{ item.incBal | color }}">{{ item.costPrc }}</span>
+    <span class="right {{ item.incBal | color }}">{{ item.price }}</span>
   </td>
 </tr>
 {{ /each }}

@@ -101,6 +101,10 @@ body {
   background-color: $bg-red;
   @include clearfix();
 
+  &.search {
+    padding-right: 0;
+  }
+
   .ui-header-left {
     float: left;
     margin-left: pxToRem(-48px);

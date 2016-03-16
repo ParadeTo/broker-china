@@ -7,7 +7,7 @@
     {{item.adviserOrg}}
   </td>
   <td>
-    <span class="text-danger">{{item.yield | rate}}</span>
+    <span class="{{ item.yield | color }}">{{item.yield | rate}}</span>
   </td>
   <td>
     {{item.joinNum}}

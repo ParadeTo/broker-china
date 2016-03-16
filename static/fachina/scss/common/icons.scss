@@ -86,3 +86,19 @@
 .icon-link-search {
   background-position: 0 pxToRem(-60px);
 }
+
+// 人民币符号
+.icon-symbol-rmb {
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: pxToRem(12px);
+}
+
+.icon-symbol-per {
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: pxToRem(12px);
+}
+

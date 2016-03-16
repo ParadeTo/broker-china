@@ -157,7 +157,12 @@ registerHandler.register = function() {
         // 注册成功，设置cookie，跳转到首页
         $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
         J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        window.location.href = "./enroll_entry.html";
+
+        var src = J_app.getUrlParam('src');
+        if(!src){
+          src = './index';
+        }
+        window.location.href = src + '.html';
       } else {
         J_app.alert(data.message);
       }

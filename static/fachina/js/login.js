@@ -69,7 +69,12 @@ loginHandler.login = function(){
 
         // 存储用户状态
         J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        window.location.href = "./enroll_entry.html";
+
+        var src = J_app.getUrlParam('src');
+        if(!src){
+          src = 'index';
+        }
+        window.location.href = src + '.html';
       } else {
         $("#validError").html("<p>" + data.message + "</p>");
       }

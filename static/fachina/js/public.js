@@ -112,7 +112,11 @@
   };
 
   var links = {
-    register: host + (development ? '/html/' : '/webstatic/') + 'fachina/register.html'
+    register: host + (development ? '/html/' : '/webstatic/') + 'fachina/register.html',
+    index : host + (development ? '/html/' : '/webstatic/') + 'fachina/index.html',
+    home : host + (development ? '/html/' : '/webstatic/') + 'fachina/home.html',
+    trade : host + (development ? '/html/' : '/webstatic/') + 'fachina/trade.html',
+    rank: host + (development ? '/html/' : '/webstatic/') + 'fachina/rank.html'
   };
 
   var params = {
@@ -172,12 +176,54 @@
       return num;
     },
 
+    /*价格格式化*/
+    formatCurrency: function(v) {
+      if(isNaN(v)){
+          return v;
+      }
+      v = (Math.round((v - 0) * 100)) / 100;
+      v = (v == Math.floor(v)) ? v + ".00" : ((v * 10 == Math.floor(v * 10)) ? v
+              + "0" : v);
+      v = String(v);
+      var ps = v.split('.');
+      var whole = ps[0];
+      var sub = ps[1] ? '.' + ps[1] : '.00';
+      var r = /(\d+)(\d{3})/;
+      while (r.test(whole)) {
+          whole = whole.replace(r, '$1' + ',' + '$2');
+      }
+      v = whole + sub;
+      return v;
+    },
+
+    /*格式化百分比*/
+    formatPer: function(num,noSymbol) {
+      var data;
+      if(num){
+        data = (num * 100).toFixed(2);
+      } else{
+        data = '0.00';
+      }
+      return noSymbol ? data : (data + '%');
+    },
+
     /*为空处理*/
     isNull: function (text) {
       if (typeof text === "undefined" || text === null) {
         return '';
       } else {
         return text;
+      }
+    },
+
+    /*收益颜色处理*/
+    yieldColor: function(yield) {
+      if(yield > 0){
+        return 'text-red';
+      } else if(yield < 0){
+        return 'text-green';
+      } else {
+        return '';
       }
     },
 
@@ -577,10 +623,12 @@
               img: $this.closest('tr').find('img').attr('src')
             };
         if(isWeixin){
-          J_app.shareByWeixin(false, option.title, option.desc, option.url, option.img);
-          J_app.wxShareNotice();
+          //J_app.shareByWeixin(false, option.title, option.desc, option.url, option.img);
+          //J_app.wxShareNotice();
+          J_app.alert('微信分享正在开发中...');
         } else if(isYiqiniu){
-          jYiqiniu.share(option);
+          //jYiqiniu.share(option);
+          J_app.alert('一起牛分享正在开发中...');
         } else{
           J_app.alert('请关注券商中国');
         }
@@ -629,13 +677,14 @@
 
     // 搜索
     search: function () {
-      $("#globalSearch").click(function () {
+      $("#globalSearch").on('click', function() {
         // 获取搜索关键字
         var keyword = $("#searchKeyword").val();
+        var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
         if (keyword) {
-          window.location.href = encodeURI("./search.html?keyword=" + keyword);
+          window.location.href = encodeURI("./search.html?keyword=" + keyword + '&src=' + src);
         } else {
-          J_app.alert("请输入关键词");
+          J_app.alert("请输入投顾/机构查询！");
         }
       });
     },

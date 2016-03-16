@@ -49,11 +49,24 @@ template.helper('dateFormat', function(date, format) {
 });
 
 /*格式化百分比*/
-template.helper('rate', function(data) {
-  if(data){
-    return (data * 100).toFixed(2) + '%';
+template.helper('rate', function(num,noSymbol) {
+  var data;
+  if(num){
+    data = (num * 100).toFixed(2);
   } else{
-    return '0.00%';
+    data = '0.00';
+  }
+  return noSymbol ? data : (data + '%');
+});
+
+/*收益颜色*/
+template.helper('color', function(data) {
+  if(data > 0){
+    return 'text-red';
+  } else if(data < 0){
+    return 'text-green';
+  } else{
+    return '';
   }
 });
 
