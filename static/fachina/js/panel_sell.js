@@ -32,49 +32,37 @@ handler.init = function() {
 
 // 加载持仓详情
 handler.loadPtfDetail = function() {
-  var params = {};
-
-  J_app.ajax(J_app.api.ptfDetail, params, function(data){
-
-    var listHtml;
-
+  J_app.ajax(J_app.api.ptfDetail, {}, function(data){
+    var trHtml;
     if(data.code === 0){
       if(data.result){
-
         var stks = data.result.stks;
         handler.cash = stks[stks.length-1].tBal;
         stks.pop();
-
-        listHtml = template('panel/panelTake', { stks: stks});
+        trHtml = template('panel/panelTake', { stks: stks});
       }
     } else{
       J_app.alert(data.message);
     }
 
-    $('#ptfDetail').empty().append(listHtml);
+    $('#ptfDetail').empty().append(trHtml);
   });
-};
-
-// 搜索条件改变，价格和数量清0
-handler.keyWordsChange = function() {
-  clearInterval(handler.timer);
-  handler.getFiveBets();
-  $('#stkPrice').val(0);
-  $('#ableQuantity').html(0);
-
-  handler.timer = setInterval(handler.getFiveBets, 10000);
 };
 
 // 选择持仓中的股票
 handler.selectPtfStks = function() {
 
   $('#ptfDetail').on('click', 'tr', function() {
+    clearInterval(handler.timer);
+
     var code = $(this).data('id').substr(0,6),
         name = $(this).data('name');
 
-    $('#searchInput').val(code+name).data('code',$(this).data('id'));
+    $('#searchInput').val(code+name).data('code',$(this).data('id')).data('name',name);
     $('#ableQuantity').html($(this).data('aBal'));
+    $('#stkQuantity').val(0);
     handler.getFiveBets();
+    handler.timer = setInterval(handler.getFiveBets, 10000);
   });
 };
 
@@ -152,13 +140,11 @@ handler.selectFiveBets = function() {
   // 选择五档
   $('#fiveBetsBox').on('click', 'li', function(){
     $('#stkPrice').val($(this).data('price'));
-    handler.ableQuantity(); // 计算可买数量
   });
 
   //点击涨停，跌停
   $("#priceFall,#priceRise").on("click", function(){
     $('#stkPrice').val($(this).html());
-    handler.ableQuantity(); // 计算可买数量
   });
 };
 
@@ -188,11 +174,7 @@ handler.priceOper = function() {
     }
 
     input.val(val);
-    handler.ableQuantity(); // 计算可买数量
   });
-
-  // 手动填写价格
-  $('#stkPrice').on('blur', handler.ableQuantity);
 };
 
 // 仓位选择
@@ -202,7 +184,6 @@ handler.quantityOper = function() {
         position = $(this).data('den'),
         ableBal = 0;
     ableBal = Math.floor(tBal/(100*position))*100;
-
     $('#stkQuantity').val(ableBal);
   });
 };
@@ -228,10 +209,10 @@ handler.clickSubmitBtn = function() {
   // 需要加入确认弹窗
   $('#submitBtn').on('click', function(){
     var data = {
-      name : '平安银行',
+      name : $('#searchInput').data('name'),
       asset : $('#searchInput').data('code'),
       number : $('#stkQuantity').val(),
-      price : $('#stkPrice').val()
+      tPrice : $('#stkPrice').val()
     };
 
     if(!data.asset){
@@ -239,7 +220,7 @@ handler.clickSubmitBtn = function() {
       return false;
     }
 
-    if(data.price === '0') {
+    if(data.tPrice === '0') {
       J_app.alert('请输入价格');
       return false;
     }
@@ -282,18 +263,14 @@ handler.sellSubmit = function() {
 
   J_app.ajax(J_app.api.simuOrder, params, function(data){
     if(data.code === 0){
-      handler.clearInput();
       handler.loadPtfDetail();
+      $('#searchInput').val('').data('code', '');
+      $('#stkQuantity').val(0);
+      clearInterval(handler.timer);
     } else{
       J_app.alert(data.message);
     }
   });
-};
-
-// 将数据清零
-handler.clearInput = function() {
-  $('#searchInput').val('').data('code', '');
-  handler.keyWordsChange();
 };
 
 // 执行

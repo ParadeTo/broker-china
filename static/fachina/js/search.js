@@ -7,14 +7,6 @@ handler.lastId = 0;
 // 判断是否是第一次搜索，从其他页面跳转过来
 handler.keyword = "";
 
-// 返回地址
-handler.goBack = function() {
-  var src = J_app.getUrlParam('src');
-  if(src){
-    $('#goBack').data('src', src + '.html');
-  }
-};
-
 // 搜索
 handler.search = function(keyword) {
   // 加载动画
@@ -37,6 +29,7 @@ handler.search = function(keyword) {
       } else {
         $("#search-more").show();
       }
+
       handler.lastId = data.result.readId;
     } else {
       J_app.alert(data.message);
@@ -83,7 +76,6 @@ handler.searchBtnClick = function() {
 };
 
 $(function() {
-  handler.goBack();
   // 获取url中的关键词搜索，只执行一次
   var keyword = J_app.getUrlParam("keyword");
   handler.keyword = keyword;

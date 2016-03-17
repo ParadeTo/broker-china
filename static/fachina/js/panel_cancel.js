@@ -34,7 +34,7 @@ handler.loadOrderList = function() {
       if(newStks.length > 0){
         trHtml = template('panel/panelCancel', { stks : newStks});
       } else{
-        $('.panel-cancel-list').after(template('common/noData', { message : '无可撤单委托'}));
+        $('.panel-cancel-list').after(template('common/noData', { message : '还没有数据'}));
       }
     } else{
       J_app.alert(data.message);

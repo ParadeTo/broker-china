@@ -78,7 +78,7 @@ handler.loadUserAssets = function() {
         stks.pop();
 
         $('#stkList').append(template('trade/takeList', {stks:stks}));
-        $('#userAssets').empty().append(template('trade/userAssets', data));
+        $('#userAssets').empty().append(template('trade/userStatis', data));
       }
     }
   });

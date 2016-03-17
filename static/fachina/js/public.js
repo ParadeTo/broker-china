@@ -680,9 +680,8 @@
       $("#globalSearch").on('click', function() {
         // 获取搜索关键字
         var keyword = $("#searchKeyword").val();
-        var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
         if (keyword) {
-          window.location.href = encodeURI("./search.html?keyword=" + keyword + '&src=' + src);
+          window.location.href = encodeURI("./search.html?keyword=" + keyword);
         } else {
           J_app.alert("请输入投顾/机构查询！");
         }

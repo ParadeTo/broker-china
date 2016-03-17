@@ -69,7 +69,7 @@ var stkComplete = {
       }else{
         $.each(result,function(i) {
           if(i < 3){
-            var html = '<li data-code="' + result[i].id + '" data-status="' + result[i].status + '">'
+            var html = '<li data-code="' + result[i].id + '" data-status="' + result[i].status + '" data-name="' + result[i].name + '">'
                     + result[i].name + '&nbsp;&nbsp;'
                     + result[i].id
                     + stkComplete.stkStatus(result[i].status) + '</li>';
@@ -100,11 +100,11 @@ var stkComplete = {
         }else if( status === 3){
           J_app.alert('停牌股票不能买入');
         }else{
-          $('#searchInput').data('code',$(this).data('code')).val(stk);
+          $('#searchInput').data('code',$this.data('code')).data('name',$this.data('name')).val(stk);
           stkComplete.hideResult();
 
           // 重新选择
-          handler.keyWordsChange();
+          handler.setKeywords();
         }
       }
     });
@@ -158,42 +158,36 @@ handler.init = function() {
 
 // 加载持仓详情
 handler.loadPtfDetail = function() {
-  var params = {};
+  J_app.ajax(J_app.api.ptfDetail, {}, function(data){
 
-  J_app.ajax(J_app.api.ptfDetail, params, function(data){
-
-    var listHtml;
-
+    var trHtml;
     if(data.code === 0){
       if(data.result){
-
         var stks = data.result.stks;
+
+        // 取得现金
         handler.cash = stks[stks.length-1].tBal;
         stks.pop();
-
-        listHtml = template('panel/panelTake', { stks: stks});
+        trHtml = template('panel/panelTake', { stks: stks});
       }
     } else{
       J_app.alert(data.message);
     }
 
-    $('#ptfDetail').empty().append(listHtml);
+    $('#ptfDetail').empty().append(trHtml);
   });
 };
 
 // 搜索条件改变，价格和数量清零
-handler.keyWordsChange = function() {
+handler.setKeywords = function() {
   clearInterval(handler.timer);
   handler.getFiveBets();
-  $('#stkPrice').val(0);
-  $('#ableQuantity').html(0);
-
+  $('#stkQuantity').val(0);
   handler.timer = setInterval(handler.getFiveBets, 10000);
 };
 
 // 选择持仓中的股票
 handler.selectPtfStks = function() {
-
   $('#ptfDetail').on('click', 'tr', function() {
     var code = $(this).data('id').substr(0,6);
     $('#searchInput').val(code).trigger('focus');
@@ -229,6 +223,7 @@ handler.getFiveBets = function() {
       handler.limitup = data.result.limitup;
 
       $('#stkPrice').val(data.result.price);
+      handler.ableQuantity();
 
       // 显示五档
       var ask = data.result.ask,
@@ -274,13 +269,17 @@ handler.selectFiveBets = function() {
   // 选择五档
   $('#fiveBetsBox').on('click', 'li', function(){
     $('#stkPrice').val($(this).data('price'));
-    handler.ableQuantity(); // 计算可买数量
+
+    // 计算可买数量
+    handler.ableQuantity();
   });
 
   //点击涨停，跌停
   $("#priceFall,#priceRise").on("click", function(){
     $('#stkPrice').val($(this).html());
-    handler.ableQuantity(); // 计算可买数量
+
+    // 计算可买数量
+    handler.ableQuantity();
   });
 };
 
@@ -310,7 +309,9 @@ handler.priceOper = function() {
     }
 
     input.val(val);
-    handler.ableQuantity(); // 计算可买数量
+
+    // 计算可买数量
+    handler.ableQuantity();
   });
 
   // 手动填写价格
@@ -321,7 +322,6 @@ handler.priceOper = function() {
 handler.insistTouch = function() {
 
   var timer = null;
-
   $('#quantityForm li').on('touchstart mousedown', function(){
     var $this = $(this);
     timer = setInterval(function(){
@@ -361,10 +361,10 @@ handler.clickSubmitBtn = function() {
   // 需要加入确认弹窗
   $('#submitBtn').on('click', function(){
     var data = {
-      name : '平安银行',
+      name : $('#searchInput').data('name'),
       asset : $('#searchInput').data('code'),
       number : $('#stkQuantity').val(),
-      price : $('#stkPrice').val()
+      tPrice : $('#stkPrice').val()
     };
 
     if(!data.asset){
@@ -372,7 +372,7 @@ handler.clickSubmitBtn = function() {
       return false;
     }
 
-    if(data.price === '0') {
+    if(data.tPrice === '0') {
       J_app.alert('请输入价格');
       return false;
     }
@@ -413,11 +413,9 @@ handler.buySubmit = function() {
   params['ordProp'] = 'L';
   params['exchType'] = getExchType($('#searchInput').data('code'));
 
-  console.log(params['stkCode']);
-
   J_app.ajax(J_app.api.simuOrder, params, function(data){
     if(data.code === 0){
-      handler.clearInput();
+      handler.resetInput();
       handler.loadPtfDetail();
     } else{
       J_app.alert(data.message);
@@ -426,9 +424,9 @@ handler.buySubmit = function() {
 };
 
 // 将数据清零
-handler.clearInput = function() {
+handler.resetInput = function() {
   $('#searchInput').val('').data('code', '');
-  handler.keyWordsChange();
+  handler.setKeywords();
 };
 
 // 执行

@@ -99,6 +99,7 @@
     border-left: 0 none;
     line-height: pxToRem(30px);
     text-align: center;
+    font-size: pxToRem(12px);
 
     &:first-child {
       border-left: 1px solid $border-color;
