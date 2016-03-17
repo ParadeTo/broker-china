@@ -21,7 +21,7 @@
 
   // 需要配置的地方
   var devHost = 'http://192.168.1.19',
-    development = true; // 是否开发模式，开发时配置true，上线时为false
+    development = false; // 是否开发模式，开发时配置true，上线时为false
 
   //apis
   var apis = {
@@ -120,11 +120,6 @@
     weixin : host + '/gs_api/oauth2API?redirectType=game_adviser_entry_type&src='
   };
 
-  var params = {
-    cId: 'fachinaId',
-    status : 'fachinaStatus'
-  };
-
   var uAgent = {
     android : isAndroid,
     ios : isIos,
@@ -143,9 +138,6 @@
 
     // 页面跳转
     link: links,
-
-    // 公用参数
-    param: params,
 
     // 浏览器
     agent : uAgent,
@@ -261,7 +253,7 @@
       var params = {};
       params['id'] = J_app.onlyNum();
       params['src'] = 'GA'; // 投顾大赛来源
-      params['cId'] = J_app.param.cId; // cId
+      params['cId'] = $.cookie('fachinaId'); // cId
       params['uAgent'] = isWeixin ? 'WX' : (isYiqiniu ? 'QN' : 'O'); // 浏览器标识
       params['params'] = data;
 
@@ -369,7 +361,7 @@
       if(typeof data !== 'object'){
         data = {};
       }
-      return $.extend({userStatus: params.status},data);
+      return $.extend({userStatus: $.cookie('fachinaStatus')},data);
     },
 
     //微信分享
@@ -613,7 +605,7 @@
       });
     },
 
-    // 拉票行为封装
+    // 拉票
     inviteAction: function(option) {
       if(isWeixin){
         $('.dialog').remove();
@@ -751,7 +743,7 @@
 
     // 判断是否登录公用方法
     checkSign: function (callback) {
-      if (!params.cId) {
+      if (!$.cookie('fachinaId')) {
         J_app.userLogin();
       } else {
         callback();
@@ -762,21 +754,21 @@
     fachinaStatus: function(status, type) {
       if(type === 1){
         if(status === 0){
-          $.cookie(params.status, 2, {expires:365,path:'/'});
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
         } else if(status === 2) {
-          $.cookie(params.status, 5, {expires:365,path:'/'});
+          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
         } else {
-          $.cookie(params.status, 2, {expires:365,path:'/'});
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
         }
       } else{
         if(status === 0){
-          $.cookie(params.status, 2, {expires:365,path:'/'});
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
         } else if(status === 1) {
-          $.cookie(params.status, 3, {expires:365,path:'/'});
+          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
         } else if(status === 2) {
-          $.cookie(params.status, 4, {expires:365,path:'/'});
+          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
         } else {
-          $.cookie(params.status, 2, {expires:365,path:'/'});
+          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
         }
       }
     },
@@ -787,7 +779,7 @@
         var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
         window.location.href = links.weixin + src;
       } else if(isYiqiniu){
-        J_app.atYiqiniu();
+        J_app.inYiqiniu();
       } else {
         window.location.href = links.register;
       }
@@ -799,7 +791,7 @@
         return false;
       }
 
-      if($.cookie(params.cId)){
+      if($.cookie('fachinaId')){
         J_app.ajax(apis.joinDetail, {}, function(data){
           if(data.code === 0){
             J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
@@ -810,7 +802,7 @@
     },
 
     // 在一起牛内访问
-    loginInYiqiniu: function() {
+    inYiqiniu: function() {
 
       // 请求用户信息
       function login(session) {
@@ -823,6 +815,7 @@
               window.location.href = links.register;
             } else{
               // 更新状态
+              $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
               J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
             }
           } else {
@@ -836,8 +829,63 @@
     },
 
     // 参赛封装
-    joinAction: function() {
+    joinEventAction: function() {
 
+      J_app.loading(true);
+
+      J_app.checkSign(function(){
+        if($.cookie('fachinaType') === '2'){
+          J_app.ajax(apis.join, {}, function(data){
+
+            J_app.loading(false);
+
+            if(data.code === 0){
+              J_app.alert('参赛成功！');
+            }else{
+              J_app.alert(data.message);
+            }
+          });
+        } else{
+          window.location.href = './enroll_entry.html';
+        }
+      });
+    },
+
+    // 导航权限控制
+    updateNavbar: function() {
+      var status = $.cookie('fachinaStatus');
+      if (status) {
+        $('#userStatus').addClass('status-' + status);
+
+        function navLink(home,trade) {
+          switch(status){
+            case '1':
+              $(home).attr('href','javascript:J_app.userLogin();');
+              $(trade).attr('href','javascript:J_app.joinEventAction();');
+              break;
+            case '2':
+              $(home).attr('href','./home.html');
+              $(trade).attr('href','javascript:J_app.joinEventAction();');
+              break;
+            case '3':
+              $(home).attr('href','./home');
+              $(trade).attr('href','javascript:J_app.joinEventAction();');
+              break;
+            case '4':
+              $(home).attr('href','./home.html');
+              $(trade).attr('href','./trade.html');
+              break;
+            case '5':
+              $(home).attr('href','./home.html');
+              $(trade).attr('href','./trade.html');
+              break;
+            default:
+              $(home).attr('href','javascript:J_app.userLogin();');
+              $(trade).attr('href','javascript:J_app.joinEventAction();');
+          }
+        }
+        navLink($('#navHome'),$('#navTrade'));
+      }
     }
   };
 
@@ -991,6 +1039,9 @@
 
     // 搜索
     J_app.search();
+
+    // 导航控制
+    J_app.updateNavbar();
   })(jQuery);
 
   //头部固定栏跳转
@@ -1021,42 +1072,6 @@
     }).on('touchend', '.J-touch', function () {
       $(this).removeClass('active');
     });
-  })(jQuery);
-
-  // 导航权限控制
-  (function ($) {
-    if (params.status) {
-      $('#userStatus').addClass('status-' + params.status);
-
-      function navLink(home,trade) {
-        switch(params.status){
-          case '1':
-            $(home).attr('href','./register.html');
-            $(trade).attr('href','./register.html');
-            break;
-          case '2':
-            $(home).attr('href','./home.html');
-            $(trade).attr('href','./enroll_entry.html');
-            break;
-          case '3':
-            $(home).attr('href','./home');
-            $(trade).attr('href','./enroll_entry.html');
-            break;
-          case '4':
-            $(home).attr('href','./home.html');
-            $(trade).attr('href','./trade.html');
-            break;
-          case '5':
-            $(home).attr('href','./home.html');
-            $(trade).attr('href','./trade.html');
-            break;
-          default:
-            $(home).attr('href','./register.html');
-            $(trade).attr('href','./register.html');
-        }
-      }
-      navLink($('#navHome'),$('#navTrade'));
-    }
   })(jQuery);
 
   //回到顶部

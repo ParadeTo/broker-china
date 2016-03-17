@@ -82,7 +82,7 @@ function validForm() {
     return false;
   }
   // cId
-  if (!J_app.param.cId) {
+  if (!$.cookie('fachinaId')) {
     $('#enroll-1-error').html("请登录");
     return false;
   }

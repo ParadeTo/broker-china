@@ -9,33 +9,37 @@ var handler = window.handler || {};
 handler.init = function() {
 
   // tab切换
-  $('#rankTab').muTabs($('#rankContent'),handler.loadRankList);
+  $('#rankTab').muTabs($('#rankContent'),handler.fetchRankList);
 
   // 请求广告
   J_app.adverst(2201);
   J_app.inviteOrg($('#rankOrg'));
 
   // 请求观点列表
-  handler.loadUserInfo();
-  handler.loadEventDetail();
-  handler.loadEventRadio();
-  handler.loadRankList();
-  handler.loadViewpointList();
-  handler.inviteJoinGame();
+  handler.fetchUserInfo();
+  handler.fetchEventDetail();
+  handler.fetchEventRadio();
+  handler.fetchRankList();
+  handler.fetchViewpointList();
+  handler.inviteJoin();
   handler.inviteVote();
 };
 
 // 获取用户信息
-handler.loadUserInfo = function() {
-  if(!J_app.param.cId){
-    $.cookie(J_app.param.status, 1, {expires:365,path:'/'});
+handler.fetchUserInfo = function() {
+  if(!$.cookie('fachinaId')){
+    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+    $.cookie('fachinaType', 1, {expires:365,path:'/'});
     $('#userStatus').addClass('status-1');
-    $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie(J_app.param.status)}));
+    $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie('fachinaStatus')}));
+    J_app.updateNavbar();
   } else{
     J_app.ajax(J_app.api.joinDetail, {}, function(data){
       if(data.code === 0){
         J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        $('#joinBtnBox').empty().append(template('index/joinBtn', {status: $.cookie(J_app.param.status), result: data.result}));
+        $.cookie('fachinaType', data.result.adviserStatus, {expires:365,path:'/'});
+        $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie('fachinaStatus'), result: data.result}));
+        J_app.updateNavbar();
 
         $('body').append(template('common/hidden', data));
       }
@@ -44,26 +48,19 @@ handler.loadUserInfo = function() {
 };
 
 // 获取赛事信息
-handler.loadEventDetail = function() {
-  var params = {};
-
-  J_app.ajax(J_app.api.eventDetail, params, function(data){
-
-    var detailHtml;
-
+handler.fetchEventDetail = function() {
+  J_app.ajax(J_app.api.eventDetail, {}, function(data){
     if(data.code === 0){
-      detailHtml = template('common/eventDetail', data);
+      $('#indexBanner').append(template('common/eventDetail', data));
       $('#eventDate').addClass('date-' + data.result.season);
     } else{
-      detailHtml = template('common/error', data);
+      $('#indexBanner').append(template('common/error', data));
     }
-
-    $('#indexBanner').append(detailHtml);
   });
 };
 
 // 获取赛事直播
-handler.loadEventRadio = function() {
+handler.fetchEventRadio = function() {
 
   var params = {};
 
@@ -73,16 +70,9 @@ handler.loadEventRadio = function() {
 
   J_app.ajax(J_app.api.noteList, params, function(data){
 
-    var listData = {},
-        listHtml;
-
-    listData['urlHost'] = J_app.host;
-
+    var listHtml = '';
     if(data.code === 0){
-      if(data.result){
-        $.extend(listData, data.result);
-      }
-      listHtml = template('index/eventRadio', listData);
+      listHtml = template('index/eventRadio', data.result);
     } else{
       listHtml = template('common/error', data);
     }
@@ -95,7 +85,7 @@ handler.loadEventRadio = function() {
 };
 
 // 获取榜单
-handler.loadRankList = function(t) {
+handler.fetchRankList = function(t) {
 
   var type = t ? t.data('type') : 'A',
       params = {},
@@ -124,17 +114,17 @@ handler.loadRankList = function(t) {
     if(data.code === 0){
       trHtml = template('index/' + tplName, J_app.tmpData(data.result));
     } else{
-      trHtml = template('common/error', data);
+      trHtml = template('common/errorTable5', data);
     }
 
     $('#' + viewId).empty().append(trHtml);
   }, function(){
-    $('#' + viewId).empty().append(template('common/loadFail'));
+    $('#' + viewId).empty().append(template('common/errorTable5', {message:'请求失败'}));
   });
 };
 
 // 获取观点列表
-handler.loadViewpointList = function() {
+handler.fetchViewpointList = function() {
 
   var params = {};
 
@@ -144,16 +134,10 @@ handler.loadViewpointList = function() {
 
   J_app.ajax(J_app.api.noteList, params, function(data){
 
-    var listData = {},
-        listHtml;
-
-    listData['urlHost'] = J_app.host;
+    var listHtml;
 
     if(data.code === 0){
-      if(data.result){
-        $.extend(listData, data.result);
-      }
-      listHtml = template('index/viewpointList', listData);
+      listHtml = template('index/viewpointList', data.result);
     } else{
       listHtml = template('common/error', data);
     }
@@ -165,7 +149,7 @@ handler.loadViewpointList = function() {
 };
 
 // 邀请朋友参赛
-handler.inviteJoinGame = function() {
+handler.inviteJoin = function() {
 
   //邀请好友参赛
   $('#inviteEvent').on('click', function(){
