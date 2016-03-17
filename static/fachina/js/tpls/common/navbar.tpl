@@ -3,14 +3,14 @@
 </li>
 <li class="ui-col">
   {{ if status === '1' }}
-    <a href="./register.html" class="nav-link">个人中心</a>
+    <a href="javascript:J_app.userLogin();" class="nav-link">个人中心</a>
   {{ else }}
     <a href="./home.html" class="nav-link">个人中心</a>
   {{ /if }}
 </li>
 <li class="ui-col">
   {{ if status === '1' }}
-    <a href="./register.html" class="nav-link">模拟交易</a>
+    <a href="javascript:J_app.userLogin();" class="nav-link">模拟交易</a>
   {{ else if status === '2' || status === '3' }}
     <a href="./enroll_entry.html" class="nav-link">模拟交易</a>
   {{ else }}

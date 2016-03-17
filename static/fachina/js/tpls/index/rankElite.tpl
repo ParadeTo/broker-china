@@ -19,7 +19,7 @@
   <td>
     <div class="index-td-btn">
       {{if userStatus === '1'}}
-      <a href="./register.html?src=index" class="btn btn-white">查看</a>
+      <a href="javascript:J_app.userLogin();" class="btn btn-white">查看</a>
       {{else}}
       <a href="../ptfshare/index.html?ptfId={{item.ptfId}}" class="btn btn-white">查看</a>
       {{/if}}

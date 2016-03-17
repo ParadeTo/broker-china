@@ -116,12 +116,13 @@
     index : host + (development ? '/html/' : '/webstatic/') + 'fachina/index.html',
     home : host + (development ? '/html/' : '/webstatic/') + 'fachina/home.html',
     trade : host + (development ? '/html/' : '/webstatic/') + 'fachina/trade.html',
-    rank: host + (development ? '/html/' : '/webstatic/') + 'fachina/rank.html'
+    rank: host + (development ? '/html/' : '/webstatic/') + 'fachina/rank.html',
+    weixin : host + '/gs_api/oauth2API?redirectType=game_adviser_entry_type&src='
   };
 
   var params = {
-    cId: $.cookie("fachinaId"),
-    status : $.cookie('fachinaStatus')
+    cId: 'fachinaId',
+    status : 'fachinaStatus'
   };
 
   var uAgent = {
@@ -336,6 +337,14 @@
       return timeHtml;
     },
 
+    // 将用户状态带入模板参数
+    tmpData: function(data) {
+      if(typeof data !== 'object'){
+        data = {};
+      }
+      return $.extend({userStatus: params.status},data);
+    },
+
     //微信分享
     shareByWeixin: function (b, t, d, l, i) {
 
@@ -437,7 +446,6 @@
               console.log("----qq点击了取消------");
             }
           });
-
         });
       };
     },
@@ -503,22 +511,6 @@
       });
     },
 
-    //在一起牛APP打开
-    notAtYiqiniu: function () {
-
-      var _html = [];
-
-      _html.push('<div class="niu-at-yiqiniu">');
-      _html.push('<div class="niu-at-yiqiniu-img">');
-      _html.push('<img src="' + J_app.host + '/static/common/images/logo120.png" alt="">');
-      _html.push('</div>');
-      _html.push('<div class="niu-at-yiqiniu-text">请在一起牛客户端打开链接！</div>');
-      _html.push('</div>');
-
-      $('body').empty().append(_html.join(''));
-      $('title').text('抱歉，出错了');
-    },
-
     //加载失败
     loadFail: function () {
 
@@ -542,23 +534,6 @@
       } else {
         $('.ui-loading').remove();
       }
-    },
-
-    // 判断是否登录公用方法
-    checkSign: function (callback) {
-      if (!params.cId) {
-        window.location.href = J_app.link.register;
-      } else {
-        callback();
-      }
-    },
-
-    // 将用户状态带入模板参数
-    tmpData: function(data) {
-      if(typeof data !== 'object'){
-        data = {};
-      }
-      return $.extend({userStatus: params.status},data);
     },
 
     // 我要参赛
@@ -611,27 +586,41 @@
       });
     },
 
-    // 拉票
-    inviteAction: function() {
-      $(document).on('click', '.J-invite', function () {
+    // 拉票行为封装
+    inviteAction: function(option) {
+      if(isWeixin){
+        $('.dialog').remove();
+        $('body').append(template('common/wxShare'));
+        $('.dialog').fadeIn();
+        $('.dialog').on('click',function(){
+          $(this).remove();
+        });
 
+        J_app.shareByWeixin(false, option.title, option.desc, option.url, option.img);
+      } else if(isYiqiniu){
+        jYiqiniu.share(option);
+      } else{
+        $('.dialog').remove();
+        $('body').append(template('common/qszg'));
+        $('.dialog').fadeIn();
+        $('.dialog').on('click', function(){
+          $(this).remove();
+        });
+      }
+    },
+
+    // 表格中的帮TA拉票
+    inviteInTable: function() {
+      $(document).on('click', '.J-invite', function () {
         var $this = $(this),
-            option = {
-              url: host + '/webstatic/fachina/ranking.html?joinId=' + $this.data('id'),
-              desc: '我参加了投顾大赛，快来帮我投票吧！',
-              title: $this.closest('tr').find('dt').html() + '邀你参加投顾大赛',
-              img: $this.closest('tr').find('img').attr('src')
-            };
-        if(isWeixin){
-          //J_app.shareByWeixin(false, option.title, option.desc, option.url, option.img);
-          //J_app.wxShareNotice();
-          J_app.alert('微信分享正在开发中...');
-        } else if(isYiqiniu){
-          //jYiqiniu.share(option);
-          J_app.alert('一起牛分享正在开发中...');
-        } else{
-          J_app.alert('请关注券商中国');
-        }
+            option = {};
+
+        option['url'] = J_app.host + '/webstatic/fachina/ranking.html?joinId=' + $this.data('id');
+        option['title'] = $this.closest('tr').find('dt').html() + '邀你参加投顾大赛';
+        option['desc'] = '我参加了投顾大赛，快来帮我投票吧！';
+        option['img'] = $this.closest('tr').find('img').attr('src');
+
+        J_app.inviteAction(option);
       });
     },
 
@@ -660,18 +649,21 @@
               J_app.alert(data.message);
             }
           }, function () {
-            J_app.alert('请求失败！');
             $this.removeClass('J-locked');
           });
         });
       });
     },
 
-    // 机构
+    // 机构拉票
     inviteOrg: function(box) {
       $(box).on('click', 'tr', function(){
-        var org = $(this).data('org') ? $(this).data('org') : '证券';
-        window.location.href = encodeURI("./search.html?keyword=" + org);
+        var orgName = $(this).data('org');
+
+        if(!orgName){
+          orgName = '证券';
+        }
+        window.location.href = encodeURI("./search.html?keyword=" + orgName);
       });
     },
 
@@ -730,38 +722,96 @@
       });
     },
 
-    //分享提示
-    wxShareNotice : function(){
-      $(".dialog").remove();
-      $('body').append(template('common/wxShare'));
-      $(".dialog").fadeIn();
-      $(".dialog").on("click",function(){
-        $(this).remove();
-      });
+    // 判断是否登录公用方法
+    checkSign: function (callback) {
+      if (!params.cId) {
+        J_app.userLogin();
+      } else {
+        callback();
+      }
     },
 
     // 用户状态
     fachinaStatus: function(status, type) {
       if(type === 1){
         if(status === 0){
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+          $.cookie(params.status, 2, {expires:365,path:'/'});
         } else if(status === 2) {
-          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
+          $.cookie(params.status, 5, {expires:365,path:'/'});
         } else {
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+          $.cookie(params.status, 2, {expires:365,path:'/'});
         }
       } else{
         if(status === 0){
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+          $.cookie(params.status, 2, {expires:365,path:'/'});
         } else if(status === 1) {
-          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
+          $.cookie(params.status, 3, {expires:365,path:'/'});
         } else if(status === 2) {
-          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
+          $.cookie(params.status, 4, {expires:365,path:'/'});
         } else {
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
+          $.cookie(params.status, 2, {expires:365,path:'/'});
         }
       }
-   }
+    },
+
+    // 用户登录判定
+    userLogin: function() {
+      if(isWeixin){
+        var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
+        window.location.href = links.weixin + src;
+      } else if(isYiqiniu){
+        J_app.atYiqiniu();
+      } else {
+        window.location.href = links.register;
+      }
+    },
+
+    // 更新用户状态
+    updateUserInfo: function(callback) {
+      callback = callback ? callback : function(){
+        return false;
+      }
+
+      if($.cookie(params.cId)){
+        J_app.ajax(apis.joinDetail, {}, function(data){
+          if(data.code === 0){
+            J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+            callback();
+          }
+        });
+      }
+    },
+
+    // 在一起牛内访问
+    loginInYiqiniu: function() {
+
+      // 请求用户信息
+      function login(session) {
+        var params = {};
+        params['sessionId'] = session;
+
+        J_app.ajax(J_app.api.joinDetail, params, function(data){
+          if(data.code === 0){
+            if(data.result.adviserStatus === 0){
+              window.location.href = links.register;
+            } else{
+              // 更新状态
+              J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+            }
+          } else {
+            J_app.alert(data.message);
+          }
+        });
+      }
+
+      // 与一起牛交互
+      jYiqiniu.getSessionId(login);
+    },
+
+    // 参赛封装
+    joinAction: function() {
+
+    }
   };
 
   // Jquery扩展方法
@@ -900,11 +950,20 @@
 
   // 事件绑定
   (function ($) {
-    J_app.favAction();  // 关注达人
-    J_app.joinEvent();  // 报名参赛
-    J_app.voteAction(); // 投票
-    J_app.inviteAction(); // 拉票
-    J_app.search(); // 搜索
+    // 关注达人
+    J_app.favAction();
+
+    // 报名参赛
+    J_app.joinEvent();
+
+    // 投票
+    J_app.voteAction();
+
+    // 帮TA拉票
+    J_app.inviteInTable();
+
+    // 搜索
+    J_app.search();
   })(jQuery);
 
   //头部固定栏跳转
@@ -937,7 +996,7 @@
     });
   })(jQuery);
 
-  //用户登录状态
+  // 导航权限控制
   (function ($) {
     if (params.status) {
       $('#userStatus').addClass('status-' + params.status);

@@ -21,21 +21,23 @@ handler.init = function() {
   handler.loadEventRadio();
   handler.loadRankList();
   handler.loadViewpointList();
-  handler.inviteActive();
   handler.inviteJoinGame();
+  handler.inviteVote();
 };
 
 // 获取用户信息
 handler.loadUserInfo = function() {
   if(!J_app.param.cId){
-    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+    $.cookie(J_app.param.status, 1, {expires:365,path:'/'});
     $('#userStatus').addClass('status-1');
-    $('#joinBtnBox').empty().append(template('index/joinBtn', {status: J_app.param.status}));
+    $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie(J_app.param.status)}));
   } else{
     J_app.ajax(J_app.api.joinDetail, {}, function(data){
       if(data.code === 0){
         J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        $('#joinBtnBox').empty().append(template('index/joinBtn', {status: J_app.param.status, result: data.result}));
+        $('#joinBtnBox').empty().append(template('index/joinBtn', {status: $.cookie(J_app.param.status), result: data.result}));
+
+        $('body').append(template('common/hidden', data));
       }
     });
   }
@@ -162,17 +164,35 @@ handler.loadViewpointList = function() {
   });
 };
 
-// 邀请好友参赛
+// 邀请朋友参赛
 handler.inviteJoinGame = function() {
-  $(document).on('click', '.J-invite', function(){
-    if(J_app.agent.isWeixin){
-      // 修改微信分享地址；
-      J_app.wxShareNotice();
-    } else if(J_app.agent.isYiqiniu){
 
-    } else {
-      J_app.alert('请关注券商中国');
-    }
+  //邀请好友参赛
+  $('#inviteEvent').on('click', function(){
+    var option = {};
+
+    option['url'] = J_app.host + '/webstatic/fachina/index.html';
+    option['title'] = '参加投顾大赛，赢取万元奖金！';
+    option['desc'] = '参加投顾大赛，赢取万元奖金！';
+    option['img'] = J_app.host + '/static/fachina/images/pic_share.jpg';
+
+    J_app.inviteAction(option);
+  });
+};
+
+// 转发拉票
+handler.inviteVote = function() {
+
+  //邀请好友参赛
+  $('#joinBtnBox').on('click', '.J-invite-alone', function(){
+    var option = {};
+
+    option['url'] = J_app.host + '/webstatic/fachina/ranking.html?joinId=' + $('#globalUserJoinId').val();
+    option['title'] = $('#globalUserName').val() + '邀您参加投顾大赛';
+    option['desc'] = '我参加了投顾大赛，快来帮我投票吧！';
+    option['img'] = $('#globalUserImg').val();
+
+    J_app.inviteAction(option);
   });
 };
 
