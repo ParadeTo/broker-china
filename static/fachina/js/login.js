@@ -5,14 +5,6 @@
 
 var loginHandler = window.homeHandler || {};
 
-// 验证手机号
-function validPhone(phone) {
-  re= /^\d{11}$/;
-  if(re.test(phone)){
-    return true;
-  }
-}
-
 // 初始化
 loginHandler.init = function() {
   // 输入手机和密码时删除验证提示
@@ -34,13 +26,13 @@ loginHandler.login = function(){
     var password = $('#login-body-password').val();
 
     // 验证手机号
-    if(!validPhone(phone)) {
+    if(!J_app.validPhone(phone)) {
       $("#validError").html("<p>请输入11位手机号</p>");
       return ;
     }
 
-    // 密码为空
-    if(typeof password === undefined) {
+    // 验证密码
+    if(!J_app.validPw(password)) {
       $("#validError").html("<p>请输入密码</p>");
       return ;
     }
