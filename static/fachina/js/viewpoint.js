@@ -6,14 +6,11 @@
 var viewpointHandler = window.viewpointHandler || {};
 viewpointHandler.lastViewpointId = 0;
 
-// 处理时间和分享链接
+// 处理时间
 function dealData(data) {
   var _data = data;
   for(var i=0;i<data.length;i++) {
     _data[i].viewpointTs = J_app.timeDifference(data[i].viewpointTs);
-    if(_data[i].targetId){
-      _data[i].shareUrl = _data[i].shareUrl + "&joinId=" + _data[i].targetId;
-    }
   }
   return _data;
 }

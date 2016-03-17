@@ -150,6 +150,33 @@
     // 浏览器
     agent : uAgent,
 
+    /*验证手机号*/
+    validPhone: function (phone) {
+      var re= /^\d{11}$/;
+      if(re.test(phone)){
+        return true;
+      }
+      return false;
+    },
+
+    /*验证密码*/
+    validPw: function (pw) {
+      var re = /^\S{6,16}$/;
+      if(re.test(pw)) {
+        return true;
+      }
+      return false;
+    },
+
+    /*验证验证码*/
+    validCaptcha: function (captcha) {
+      var re = /^\S{4}$/;
+      if(re.test(captcha)) {
+        return true;
+      }
+      return false;
+    },
+
     /*获取url中的参数*/
     getUrlParam: function (name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)'),

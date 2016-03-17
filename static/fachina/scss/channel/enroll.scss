@@ -104,9 +104,13 @@
       margin: pxToRem(10px) 0;
       height: pxToRem(20px);
     }
+    span {
+      display: block;
+      float: right;
+    }
   }
   .enroll-1-select {
-    background: url(../images/pic_right_arrow.png) no-repeat right;
+    background: url("../images/pic_right_arrow.png") no-repeat right;
     background-size: pxToRem(14px) pxToRem(14px);
     &:active {
       background-color: $border-color;

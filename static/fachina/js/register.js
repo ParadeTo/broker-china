@@ -11,45 +11,33 @@ var timer;
 // 错误标记
 registerHandler.errorType = {
   phone: false,
+  authClick: false,
   auth: false,
   pw: false
 };
 
-// 验证手机号
-function validPhone(phone) {
-  var re = /^\d{11}$/;
-  if(re.test(phone)) {
-    return true;
-  }
-  return false;
-}
-
-// 验证密码
-function validPw(pw) {
-  var re = /^\S{6,16}$/;
-  if(re.test(pw)) {
-    return true;
-  }
-  return false;
-}
-
 // 验证表单
 function validForm(params) {
   // 验证手机
-  if(!validPhone(params['certCode'])) {
+  if(!J_app.validPhone(params['certCode'])) {
     $("#validError").html("<p>请输入11位手机号</p>");
     registerHandler.errorType.phone = true;
     return false;
   }
   // 验证验证码
-  if(typeof params['captcha'] === undefined || typeof params['eventId'] === undefined) {
-    $("#validError").html("<p>请输入验证码</p>");
+  if(!params['eventId']) {
+    $("#validError").html("<p>请获取验证码</p>");
+    registerHandler.errorType.authClick = true;
+    return false;
+  }
+  if(!J_app.validCaptcha(params['captcha'])) {
+    $("#validError").html("<p>请输入4位验证码，不能包含空格</p>");
     registerHandler.errorType.auth = true;
     return false;
   }
   // 验证密码
-  if(!validPw(params['pwd'])) {
-    $("#validError").html("<p>请输入6~16位密码,不能包含空格</p>");
+  if(!J_app.validPw(params['pwd'])) {
+    $("#validError").html("<p>请输入6~16位密码，不能包含空格</p>");
     registerHandler.errorType.pw = true;
     return false;
   }
@@ -73,8 +61,8 @@ function countDown(){
 registerHandler.getCaptcha = function() {
   $('#register-body-identify-btn').click(function() {
     // 清除验证提示信息
-    if(registerHandler.errorType.auth) {
-      registerHandler.errorType.auth = false;
+    if(registerHandler.errorType.authClick) {
+      registerHandler.errorType.authClick = false;
       $("#validError").html("");
     }
 
@@ -82,7 +70,7 @@ registerHandler.getCaptcha = function() {
     var $this = $(this);
 
     // 验证手机号
-    if(!validPhone(phone)){
+    if(!J_app.validPhone(phone)){
       $("#validError").html("<p>请输入11位手机号</p>");
       registerHandler.errorType.phone = true;
       return ;

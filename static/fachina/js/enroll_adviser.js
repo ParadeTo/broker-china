@@ -33,21 +33,21 @@ function validProCode(proCode) {
 // 验证表单
 function validForm() {
   // 真实姓名
-  var realName = $("#enroll-1-name").val();
+  var realName = $("#enroll-1-name").val().trim();
   if (!validName(realName)) {
     $('#enroll-1-error').html("请输入真实姓名");
     enrollAdviserHandler.errorType.realName = true;
     return false;
   }
   // 身份证号
-  var idNumber = $("#enroll-1-idNum").val();
+  var idNumber = $("#enroll-1-idNum").val().trim();
   if (!validIdNum(idNumber)) {
     $('#enroll-1-error').html("请输入正确身份证号");
     enrollAdviserHandler.errorType.idNum = true;
     return false;
   }
   // 执业编码
-  var licenceCode = $("#enroll-1-proCode").val();
+  var licenceCode = $("#enroll-1-proCode").val().trim();
   if (!validProCode(licenceCode)) {
     $('#enroll-1-error').html("请输入执业编码");
     enrollAdviserHandler.errorType.proCode = true;
@@ -61,7 +61,7 @@ function validForm() {
     return false;
   }
   // 所属营业部
-  var dept = $("#enroll-1-office").val();
+  var dept = $("#enroll-1-office").val().trim();
   if (!dept) {
     $('#enroll-1-error').html("请输入所属营业部");
     enrollAdviserHandler.errorType.office = true;
@@ -367,11 +367,10 @@ enrollAdviserHandler.clickOrg = function () {
     // 得到机构id和名字
     var oId = $(this).data("id");
     var oName = $(this).html();
-    // 将机构id和名字赋值给input
+    // 将机构id和名字赋值
     $("#enroll-1-org-id").val(oId);
-    $("#enroll-1-org").val(oName);
+    $("#enroll-1-org").html(oName);
     // 显示信息列表，隐藏机构列表
-    $("#enroll-1-org").show();
     $("#info").show();
     $("#org").hide();
   })
@@ -432,9 +431,8 @@ enrollAdviserHandler.clickCity = function () {
     enrollAdviserHandler.cityName += ' ' + cityName;
     // 将城市id和名字赋值给input
     $("#enroll-1-city-id").val(cityId);
-    $("#enroll-1-city").val(enrollAdviserHandler.cityName);
+    $("#enroll-1-city").html(enrollAdviserHandler.cityName);
     // 显示信息列表，隐藏省市和城市列表
-    $("#enroll-1-city").show();
     $("#info").show();
     $("#pro").hide();
     $("#city").hide();
