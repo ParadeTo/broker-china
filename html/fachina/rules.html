@@ -5,7 +5,7 @@
 </head>
 <body class="fixed-header-body">
   <!-- 头部固定栏-->
-  @@include('_back_home.html',{"title":"大赛规则","back-href":""})
+  @@include('_back_home.html',{"title":"大赛规则", "src":""})
   <div class="rules-page">
     <section>
       <h2>一、大赛简介</h2>
@@ -94,10 +94,14 @@
     </section>
   </div>
 
-  <!--我要参赛-->
-  @@include("_join_event.html")
-
   <!-- script -->
   @@include('_scripts.html')
+
+  <script>
+    if(($.cookie('fachinaStatus') === '1') || ($.cookie('fachinaStatus') === '2')){
+      $('body').append(template('common/joinEvent'));
+      $('.rules-page').addClass('rules-fixed-footer');
+    }
+  </script>
 </body>
 </html>

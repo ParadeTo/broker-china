@@ -15,9 +15,14 @@ handler.init = function() {
 
 // 查询可撤单列表
 handler.loadOrderList = function() {
+
+  J_app.loading(true);
+
   var params = {};
 
   J_app.ajax(J_app.api.todayOrders, params, function(data){
+
+    J_app.loading(false);
 
     var trHtml;
 
@@ -41,6 +46,9 @@ handler.loadOrderList = function() {
     }
 
     $('#cancelList').empty().append(trHtml);
+  }, function(){
+    J_app.loading(false);
+    J_app.alert('请求超时');
   });
 };
 
@@ -57,8 +65,6 @@ handler.cancelAction = function() {
       oprice : $this.data('oprc'),
       number : $this.data('oqty') - $this.data('cqty')
     };
-
-    console.log(data.price);
 
     var option = {
       title: '委托撤单确认',
@@ -83,6 +89,8 @@ handler.cancelSubmit = function(data) {
     }
   };
 
+  J_app.loading(true);
+
   var params = {};
   params['ptfTransId'] = data.tId;
   params['stkCode'] = data.code;
@@ -91,12 +99,17 @@ handler.cancelSubmit = function(data) {
 
   J_app.ajax(J_app.api.withdrawOrder, params, function(data){
 
+    J_app.loading(false);
+
     if(data.code === 0){
       J_app.alert('操作成功');
       handler.loadOrderList();
     } else{
       J_app.alert(data.message);
     }
+  }, function(){
+    J_app.loading(false);
+    J_app.alert('请求超时');
   });
 };
 

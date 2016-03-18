@@ -87,6 +87,8 @@ handler.fetchEventRadio = function() {
 // 获取榜单
 handler.fetchRankList = function(t) {
 
+  J_app.loading(true);
+
   var type = t ? t.data('type') : 'A',
       params = {},
       tplName,
@@ -109,6 +111,7 @@ handler.fetchRankList = function(t) {
 
   J_app.ajax(J_app.api.joinList, params, function(data){
 
+    J_app.loading(false);
     var trHtml;
 
     if(data.code === 0){
@@ -119,7 +122,8 @@ handler.fetchRankList = function(t) {
 
     $('#' + viewId).empty().append(trHtml);
   }, function(){
-    $('#' + viewId).empty().append(template('common/errorTable5', {message:'请求失败'}));
+    J_app.loading(false);
+    $('#' + viewId).empty().append(template('common/errorTable5', {message:'请求超时'}));
   });
 };
 
@@ -139,12 +143,12 @@ handler.fetchViewpointList = function() {
     if(data.code === 0){
       listHtml = template('index/viewpointList', data.result);
     } else{
-      listHtml = template('common/error', data);
+      listHtml = template('common/error', {message: data.message, class: 'padding'});
     }
 
     $('#viewpointList').empty().append(listHtml);
   },function(){
-    $('#viewpointList').empty().append(template('common/loadFail'));
+    $('#viewpointList').empty().append(template('common/loadFail', {class: 'padding'}));
   });
 };
 

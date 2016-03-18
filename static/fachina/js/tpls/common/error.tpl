@@ -1,3 +1,3 @@
 {{if message }}
-  <div class="ui-load-fail">{{ message }}</div>
+  <div class="ui-load-error">{{ message }}</div>
 {{/if}}

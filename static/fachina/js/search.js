@@ -30,13 +30,17 @@ handler.search = function(keyword) {
         $("#search-more").show();
       }
 
+      // 数据为空
+      if($('#rankAdviser').children().length === 0) {
+        $('#listBox').empty().append(template('common/noData', {message:'没有搜到相关数据'}));
+      }
       handler.lastId = data.result.readId;
     } else {
-      J_app.alert(data.message);
+      $("#rankAdviser").append(template('common/errorTable5', data));
     }
   }, function() {
     J_app.loading(false);
-    J_app.alert("请求数据失败");
+    $("#rankAdviser").append(template('common/errorTable5', {message:'请求超时'}));
   });
 };
 
@@ -61,7 +65,7 @@ handler.searchBtnClick = function() {
     var  keyword = $("#searchKeyword").val();
     // 检查关键词
     if (!keyword) {
-      J_app.alert("请输入关键词");
+      J_app.alert("请输入投顾/机构查询");
       return ;
     }
 

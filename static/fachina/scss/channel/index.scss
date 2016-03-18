@@ -188,6 +188,10 @@
   .module-title {
     border-bottom: 1px solid $border-color;
   }
+
+  .ui-more.large {
+    border-top: 1px solid $border-color;
+  }
 }
 .index-tabs {
   padding: pxToRem(7px) pxToRem(10px);
@@ -232,6 +236,12 @@
 }
 .index-ranking-content {
   display: none;
+
+  tbody {
+    tr:last-child {
+      border-bottom: 0 none;
+    }
+  }
 }
 .index-viewpoint-list {
 

@@ -69,7 +69,12 @@ handler.loadEventRadio = function() {
 // 获取个人资产
 handler.loadUserAssets = function() {
 
+  J_app.loading(true);
+
   J_app.ajax(J_app.api.ptfDetail, {}, function(data){
+
+    J_app.loading(false);
+
     if(data.code === 0){
       if(data.result) {
         var stks = data.result.stks;
@@ -81,6 +86,9 @@ handler.loadUserAssets = function() {
         $('#userAssets').empty().append(template('trade/userStatis', data));
       }
     }
+  }, function(){
+    J_app.loading(false);
+    J_app.alert('请求超时');
   });
 };
 

@@ -62,6 +62,15 @@
 }
 .ranking-list-box {
   border: 0 none;
+
+  .index-ranking-content {
+    border-bottom: 1px solid $border-color;
+  }
+
+  .ui-more.large {
+    display: none;
+    border-top: 1px solid $border-color;
+  }
 }
 
 .ranking-to-rules {

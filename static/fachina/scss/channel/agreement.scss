@@ -3,6 +3,10 @@
 // 协议页
 .agreement-page {
   padding: 0 pxToRem(12px);
+
+  &.agree-fixed-footer {
+    padding-bottom: pxToRem(60px);
+  }
 }
 
 .align-right {

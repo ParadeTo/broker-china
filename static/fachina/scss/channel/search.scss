@@ -4,3 +4,11 @@
   padding-top: pxToRem(6px);
   line-height: pxToRem(24px);
 }
+
+.search-list-box {
+  tbody {
+    tr:last-child {
+      border-bottom: 0 none;
+    }
+  }
+}

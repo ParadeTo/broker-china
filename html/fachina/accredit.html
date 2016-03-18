@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  @@include('_meta.html')
+  @@include('_metas.html')
 </head>
 <body>
+  <div class="ui-skip-box">登录成功，正在跳转...</div>
   <!-- script -->
-  @@include('_script.html')
-
+  @@include('_scripts.html')
   <script>
     var cId = J_app.getUrlParam('cid');
     var soure = J_app.getUrlParam('src');
 
-    $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-    window.location.href = soure ? soure : './index.html';
+    $.cookie("fachinaId", cId, {expires:365,path:'/'});
+    window.location.href = soure ? soure + '.html' : './index.html';
   </script>
 </body>
 </html>

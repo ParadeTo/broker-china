@@ -158,7 +158,12 @@ handler.init = function() {
 
 // 加载持仓详情
 handler.loadPtfDetail = function() {
+
+  J_app.loading(true);
+
   J_app.ajax(J_app.api.ptfDetail, {}, function(data){
+
+    J_app.loading(false);
 
     var trHtml;
     if(data.code === 0){
@@ -175,6 +180,9 @@ handler.loadPtfDetail = function() {
     }
 
     $('#ptfDetail').empty().append(trHtml);
+  }, function(){
+    J_app.loading(false);
+    J_app.alert('请求超时');
   });
 };
 
@@ -256,7 +264,7 @@ handler.getFiveBets = function() {
       // 执行选择五档
       handler.selectFiveBets();
     } else{
-      J_app.alert(data.message);
+      console.log(data.message);
     }
   });
 };
@@ -394,6 +402,8 @@ handler.clickSubmitBtn = function() {
 // 买入
 handler.buySubmit = function() {
 
+  J_app.loading(true);
+
   //交易市场
   function getExchType(code){
     if(/SH/.test(code)){
@@ -414,19 +424,25 @@ handler.buySubmit = function() {
   params['exchType'] = getExchType($('#searchInput').data('code'));
 
   J_app.ajax(J_app.api.simuOrder, params, function(data){
+
+    J_app.loading(false);
+
     if(data.code === 0){
       handler.resetInput();
       handler.loadPtfDetail();
     } else{
       J_app.alert(data.message);
     }
+  }, function(){
+    J_app.loading(false);
+    J_app.alert('请求超时');
   });
 };
 
 // 将数据清零
 handler.resetInput = function() {
-  $('#searchInput').val('').data('code', '');
   handler.setKeywords();
+  $('#searchInput').val('').data('code', '');
 };
 
 // 执行

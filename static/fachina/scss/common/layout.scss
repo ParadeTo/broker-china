@@ -83,11 +83,15 @@ body {
   background: url(../images/icon_gotop.png) no-repeat center center;
   background-size: 100% 100%;
 }
+.ui-load-error,
 .ui-load-fail {
-  padding: pxToRem(10px) 0;
   font-size: pxToRem(12px);
   text-align: center;
   color: $light;
+
+  &.padding {
+    padding: pxToRem(10px) 0;
+  }
 }
 
 .ui-header {
@@ -417,26 +421,12 @@ body {
 
 // 我要参赛悬浮栏
 .join-event-bg {
-  height: pxToRem(60px);
   position: fixed;
   bottom: 0;
-  background-color: $bg-black;
-  width: pxToRem(320px);
-}
-
-.join-event-btn {
-  margin: pxToRem(10px) auto;
-  color: $white;
-  background-color: $bg-red;
+  padding: pxToRem(10px);
   text-align: center;
-  line-height: pxToRem(40px);
-  height: pxToRem(40px);
-  width: pxToRem(150px);
-  border-radius: pxToRem(3px);
-  font-size: pxToRem(16px);
-  &.active {
-    background-color: $bg-red-active;
-  }
+  width: pxToRem(320px);
+  background-color: $bg-black;
 }
 
 //微信分享提示
@@ -567,4 +557,14 @@ body {
     width: pxToRem(250px);
     height: pxToRem(250px);
   }
+}
+.ui-skip-box {
+  margin: pxToRem(100px) auto 0;
+  padding: pxToRem(15px) 0;
+  width: pxToRem(220px);
+  text-align: center;
+  font-size: pxToRem(12px);
+  color: $light;
+  background: $white;
+  border: 1px solid $border-color;
 }

@@ -5,20 +5,26 @@
 </head>
 <body class="fixed-header-body">
   <!-- 头部固定栏-->
-  @@include('_back_home.html',{"title":"用户协议","back-href":""})
+  @@include('_back_home.html',{"title":"用户协议", "src":""})
 
-
-    <div class="agreement-page"></div>
-
-  <!-- 我要参赛-->
-  @@include("_join_event.html")
+  <div class="agreement-page"></div>
 
   <!-- script -->
   @@include('_scripts.html')
+
   <script>
     $(function(){
-      $(".agreement-page").load("../page/user_agreement.html");
+      $(".agreement-page").load("../page/user_agreement.html", function(t,s,x){
+        if(s !== 'success'){
+          $('.agreement-page').append(template('common/noData',{message: '请求超时'}));
+        }
+      });
     });
+
+    if(($.cookie('fachinaStatus') === '1') || ($.cookie('fachinaStatus') === '2')){
+      $('body').append(template('common/joinEvent'));
+      $('.agreement-page').addClass('agree-fixed-footer');
+    }
   </script>
 </body>
 </html>

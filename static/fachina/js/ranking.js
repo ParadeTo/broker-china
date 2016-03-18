@@ -48,8 +48,6 @@ handler.fetchEventDetail = function() {
   J_app.ajax(J_app.api.eventDetail, {}, function(data){
     if(data.code === 0){
       $('#indexBanner').append(template('common/eventDetail', data));
-    } else{
-      $('#indexBanner').append(template('common/error', data));
     }
   });
 };
@@ -105,6 +103,8 @@ handler.fetchGuestInfo = function() {
 // 获取榜单
 handler.fetchRankList = function(obj,readId,more) {
 
+  J_app.loading(true);
+
   var type = obj ? obj.data('type') : 'A',
       readId = readId ? readId : 0,
       params = {},
@@ -128,6 +128,8 @@ handler.fetchRankList = function(obj,readId,more) {
 
   J_app.ajax(J_app.api.joinList, params, function(data){
 
+    J_app.loading(false);
+
     var trHtml;
 
     if(data.code === 0){
@@ -140,7 +142,7 @@ handler.fetchRankList = function(obj,readId,more) {
         $('#' + viewId).closest('.index-ranking-content').find('.ui-more').hide();
       }
     } else{
-      trHtml = template('common/error', data);
+      trHtml = template('common/errorTable5', data);
     }
 
     if(more){
@@ -149,7 +151,13 @@ handler.fetchRankList = function(obj,readId,more) {
       $('#' + viewId).empty().append(trHtml);
     }
   }, function(){
-    $('#' + viewId).empty().append(template('common/errorTable5', {message:'请求失败！'}));
+    J_app.loading(false);
+    var errHtml = template('common/errorTable5', {message:'请求超时'});
+    if(more){
+      $('#' + viewId).append(errHtml);
+    } else{
+      $('#' + viewId).empty().append(errHtml);
+    }
   });
 };
 

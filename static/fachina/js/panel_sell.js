@@ -32,7 +32,12 @@ handler.init = function() {
 
 // 加载持仓详情
 handler.loadPtfDetail = function() {
+
+  J_app.loading(true);
+
   J_app.ajax(J_app.api.ptfDetail, {}, function(data){
+    J_app.loading(false);
+
     var trHtml;
     if(data.code === 0){
       if(data.result){
@@ -46,6 +51,9 @@ handler.loadPtfDetail = function() {
     }
 
     $('#ptfDetail').empty().append(trHtml);
+  }, function(){
+    J_app.loading(false);
+    J_app.alert('请求超时');
   });
 };
 

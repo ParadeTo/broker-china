@@ -920,9 +920,7 @@
       }
 
       //自动间隔时间向上滑动
-      if(scrollWrap.children().length > 1){
-        timer = setInterval(slideUpAnimate, option.time);
-      }
+      timer = setInterval(slideUpAnimate, option.time);
 
       //悬停时停止滑动，离开时继续执行
       scrollWrap.children().hover(function () {

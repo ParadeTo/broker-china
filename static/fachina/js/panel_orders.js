@@ -15,9 +15,14 @@ handler.init = function() {
 
 // 当日委托
 handler.loadTodayOrder = function() {
+
+  J_app.loading(true);
+
   var params = {};
 
   J_app.ajax(J_app.api.todayOrders, params, function(data){
+
+    J_app.loading(false);
 
     var trHtml;
 
@@ -36,6 +41,9 @@ handler.loadTodayOrder = function() {
     }
 
     $('#orderList').empty().append(trHtml);
+  }, function(){
+    J_app.loading(false);
+    J_app.alert('请求超时');
   });
 };
 
