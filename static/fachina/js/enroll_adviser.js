@@ -478,6 +478,11 @@ enrollAdviserHandler.uploadAndroid = function () {
           if (data.code === 0) {
             $("#enroll-upload-preview").attr('src', data.result.urls);
             $("#enroll-1-img").val(response.result.urls);
+            // 去掉验证信息
+            if (enrollAdviserHandler.errorType.img) {
+              enrollAdviserHandler.errorType.img = false;
+              $('#enroll-1-error').html("");
+            }
           } else {
             J_app.alert(data.message);
           }
