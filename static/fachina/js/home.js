@@ -30,8 +30,10 @@ handler.fetchUserInfo = function() {
         $('#statis').append(template('home/userStatis', data));
       }
     } else{
-      J_app.alert(data.message);
+      $('#statis').append(template('common/error', data));
     }
+  }, function(){
+    $('#statis').append(template('common/loadFail'));
   });
 };
 
@@ -95,8 +97,10 @@ handler.moreInviteList = function() {
 };
 
 $(function() {
-  if(!$.cookie('fachinaId')){
-    window.location.href = './register.html';
+
+  // 没登录将跳转到首页
+  if(!J_app.getCookie('id')){
+    window.location.href = './index.html';
   } else{
     handler.init();
   }

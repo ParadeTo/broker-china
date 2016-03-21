@@ -4,31 +4,33 @@
   @@include('_metas.html')
 </head>
 <body class="fixed-header-body">
-  <!-- 报名页面 -->
-  <!-- 头部固定栏-->
-  @@include('_back_home.html',{"title":"报名参赛","src":""})
-  <div class="enroll-title">
-    <span>请选择参赛身份</span>
-    <p>如需修改，请下载一起牛App</p>
-  </div>
-  <div class="enroll-container">
-    <div class="enroll-select">
-      <a href="enroll_adviser.html" class="enroll-identity enroll-left">
-        <img class="enroll-portrait" src="../../static/fachina/images/icon_adviser.png?ver=@@pageVersion" alt=""/>
-        <img id="enroll-vip" src="../../static/fachina/images/icon_vip.png?ver=@@pageVersion" alt=""/>
-        <span id="enroll-adviser">我是投资顾问</span>
-        <p>1.证券投资咨询资格</p>
-        <p>2.正在金融机构任职</p>
-      </a>
-      <div id="enroll-or">
-        or
+  <div id="mainWrap" style="display:none">
+    <!-- 报名页面 -->
+    <!-- 头部固定栏-->
+    @@include('_back_home.html',{"title":"报名参赛","src":""})
+    <div class="enroll-title">
+      <span>请选择参赛身份</span>
+      <p>如需修改，请下载一起牛App</p>
+    </div>
+    <div class="enroll-container">
+      <div class="enroll-select">
+        <a href="enroll_adviser.html" class="enroll-identity enroll-left">
+          <img class="enroll-portrait" src="../../static/fachina/images/icon_adviser.png?ver=@@pageVersion" alt=""/>
+          <img id="enroll-vip" src="../../static/fachina/images/icon_vip.png?ver=@@pageVersion" alt=""/>
+          <span id="enroll-adviser">我是投资顾问</span>
+          <p>1.证券投资咨询资格</p>
+          <p>2.正在金融机构任职</p>
+        </a>
+        <div id="enroll-or">
+          or
+        </div>
+        <a href="enroll_rookie.html" class="enroll-identity">
+          <img class="enroll-portrait" src="../../static/fachina/images/icon_guest.png?ver=@@pageVersion" alt=""/>
+          <span id="enroll-investor">我是股民</span>
+          <p>模拟炒股交流学习</p>
+          <p>不参与评选</p>
+        </a>
       </div>
-      <a href="enroll_rookie.html" class="enroll-identity">
-        <img class="enroll-portrait" src="../../static/fachina/images/icon_guest.png?ver=@@pageVersion" alt=""/>
-        <span id="enroll-investor">我是股民</span>
-        <p>模拟炒股交流学习</p>
-        <p>不参与评选</p>
-      </a>
     </div>
   </div>
 

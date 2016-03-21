@@ -3,37 +3,37 @@
  * Created by ayou on 2016-02-29.
  */
 
-var loginHandler = window.homeHandler || {};
+var handler = window.handler || {};
 
 // 初始化
-loginHandler.init = function() {
+handler.init = function() {
   // 输入手机和密码时删除验证提示
   $('#login-body-phone').focus(function() {
-    $("#validError").html("");
+    $('#validError').html('');
   });
   $('#login-body-password').focus(function() {
-    $("#validError").html("");
+    $('#validError').html('');
   });
   // 注册按钮
-  $('#login-btn-register').attr("href","register.html");
+  $('#login-btn-register').attr('href','register.html');
 }
 
 // 登录
-loginHandler.login = function(){
+handler.login = function(){
   $('#login-btn-login').click(function() {
     var $this = $(this);
-    var phone = $("#login-body-phone").val();
+    var phone = $('#login-body-phone').val();
     var password = $('#login-body-password').val();
 
     // 验证手机号
     if(!J_app.validPhone(phone)) {
-      $("#validError").html("<p>请输入11位手机号</p>");
+      $('#validError').html('<p>请输入11位手机号</p>');
       return ;
     }
 
     // 验证密码
     if(!J_app.validPw(password)) {
-      $("#validError").html("<p>请输入密码</p>");
+      $('#validError').html('<p>请输入密码</p>');
       return ;
     }
 
@@ -57,7 +57,7 @@ loginHandler.login = function(){
       J_app.loading(false);
 
       if(data.code === 0){
-        $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
+        J_app.setCookie('id', data.result.cId);
 
         // 存储用户状态
         J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
@@ -68,7 +68,7 @@ loginHandler.login = function(){
         }
         window.location.href = src + '.html';
       } else {
-        $("#validError").html("<p>" + data.message + "</p>");
+        $('#validError').html('<p>' + data.message + '</p>');
       }
     },function() {
       $this.removeClass('locked');
@@ -79,6 +79,6 @@ loginHandler.login = function(){
 }
 
 $(function() {
-  loginHandler.init();
-  loginHandler.login();
+  handler.init();
+  handler.login();
 });

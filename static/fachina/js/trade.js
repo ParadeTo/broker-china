@@ -8,8 +8,7 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
-  // 赛事直播动画
-  $('#eventRadio').muSlideUp({time:3000});
+
 
   // 请求观点列表
   handler.loadUserInfo();
@@ -61,6 +60,9 @@ handler.loadEventRadio = function() {
     }
 
     $('#eventRadio').empty().append(listHtml);
+
+    // 赛事直播动画
+    $('#eventRadio').muSlideUp({time:3000});
   },function(){
     $('#eventRadio').empty().append(template('common/loadFail'));
   });
@@ -92,12 +94,12 @@ handler.loadUserAssets = function() {
 
 // 执行
 $(function() {
-  if(!$.cookie('fachinaId')){
-    window.location.href = './register.html';
-  } else if($.cookie('fachinStatus') === '2'){
-    // 需要报名参赛
-    J_app.alert('需要报名参赛');
-  } else {
-    handler.init();
-  }
+  J_app.mustSign(function(){
+    if(J_app.getCookie('type') === '2'){
+      // 需要报名参赛
+      $('body').append(template('trade/notJoin'));
+    } else{
+      handler.init();
+    }
+  });
 });

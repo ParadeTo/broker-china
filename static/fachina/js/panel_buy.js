@@ -454,5 +454,12 @@ handler.resetInput = function() {
 
 // 执行
 $(function() {
-  handler.init();
+  J_app.mustSign(function(){
+    if(J_app.getCookie('type') === '2'){
+      // 需要报名参赛
+      $('body').append(template('trade/notJoin'));
+    } else{
+      handler.init();
+    }
+  });
 });

@@ -3,13 +3,13 @@
  * Created by ayou on 2016-03-01.
  */
 
-var registerHandler = window.homeHandler || {};
+var handler = window.handler || {};
 var time = 60;
 var iTime = time;
 var timer;
 
 // 错误标记
-registerHandler.errorType = {
+handler.errorType = {
   phone: false,
   authClick: false,
   auth: false,
@@ -20,25 +20,25 @@ registerHandler.errorType = {
 function validForm(params) {
   // 验证手机
   if(!J_app.validPhone(params['certCode'])) {
-    $("#validError").html("<p>请输入11位手机号</p>");
-    registerHandler.errorType.phone = true;
+    $('#validError').html('<p>请输入11位手机号</p>');
+    handler.errorType.phone = true;
     return false;
   }
   // 验证验证码
   if(!params['eventId']) {
-    $("#validError").html("<p>请获取验证码</p>");
-    registerHandler.errorType.authClick = true;
+    $('#validError').html('<p>请获取验证码</p>');
+    handler.errorType.authClick = true;
     return false;
   }
   if(!J_app.validCaptcha(params['captcha'])) {
-    $("#validError").html("<p>请输入4位验证码，不能包含空格</p>");
-    registerHandler.errorType.auth = true;
+    $('#validError').html('<p>请输入4位验证码，不能包含空格</p>');
+    handler.errorType.auth = true;
     return false;
   }
   // 验证密码
   if(!J_app.validPw(params['pwd'])) {
-    $("#validError").html("<p>请输入6~16位密码，不能包含空格</p>");
-    registerHandler.errorType.pw = true;
+    $('#validError').html('<p>请输入6~16位密码，不能包含空格</p>');
+    handler.errorType.pw = true;
     return false;
   }
   return true;
@@ -47,23 +47,23 @@ function validForm(params) {
 //倒计时
 function countDown(){
   if(iTime>0){
-    $('#register-body-identify-btn').html("("+iTime+")").attr("disabled",true);
+    $('#register-body-identify-btn').html('('+iTime+')').attr('disabled',true);
     iTime--;
     timer = setTimeout(countDown,1000);
   }else{
     iTime=time;
     clearTimeout(timer);
-    $('#register-body-identify-btn').html("获取验证码").attr("disabled",false).removeClass("locked");
+    $('#register-body-identify-btn').html('获取验证码').attr('disabled',false).removeClass('locked');
   }
 }
 
 // 获取验证码
-registerHandler.getCaptcha = function() {
+handler.getCaptcha = function() {
   $('#register-body-identify-btn').click(function() {
     // 清除验证提示信息
-    if(registerHandler.errorType.authClick) {
-      registerHandler.errorType.authClick = false;
-      $("#validError").html("");
+    if(handler.errorType.authClick) {
+      handler.errorType.authClick = false;
+      $('#validError').html('');
     }
 
     var phone = $('#register-body-phone').val();
@@ -71,18 +71,18 @@ registerHandler.getCaptcha = function() {
 
     // 验证手机号
     if(!J_app.validPhone(phone)){
-      $("#validError").html("<p>请输入11位手机号</p>");
-      registerHandler.errorType.phone = true;
+      $('#validError').html('<p>请输入11位手机号</p>');
+      handler.errorType.phone = true;
       return ;
     }
 
     // 如果已被锁定,返回
-    if($this.hasClass("locked")) {
+    if($this.hasClass('locked')) {
       return ;
     }
 
     // 锁定，倒计时
-    $this.addClass("locked");
+    $this.addClass('locked');
     countDown();
 
     // 获取验证码
@@ -91,7 +91,7 @@ registerHandler.getCaptcha = function() {
     J_app.ajax(J_app.api.captcha, params, function(data){
       if(data.code === 0){
         // 得到事件id
-        registerHandler.eventId = data.result.eventId;
+        handler.eventId = data.result.eventId;
       } else {
         J_app.alert(data.message);
       }
@@ -102,14 +102,14 @@ registerHandler.getCaptcha = function() {
 };
 
 // 注册
-registerHandler.register = function() {
+handler.register = function() {
   $('#register-btn-register').click(function() {
     var $this = $(this);
     var params = {};
 
     // 获取邀请人id
-    if(J_app.getUrlParam("invUserId")) {
-      params['invUserId'] = J_app.getUrlParam("invUserId");
+    if(J_app.getUrlParam('invUserId')) {
+      params['invUserId'] = J_app.getUrlParam('invUserId');
     }
 
     // 获取电话、验证码、密码
@@ -119,7 +119,7 @@ registerHandler.register = function() {
     // 凭证
     params['certType'] = 0;
     // 事件id
-    params['eventId'] = registerHandler.eventId;
+    params['eventId'] = handler.eventId;
 
     // 验证表单
     if(!validForm(params)) {
@@ -142,15 +142,9 @@ registerHandler.register = function() {
       J_app.loading(false);
 
       if(data.code === 0) {
-        // 注册成功，设置cookie，跳转到首页
-        $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
-        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-
-        var src = J_app.getUrlParam('src');
-        if(!src){
-          src = './index';
-        }
-        window.location.href = src + '.html';
+        // 注册成功，设置cookie
+        J_app.setCookie('id', data.result.cId);
+        window.location.href = './index.html';
       } else {
         J_app.alert(data.message);
       }
@@ -161,45 +155,44 @@ registerHandler.register = function() {
       J_app.alert('请求超时！');
     });
   });
-
 }
 
 // 清除验证提示信息
-registerHandler.clearErrorMsg = function() {
+handler.clearErrorMsg = function() {
   // 电话
-  $("#register-body-phone").focus(function() {
-    if(registerHandler.errorType.phone) {
-      registerHandler.errorType.phone = false;
-      $("#validError").html("");
+  $('#register-body-phone').focus(function() {
+    if(handler.errorType.phone) {
+      handler.errorType.phone = false;
+      $('#validError').html('');
     }
   });
   // 验证码
   $('#register-body-identify-input').focus(function() {
-    if(registerHandler.errorType.auth) {
-      registerHandler.errorType.auth = false;
-      $("#validError").html("");
+    if(handler.errorType.auth) {
+      handler.errorType.auth = false;
+      $('#validError').html('');
     }
   });
   // 密码
   $('#register-body-password').focus(function() {
-    if(registerHandler.errorType.pw) {
-      registerHandler.errorType.pw = false;
-      $("#validError").html("");
+    if(handler.errorType.pw) {
+      handler.errorType.pw = false;
+      $('#validError').html("");
     }
   });
 }
 
 // 初始化
-registerHandler.init = function() {
+handler.init = function() {
   // 错误提示内容置为空
-  $('#validError').html("");
+  $('#validError').html('');
   // 绑定登录跳转
-  $('#register-btn-login').attr("href","login.html");
+  $('#register-btn-login').attr('href','login.html');
 }
 
 $(function() {
-  registerHandler.init();
-  registerHandler.clearErrorMsg();
-  registerHandler.register();
-  registerHandler.getCaptcha();
+  handler.init();
+  handler.clearErrorMsg();
+  handler.register();
+  handler.getCaptcha();
 });

@@ -27,6 +27,7 @@ handler.init = function() {
 
 // 获取用户信息
 handler.fetchUserInfo = function() {
+
   if(!$.cookie('fachinaId')){
     $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
     $.cookie('fachinaType', 1, {expires:365,path:'/'});

@@ -126,37 +126,44 @@
     weixin : isWeixin
   };
 
+  //cookie配置
+  var cookieText = {
+    id : 'fachinaId',
+    status: 'fachinaStatus',
+    type: 'fachinaType'
+  };
+
   //全局对象
   var J_app = {
 
-    //域名
+    // 域名
     host: host,
 
-    //接口
+    // 接口
     api: apis,
 
     //页面跳转
     link: links,
 
-    //浏览器标识
+    // 浏览器标识
     agent : uAgent,
 
-    //验证手机号
+    // 验证手机号
     validPhone: function(phone) {
       return /^\d{11}$/.test(phone);
     },
 
-    //验证密码
+    // 验证密码
     validPw: function(pwd) {
       return /^\S{6,16}$/.test(pwd);
     },
 
-    //验证验证码
+    // 验证验证码
     validCaptcha: function(captcha) {
       return /^\S{1,10}$/.test(captcha);
     },
 
-    //获取url中的参数
+    // 获取url中的参数
     getUrlParam: function(name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)'),
           r = window.location.search.substr(1).match(reg);
@@ -168,7 +175,7 @@
       }
     },
 
-    //生成唯一数
+    // 生成唯一数
     onlyNum: function() {
       var num = '',
           timestamp = '',
@@ -183,7 +190,7 @@
       return num;
     },
 
-    //价格格式化
+    // 货币格式化
     formatCurrency: function(v) {
       if(isNaN(v)){
           return v;
@@ -203,7 +210,7 @@
       return v;
     },
 
-    //百分比格式化
+    // 百分比格式化
     formatPer: function(num,noSymbol) {
       var data = '';
       if(num){
@@ -214,7 +221,7 @@
       return noSymbol ? data : (data + '%');
     },
 
-    //空数据格式化
+    // 空数据格式化
     isNull: function(text) {
       if (typeof text === 'undefined' || text === null) {
         return '';
@@ -223,7 +230,7 @@
       }
     },
 
-    //收益颜色处理
+    // 收益率颜色
     yieldColor: function(yield) {
       if(typeof yield !== 'number'){
         yield = parseFloat(yield);
@@ -238,14 +245,14 @@
       }
     },
 
-    //AJAX请求封装
-    //@data: 需传递参数对象
+    // AJAX请求封装
+    // @data: 需传递参数对象
     ajax: function(url, data, callback, error) {
 
       var params = {};
       params['id'] = J_app.onlyNum();
       params['src'] = 'GA';
-      params['cId'] = $.cookie('fachinaId');
+      params['cId'] = J_app.getCookie('id');
       params['uAgent'] = isWeixin ? 'WX' : (isYiqiniu ? 'QN' : 'O');
       params['params'] = data;
 
@@ -266,8 +273,8 @@
       });
     },
 
-    //AJAX请求封装2
-    //@data:需传递对象,没有封装params
+    // AJAX请求封装2
+    // @data:需传递对象,没有封装params
     ajaxa: function(url, data, callback, error) {
 
       $.ajax({
@@ -287,8 +294,8 @@
       });
     },
 
-    //计算当前时间差
-    //@timestamps: 时间戳
+    // 计算当前时间差
+    // @timestamps: 时间戳
     timeDifference: function(timestamps) {
       var formatNumber = function(n) {
         if (n < 10) {
@@ -350,15 +357,102 @@
       return timeHtml;
     },
 
-    //将用户状态带入模板参数
+    // 将用户状态带入模板参数
     tmpData: function(data) {
       if(typeof data !== 'object'){
         data = {};
       }
-      return $.extend({userStatus: $.cookie('fachinaStatus')}, data);
+      return $.extend({userStatus: J_app.getCookie('id')}, data);
     },
 
-    //微信分享
+    // 提示弹窗
+    alert: function(text, time) {
+
+      if (typeof time === 'undefined' || typeof time !== 'number') {
+        time = 2000;
+      }
+
+      var _html = [];
+
+      _html.push('<div class="ui-alert">');
+      _html.push('<div class="ui-alert-main">' + text + '</div>');
+      _html.push('</div>');
+
+      $('body').append(_html.join(''));
+      $(".ui-alert").fadeIn();
+
+      setTimeout(function() {
+        $('.ui-alert').remove();
+      }, time);
+    },
+
+    // 互动弹窗
+    confirm: function(opt) {
+
+      var option = {
+        title: '标题',
+        main: '',
+        sure: function() {
+          console.log('你执行了确认操作！');
+        },
+        cancel: function() {
+          $(this).closest('.ui-dialog').remove();
+        },
+        sureBtnText: '确定',
+        cancelBtnText: '取消'
+      };
+
+      $.extend(option, opt);
+
+      var _html = [];
+
+      _html.push('<div class="ui-dialog"><div class="dialog-box">');
+      _html.push('<div class="dialog-title">' + option.title + '</div>');
+      _html.push('<div class="dialog-main">' + option.main + '</div>');
+      _html.push('<div class="dialog-action ui-row">');
+      _html.push('<div class="ui-col col-2"><button class="btn btn-gray btn-fixed-dialog J-dialog-cancel">' + option.cancelBtnText + '</button></div>');
+      _html.push('<div class="ui-col col-2"><button class="btn btn-red btn-fixed-dialog J-dialog-sure">' + option.sureBtnText + '</button></div>');
+      _html.push('</div></div>');
+
+      $('body').append(_html.join(''));
+
+      $('.J-dialog-cancel').unbind('click');
+      $('.J-dialog-sure').unbind('click');
+
+      $('.J-dialog-cancel').on('click', option.cancel);
+      $('.J-dialog-sure').on('click', function() {
+        option.sure();
+        $(this).closest('.ui-dialog').remove();
+      });
+    },
+
+    // 存储cookie
+    setCookie: function(name, val) {
+      if(cookieText[name]){
+        $.cookie(cookieText[name], val, {expires:365,path:'/'});
+      }
+    },
+
+    // 取值cookie
+    getCookie: function(name) {
+      if(cookieText[name]){
+        return $.cookie(cookieText[name]);
+      }
+      else{
+        return '';
+      }
+    },
+
+    // loading
+    loading: function(type) {
+      if (type) {
+        $('body').append('<div class="ui-loading"><div class="loader"></div></div>');
+      } else {
+        $('.ui-loading').remove();
+      }
+    },
+
+    // 微信分享
     shareByWeixin: function(b, t, d, l, i) {
 
       var pageUrl = window.location.href;
@@ -463,110 +557,12 @@
       };
     },
 
-    //提示类弹窗
-    alert: function(text, time) {
-
-      if (typeof time === 'undefined' || typeof time !== 'number') {
-        time = 2000;
-      }
-
-      var _html = [];
-
-      _html.push('<div class="ui-alert">');
-      _html.push('<div class="ui-alert-main">' + text + '</div>');
-      _html.push('</div>');
-
-      $('body').append(_html.join(''));
-      $(".ui-alert").fadeIn();
-
-      setTimeout(function() {
-        $('.ui-alert').remove();
-      }, time);
-    },
-
-    //确认弹窗
-    confirm: function(opt) {
-
-      var option = {
-        title: '标题',
-        main: '',
-        sure: function() {
-          console.log('你执行了确认操作！');
-        },
-        cancel: function() {
-          $(this).closest('.ui-dialog').remove();
-        },
-        sureBtnText: '确定',
-        cancelBtnText: '取消'
-      };
-
-      $.extend(option, opt);
-
-      var _html = [];
-
-      _html.push('<div class="ui-dialog"><div class="dialog-box">');
-      _html.push('<div class="dialog-title">' + option.title + '</div>');
-      _html.push('<div class="dialog-main">' + option.main + '</div>');
-      _html.push('<div class="dialog-action ui-row">');
-      _html.push('<div class="ui-col col-2"><button class="btn btn-gray btn-fixed-dialog J-dialog-cancel">' + option.cancelBtnText + '</button></div>');
-      _html.push('<div class="ui-col col-2"><button class="btn btn-red btn-fixed-dialog J-dialog-sure">' + option.sureBtnText + '</button></div>');
-      _html.push('</div></div>');
-
-      $('body').append(_html.join(''));
-
-      $('.J-dialog-cancel').unbind('click');
-      $('.J-dialog-sure').unbind('click');
-
-      $('.J-dialog-cancel').on('click', option.cancel);
-      $('.J-dialog-sure').on('click', function() {
-        option.sure();
-        $(this).closest('.ui-dialog').remove();
-      });
-    },
-
-    //加载失败
-    loadFail: function() {
-
-      var _html = [];
-
-      _html.push('<div class="ui-loading-fail">');
-      _html.push('<div class="loading-fail-img">');
-      _html.push('<img src="' + J_app.host + '/static/common/images/icon_fail.png" alt="">');
-      _html.push('</div>');
-      _html.push('<div class="loading-fail-text">抱歉，出错啦！</div>');
-      _html.push('</div>');
-
-      $('body').empty().append(_html.join(''));
-      $('title').text('请求错误');
-    },
-
-    //加载动画
-    loading: function(type) {
-      if (type) {
-        $('body').append('<div class="ui-loading"><div class="loader"></div></div>');
-      } else {
-        $('.ui-loading').remove();
-      }
-    },
-
-    //我要参赛
-    joinEvent: function() {
-      $("#joinEvent").click(function() {
-        // 判断是否登录
-        J_app.checkSign(function() {
-          window.location.href = "enroll_entry.html";
-        })
-      });
-    },
-
-    //投票
+    // 投票
     voteAction: function() {
       $(document).on('click', '.J-vote', function() {
-
         var $this = $(this);
 
         J_app.checkSign(function() {
-
           var numberBox = $this.parent().find('.total-number'),
               number = parseInt(numberBox.html()),
               params = {};
@@ -575,14 +571,20 @@
             return;
           }
           $this.addClass('J-locked');
+          J_app.loading(true);
 
           params['joinId'] = $this.data('id');
           J_app.ajax(J_app.api.vote, params, function(data) {
 
             $this.removeClass('J-locked');
+            J_app.loading(false);
 
             if (data.code === 0) {
+              J_app.alert('投票成功');
               numberBox.html(++number);
+
+              // 如果用户没关注微信，弹出二维码
+
               if(data.result.voteCount === 0){
                 $('.J-vote').removeClass('btn-red J-vote').addClass('btn-orange J-invite').html('帮TA拉票');
               } else{
@@ -592,6 +594,7 @@
               J_app.alert(data.message);
             }
           }, function() {
+            J_app.loading(false);
             J_app.alert('请求超时！');
             $this.removeClass('J-locked');
           });
@@ -599,7 +602,7 @@
       });
     },
 
-    //拉票
+    // 拉票
     inviteAction: function(option) {
       if(isWeixin){
         $('.dialog').remove();
@@ -622,7 +625,7 @@
       }
     },
 
-    //表格中的帮TA拉票
+    // 榜单中的帮TA拉票
     inviteInTable: function() {
       $(document).on('click', '.J-invite', function() {
         var $this = $(this),
@@ -637,64 +640,63 @@
       });
     },
 
-    //关注
+    // 机构拉票
+    inviteOrg: function(box) {
+      $(box).on('click', 'tr', function(){
+        var orgName = $(this).data('org');
+        orgName = orgName ? orgName : '证券';
+        window.location.href = encodeURI("./search.html?keyword=" + orgName);
+      });
+    },
+
+    // 关注
     favAction: function() {
       $(document).on('click', '.J-fav', function(){
         var $this = $(this);
 
         J_app.checkSign(function() {
-
           var params = {};
 
           if ($this.hasClass('J-locked')) {
             return;
           }
           $this.addClass('J-locked');
+          J_app.loading(true);
 
           params['joinId'] = $this.data('id');
           J_app.ajax(J_app.api.fav, params, function(data) {
-
             $this.removeClass('J-locked');
+            J_app.loading(false);
 
             if (data.code === 0) {
+              J_app.alert('关注成功');
               $this.removeClass('btn-red J-fav').addClass('btn-gray disabled').html('已关注');
             } else {
               J_app.alert(data.message);
             }
           }, function() {
             $this.removeClass('J-locked');
+            J_app.loading(false);
           });
         });
       });
     },
 
-    //机构拉票
-    inviteOrg: function(box) {
-      $(box).on('click', 'tr', function(){
-        var orgName = $(this).data('org');
-
-        if(!orgName){
-          orgName = '证券';
-        }
-        window.location.href = encodeURI("./search.html?keyword=" + orgName);
-      });
-    },
-
-    //搜索
+    // 搜索
     search: function() {
-      $("#globalSearch").on('click', function() {
+      $('#globalSearch').on('click', function() {
         // 获取搜索关键字
-        var keyword = $("#searchKeyword").val();
+        var keyword = $('#searchKeyword').val();
         if (keyword) {
-          window.location.href = encodeURI("./search.html?keyword=" + keyword);
+          window.location.href = encodeURI('./search.html?keyword=' + keyword);
         } else {
-          J_app.alert("请输入投顾/机构查询！");
+          J_app.alert('请输入投顾/机构查询！');
         }
       });
     },
 
-    //广告
-    //@position: 广告位;首页：2201，榜单页：2202
+    // 广告
+    // @position: 广告位;首页：2201，榜单页：2202
     adverst: function(position) {
 
       // 滑动切换效果
@@ -735,115 +737,98 @@
       });
     },
 
-    //判断是否登录公用方法
+    // 判断用户是否登录
     checkSign: function(callback) {
-      if (!$.cookie('fachinaId')) {
-        J_app.userLogin();
+      if (!J_app.getCookie('id')) {
+        if(isWeixin){
+          var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
+          window.location.href = links.weixin + src;
+        } else if(isYiqiniu){
+          window.location.href = 'index.html';
+        } else {
+          window.location.href = links.register;
+        }
       } else {
         callback();
       }
     },
 
-    //用户状态
-    fachinaStatus: function(status, type) {
-      if(type === 1){
-        if(status === 0){
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
-        } else if(status === 2) {
-          $.cookie('fachinaStatus', 5, {expires:365,path:'/'});
-        } else {
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
-        }
-      } else{
-        if(status === 0){
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
-        } else if(status === 1) {
-          $.cookie('fachinaStatus', 3, {expires:365,path:'/'});
-        } else if(status === 2) {
-          $.cookie('fachinaStatus', 4, {expires:365,path:'/'});
-        } else {
-          $.cookie('fachinaStatus', 2, {expires:365,path:'/'});
-        }
-      }
-    },
-
-    //用户登录判定
-    userLogin: function() {
-      if(isWeixin){
-        var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
-        window.location.href = links.weixin + src;
-      } else if(isYiqiniu){
-
-      } else {
-        window.location.href = links.register;
-      }
-    },
-
     // 用户登录状态
     loginStatus: function() {
-      var status = $.cookie('fachinaStatus'),
+      var status = J_app.getCookie('status'),
           className = 'status-' + (status ? status : '1');
       $('#userStatus').addClass(className);
     },
 
-    //参赛封装
-    joinEventAction: function() {
+    // 必须登录才能访问的页面
+    mustSign: function(callback) {
+      if(!J_app.getCookie('id')){
+        window.location.href = './index.html';
+      } else {
+        if(!J_app.getCookie('status') || !J_app.getCookie('type')){
+          // 重新请求用户数据并存在cookie
 
-      J_app.loading(true);
-
-      J_app.checkSign(function(){
-        if($.cookie('fachinaType') === '2'){
-          J_app.ajax(apis.join, {}, function(data){
-
-            J_app.loading(false);
-
-            if(data.code === 0){
-              J_app.alert('参赛成功！');
-            }else{
-              J_app.alert(data.message);
-            }
-          });
         } else{
-          window.location.href = './enroll_entry.html';
+          callback();
         }
-      });
+      }
     },
 
-    //导航权限控制
-    updateNavbar: function() {
-      var status = $.cookie('fachinaStatus');
-      if (status) {
-        $('#userStatus').addClass('status-' + status);
-
-        function navLink(home,trade) {
-          switch(status){
-            case '1':
-              $(home).attr('href','javascript:J_app.userLogin();');
-              $(trade).attr('href','javascript:J_app.joinEventAction();');
-              break;
-            case '2':
-              $(home).attr('href','./home.html');
-              $(trade).attr('href','javascript:J_app.joinEventAction();');
-              break;
-            case '3':
-              $(home).attr('href','./home');
-              $(trade).attr('href','javascript:J_app.joinEventAction();');
-              break;
-            case '4':
-              $(home).attr('href','./home.html');
-              $(trade).attr('href','./trade.html');
-              break;
-            case '5':
-              $(home).attr('href','./home.html');
-              $(trade).attr('href','./trade.html');
-              break;
-            default:
-              $(home).attr('href','javascript:J_app.userLogin();');
-              $(trade).attr('href','javascript:J_app.joinEventAction();');
-          }
+    setUserStatus: function(status, type){
+      // 股民
+      if(type === 1){
+        if(status === 2){
+          J_app.setCookie('status', 5);
         }
-        navLink($('#navHome'),$('#navTrade'));
+        else {
+          J_app.setCookie('status', 2);
+        }
       }
+      // 投顾
+      else if(type === 2){
+        if(status === 1){
+          J_app.setCookie('status', 3);
+        } else if(status === 2) {
+          J_app.setCookie('status', 4);
+        } else {
+          J_app.setCookie('status', 2);
+        }
+      }
+      else {
+        J_app.setCookie('status', 2);
+      }
+    },
+
+    // 保存cookie
+    saveCookie: function(session) {
+      var params = {};
+
+      if(session){
+        params['sessionId'] = session;
+      }
+
+      J_app.ajax(J_app.api.joinDetail, params, function(data){
+        if(data.code === 0){
+
+          // 如果是游客
+          if(data.result.adviserStatus === 0){
+            setUserStatus(data.result.joinStatus, data.result.adviserStatus);
+          }
+          // 如果是注册用户
+          else{
+            // 存储cId
+            J_app.setCookie('id', data.result.cId);
+            // 存储用户状态
+            setUserStatus(data.result.joinStatus, data.result.adviserStatus);
+            // 存储用户身份
+            J_app.setCookie('type', data.result.adviserStatus);
+            // 存储用户姓名，头像，参赛id，机构
+            $('body').append(template('common/hidden', data));
+          }
+        } else {
+          J_app.alert(data.message);
+        }
+      });
     }
   };
 
@@ -863,8 +848,8 @@
 
       //默认参数
       option = $.extend({
-        "time": 3000,
-        "speed": 1000
+        'time': 3000,
+        'speed': 1000
       }, option);
 
       //向上滑动动画
@@ -873,12 +858,14 @@
           {marginTop: -childHeight},
           option.speed,
           function() {
-            $(this).css("margin-top", 0).appendTo(scrollWrap);
+            $(this).css('margin-top', 0).appendTo(scrollWrap);
           })
       }
 
       //自动间隔时间向上滑动
-      timer = setInterval(slideUpAnimate, option.time);
+      if(scrollWrap.children().length > 1){
+        timer = setInterval(slideUpAnimate, option.time);
+      }
 
       //悬停时停止滑动，离开时继续执行
       scrollWrap.children().hover(function() {
@@ -933,14 +920,14 @@
           //获取文件的后缀名
           var extension = fileLowerPath.substring(fileLowerPath.lastIndexOf('.') + 1);
           //判断后缀名是否包含在预先设置的、所允许的后缀名数组中
-          if ($.inArray(extension, options.allowedExtensions.split(",")) == -1) {
+          if ($.inArray(extension, options.allowedExtensions.split(',')) == -1) {
             options.extensionerror();
             $(this).focus();
           } else {
             try {
               var size = 0;
               if ($.browser && $.browser.msie) {//ie旧版浏览器
-                var fileMgr = new ActiveXObject("Scripting.FileSystemObject");
+                var fileMgr = new ActiveXObject('Scripting.FileSystemObject');
                 var fileObj = fileMgr.getFile(filePath);
                 size = fileObj.size; //byte
               } else {//其它浏览器
@@ -952,7 +939,7 @@
                 options.success();
               }
             } catch (e) {
-              J_app.alert("错误：" + e);
+              J_app.alert('错误：' + e);
             }
           }
         });
@@ -963,7 +950,7 @@
   // 使用rem初始化页面,自执行
   (function() {
     var page = this;
-    var html = document.getElementsByTagName("html")[0];
+    var html = document.getElementsByTagName('html')[0];
     page.width = 320;
     page.fontSize = 100;
     page.widthProportion = function() {
@@ -971,10 +958,10 @@
       return p > 2 ? 2 : p < 1 ? 1 : p;
     };
     page.changePage = function() {
-      html.setAttribute("style", "font-size:" + page.widthProportion() * page.fontSize + "px !important");
+      html.setAttribute('style', 'font-size:' + page.widthProportion() * page.fontSize + "px !important");
     };
     page.changePage();
-    window.addEventListener("resize", function() {
+    window.addEventListener('resize', function() {
       page.changePage();
     }, false);
   })();
@@ -984,9 +971,6 @@
     // 关注达人
     J_app.favAction();
 
-    // 报名参赛
-    J_app.joinEvent();
-
     // 投票
     J_app.voteAction();
 
@@ -995,9 +979,6 @@
 
     // 搜索
     J_app.search();
-
-    // 导航控制
-    J_app.updateNavbar();
   })(jQuery);
 
   //头部固定栏跳转
