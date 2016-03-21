@@ -95,5 +95,9 @@ handler.moreInviteList = function() {
 };
 
 $(function() {
-  handler.init();
+  if(!$.cookie('fachinaId')){
+    window.location.href = './register.html';
+  } else{
+    handler.init();
+  }
 });

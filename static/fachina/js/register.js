@@ -96,7 +96,7 @@ registerHandler.getCaptcha = function() {
         J_app.alert(data.message);
       }
     },function() {
-      J_app.alert('请求失败！');
+      J_app.alert('请求超时！');
     });
   });
 };
@@ -158,7 +158,7 @@ registerHandler.register = function() {
     },function() {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('请求失败！');
+      J_app.alert('请求超时！');
     });
   });
 

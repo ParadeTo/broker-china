@@ -54,7 +54,7 @@ enrollRookieHandler.rookieInit = function () {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('请求失败！');
+      J_app.alert('请求超时！');
     });
   });
   // 输入框获取焦点时清除错误信息

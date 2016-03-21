@@ -133,7 +133,7 @@ var handler = window.handler || {};
 // 价格变换基数
 handler.priceUnit = 0.01;
 
-// 测试现金
+// 现金
 handler.cash = 0;
 
 // 刷新五档定时器
@@ -171,7 +171,7 @@ handler.loadPtfDetail = function() {
         var stks = data.result.stks;
 
         // 取得现金
-        handler.cash = stks[stks.length-1].tBal;
+        handler.cash = data.result.avlBal;
         stks.pop();
         trHtml = template('panel/panelTake', { stks: stks});
       }
@@ -197,8 +197,10 @@ handler.setKeywords = function() {
 // 选择持仓中的股票
 handler.selectPtfStks = function() {
   $('#ptfDetail').on('click', 'tr', function() {
-    var code = $(this).data('id').substr(0,6);
-    $('#searchInput').val(code).trigger('focus');
+    var code = $(this).data('id'),
+        name = $(this).data('name');
+    $('#searchInput').val(name + ' ' + code).data('code', code).data('name', name);
+    handler.setKeywords();
   });
 };
 
@@ -385,8 +387,13 @@ handler.clickSubmitBtn = function() {
       return false;
     }
 
-    if(!data.number){
+    if(data.number === '0' || data.number === ''){
       J_app.alert('请输入数量');
+      return false;
+    }
+
+    if(parseInt(data.number) < 0){
+      J_app.alert('数量不能为负数');
       return false;
     }
 

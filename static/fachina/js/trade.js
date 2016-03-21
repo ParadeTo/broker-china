@@ -78,8 +78,6 @@ handler.loadUserAssets = function() {
     if(data.code === 0){
       if(data.result) {
         var stks = data.result.stks;
-
-        data.result.cash = stks[stks.length-1].tBal;
         stks.pop();
 
         $('#stkList').append(template('trade/takeList', {stks:stks}));
@@ -94,5 +92,12 @@ handler.loadUserAssets = function() {
 
 // 执行
 $(function() {
-  handler.init();
+  if(!$.cookie('fachinaId')){
+    window.location.href = './register.html';
+  } else if($.cookie('fachinStatus') === '2'){
+    // 需要报名参赛
+    J_app.alert('需要报名参赛');
+  } else {
+    handler.init();
+  }
 });

@@ -26,20 +26,52 @@ handler.init = function() {
 
 // 获取用户信息
 handler.fetchUserInfo = function() {
-  if(!$.cookie('fachinaId')){
-    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
-    $.cookie('fachinaType', 1, {expires:365,path:'/'});
-    $('#userStatus').addClass('status-1');
-    J_app.updateNavbar();
-  } else{
-    J_app.ajax(J_app.api.joinDetail, {}, function(data){
+
+  function userInfo(session){
+    var params = {};
+
+    if(session){
+      params['sessionId'] = session;
+    }
+
+    J_app.ajax(J_app.api.joinDetail, params, function(data){
       if(data.code === 0){
-        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        $.cookie('fachinaType', data.result.adviserStatus, {expires:365,path:'/'});
-        J_app.updateNavbar();
-        $('body').append(template('common/hidden', data));
+
+        // 如果是游客
+        if(data.result.adviserStatus === 0){
+          J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+        }
+        // 如果是注册用户
+        else{
+          // 存储cId
+          $.cookie("fachinaId", data.result.cId, {expires:365,path:'/'});
+          // 存储用户状态
+          J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+          // 存储用户身份
+          $.cookie('fachinaType', data.result.adviserStatus, {expires:365,path:'/'});
+          // 存储用户姓名，头像，参赛id，机构
+          $('body').append(template('common/hidden', data));
+        }
+      } else {
+        J_app.alert(data.message);
       }
     });
+  }
+
+  // 如果检测没有cId
+  if(!$.cookie('fachinaId')){
+
+    // 如果在一起牛APP
+    if(J_app.yiqiniu){
+      jYiqiniu.getSessionId(userInfo);
+    } else{
+      $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
+      $.cookie('fachinaType', 1, {expires:365,path:'/'});
+      $('#userStatus').addClass('status-1');
+      J_app.updateNavbar();
+    }
+  } else{
+    userInfo();
   }
 };
 
@@ -228,7 +260,7 @@ handler.voteGuest = function() {
         }
       }, function () {
         J_app.loading(false);
-        J_app.alert('请求失败！');
+        J_app.alert('请求超时！');
         $this.removeClass('J-locked');
       });
     });

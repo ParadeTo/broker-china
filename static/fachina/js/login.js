@@ -73,7 +73,7 @@ loginHandler.login = function(){
     },function() {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('请求失败！');
+      J_app.alert('请求超时！');
     });
   });
 }

@@ -8,9 +8,6 @@ var handler = window.handler || {};
 // 价格变换基数
 handler.priceUnit = 0.01;
 
-// 测试现金
-handler.cash = 0;
-
 // 刷新五档定时器
 handler.timer = null;
 
@@ -42,7 +39,6 @@ handler.loadPtfDetail = function() {
     if(data.code === 0){
       if(data.result){
         var stks = data.result.stks;
-        handler.cash = stks[stks.length-1].tBal;
         stks.pop();
         trHtml = template('panel/panelTake', { stks: stks});
       }
@@ -63,11 +59,11 @@ handler.selectPtfStks = function() {
   $('#ptfDetail').on('click', 'tr', function() {
     clearInterval(handler.timer);
 
-    var code = $(this).data('id').substr(0,6),
+    var code = $(this).data('id'),
         name = $(this).data('name');
 
-    $('#searchInput').val(code+name).data('code',$(this).data('id')).data('name',name);
-    $('#ableQuantity').html($(this).data('aBal'));
+    $('#searchInput').val(name + ' ' + code).data('code',code).data('name',name);
+    $('#ableQuantity').html($(this).data('abal'));
     $('#stkQuantity').val(0);
     handler.getFiveBets();
     handler.timer = setInterval(handler.getFiveBets, 10000);
@@ -233,8 +229,13 @@ handler.clickSubmitBtn = function() {
       return false;
     }
 
-    if(!data.number){
+    if(data.number === '0' || data.number === ''){
       J_app.alert('请输入数量');
+      return false;
+    }
+
+    if(parseInt(data.number) < 0){
+      J_app.alert('数量不能为负数');
       return false;
     }
 
