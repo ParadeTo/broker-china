@@ -14,16 +14,24 @@ handler.init = function() {
     if(J_app.getCookie('type') === '2'){
       J_app.ajax(J_app.api.join, {}, function(data){
         if(data.code === 0){
-          J_app.loading(false);
-
-          // 更新用户状态
-          J_app.updateUserStatus();
-          window.history.back();
+          J_app.ajax(J_app.api.joinDetail, {}, function(data){
+            J_app.loading(false);
+            if(data.code === 0){
+              J_app.saveCookie(data);
+              window.history.back();
+            } else {
+              J_app.alert(data.message);
+            }
+          });
         }else{
           J_app.alert(data.message);
+          setTimeout(function(){
+            window.history.back();
+          },2000);
         }
       });
     } else{
+      J_app.loading(false);
       // 显示参赛的页面
       $('#mainWrap').show();
     }

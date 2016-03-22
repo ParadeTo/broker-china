@@ -57,10 +57,9 @@ handler.login = function(){
       J_app.loading(false);
 
       if(data.code === 0){
-        J_app.setCookie('id', data.result.cId);
 
         // 存储用户状态
-        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
+        J_app.saveCookie(data);
 
         var src = J_app.getUrlParam('src');
         if(!src){

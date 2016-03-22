@@ -215,7 +215,7 @@
       .nav-link,
       a {
         color: $red;
-        border-bottom: pxToRem(2px) solid $red;
+        border-bottom-color: $red;
       }
     }
   }
@@ -248,6 +248,10 @@
   .list-item {
     padding: pxToRem(10px) pxToRem(10px) pxToRem(10px) pxToRem(32px);
     border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border-bottom: 0 none;
+    }
 
     .icon-good {
       display: block;

@@ -23,29 +23,33 @@ handler.init = function() {
   handler.fetchViewpointList();
   handler.inviteJoin();
   handler.inviteVote();
+  handler.checkJoinBtn();
 };
 
 // 获取用户信息
 handler.fetchUserInfo = function() {
 
-  if(!$.cookie('fachinaId')){
-    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
-    $.cookie('fachinaType', 1, {expires:365,path:'/'});
-    $('#userStatus').addClass('status-1');
-    $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie('fachinaStatus')}));
-    J_app.updateNavbar();
-  } else{
-    J_app.ajax(J_app.api.joinDetail, {}, function(data){
-      if(data.code === 0){
-        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        $.cookie('fachinaType', data.result.adviserStatus, {expires:365,path:'/'});
-        $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie('fachinaStatus'), result: data.result}));
-        J_app.updateNavbar();
+  // 如果检测没有cId
+  if(!J_app.getCookie('id')){
 
-        $('body').append(template('common/hidden', data));
-      }
-    });
+    // 如果在一起牛APP
+    if(J_app.agent.yiqiniu){
+      jYiqiniu.getSessionId(J_app.userInfo);
+    }
+    else{
+      J_app.setCookie('status', 1);
+      J_app.setCookie('type', 1);
+      J_app.loginStatus();
+    }
   }
+  else{
+    J_app.userInfo();
+  }
+};
+
+// 赛事按钮
+handler.checkJoinBtn = function() {
+  $('#joinBtnBox').append(template('index/joinBtn', {status: J_app.getCookie('status')}));
 };
 
 // 获取赛事信息

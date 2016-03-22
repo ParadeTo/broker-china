@@ -568,3 +568,12 @@ body {
   background: $white;
   border: 1px solid $border-color;
 }
+
+.simple-wrap.ui-dialog-copyurl {
+
+  .text {
+    font-size: pxToRem(12px);
+    word-break:break-all;
+    word-wrap:break-word
+  }
+}

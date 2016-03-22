@@ -285,7 +285,7 @@ handler.sellSubmit = function() {
 // 执行
 $(function() {
   J_app.mustSign(function(){
-    if(J_app.getCookie('type') === '2'){
+    if(J_app.getCookie('status') === '2'){
       // 需要报名参赛
       $('body').append(template('trade/notJoin'));
     } else{

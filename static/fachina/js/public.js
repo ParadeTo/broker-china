@@ -7,7 +7,7 @@
  */
 
 !function(global, factory) {
-  "function" == typeof define && (define.amd || define.cmd) ? define(function() {
+  'function' == typeof define && (define.amd || define.cmd) ? define(function() {
     return factory(global)
   }) : factory(global, !0)
 }(this, function(global, factory) {
@@ -452,6 +452,16 @@
       }
     },
 
+    // 生成二维码
+    urlToImg: function(box, url) {
+      var $box = $(box);
+      $box.qrcode({
+        correctLevel: 0,
+        text: url
+      });
+      $box.find('canvas').css({'width':'2rem', 'heigit':'2rem'});
+    },
+
     // 微信分享
     shareByWeixin: function(b, t, d, l, i) {
 
@@ -617,10 +627,11 @@
         jYiqiniu.share(option);
       } else{
         $('.dialog').remove();
-        $('body').append(template('common/qszg'));
+        $('body').append(template('common/copyUrl'));
+        J_app.urlToImg('#copyUrl', option.url);
         $('.dialog').fadeIn();
-        $('.dialog').on('click', function(){
-          $(this).remove();
+        $('.dialog-master').on('click', function(){
+          $(this).closest('.dialog').remove();
         });
       }
     },
@@ -744,7 +755,7 @@
           var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
           window.location.href = links.weixin + src;
         } else if(isYiqiniu){
-          window.location.href = 'index.html';
+          window.location.href = './index.html';
         } else {
           window.location.href = links.register;
         }
@@ -774,8 +785,43 @@
       }
     },
 
-    setUserStatus: function(status, type){
-      // 股民
+    // 获取用户信息
+    userInfo: function(session) {
+      var params = {};
+
+      if(session){
+        params['sessionId'] = session;
+      }
+
+      J_app.ajax(J_app.api.joinDetail, params, function(data){
+        if(data.code === 0){
+          J_app.saveCookie(data);
+          J_app.loginStatus();
+        } else {
+          J_app.alert(data.message);
+        }
+      });
+    },
+
+    // 保存cookie
+    saveCookie: function(data) {
+
+      var id = data.result.cId,
+          status = data.result.joinStatus,
+          type = data.result.adviserStatus;
+
+
+      // 存储用户cId
+      if(id){
+        J_app.setCookie('id', id);
+      }
+
+      // 存储用户类型
+      if(type || type === 0){
+        J_app.setCookie('type', type);
+      }
+
+      // 储存状态
       if(type === 1){
         if(status === 2){
           J_app.setCookie('status', 5);
@@ -797,37 +843,19 @@
       else {
         J_app.setCookie('status', 2);
       }
+
+      $('body').append(template('common/hidden', data));
     },
 
-    // 保存cookie
-    saveCookie: function(session) {
-      var params = {};
+    // 导航控制
+    navControl: function(link) {
 
-      if(session){
-        params['sessionId'] = session;
+      if(!link){
+        return;
       }
 
-      J_app.ajax(J_app.api.joinDetail, params, function(data){
-        if(data.code === 0){
-
-          // 如果是游客
-          if(data.result.adviserStatus === 0){
-            setUserStatus(data.result.joinStatus, data.result.adviserStatus);
-          }
-          // 如果是注册用户
-          else{
-            // 存储cId
-            J_app.setCookie('id', data.result.cId);
-            // 存储用户状态
-            setUserStatus(data.result.joinStatus, data.result.adviserStatus);
-            // 存储用户身份
-            J_app.setCookie('type', data.result.adviserStatus);
-            // 存储用户姓名，头像，参赛id，机构
-            $('body').append(template('common/hidden', data));
-          }
-        } else {
-          J_app.alert(data.message);
-        }
+      J_app.checkSign(function(){
+        window.location.href = link;
       });
     }
   };
@@ -958,7 +986,7 @@
       return p > 2 ? 2 : p < 1 ? 1 : p;
     };
     page.changePage = function() {
-      html.setAttribute('style', 'font-size:' + page.widthProportion() * page.fontSize + "px !important");
+      html.setAttribute('style', 'font-size:' + page.widthProportion() * page.fontSize + 'px !important');
     };
     page.changePage();
     window.addEventListener('resize', function() {

@@ -11,6 +11,7 @@ handler.readId = 0;
 // 初始化
 handler.init = function() {
 
+  J_app.loginStatus();
   handler.fetchUserInfo();
   handler.fetchVoteList();
   handler.fetchInviteList();

@@ -8,7 +8,7 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
-
+  J_app.loginStatus();
 
   // 请求观点列表
   handler.loadUserInfo();
@@ -95,7 +95,7 @@ handler.loadUserAssets = function() {
 // 执行
 $(function() {
   J_app.mustSign(function(){
-    if(J_app.getCookie('type') === '2'){
+    if(J_app.getCookie('status') === '2'){
       // 需要报名参赛
       $('body').append(template('trade/notJoin'));
     } else{
