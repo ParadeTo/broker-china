@@ -93,7 +93,7 @@ handler.cancelSubmit = function(data) {
 
   var params = {};
   params['ptfTransId'] = data.tId;
-  params['stkCode'] = data.code;
+  params['stkCode'] = data.code.substr(0,6);
   params['ordSeq'] = data.seq;
   params['exchType'] = getExchType(data.code);
 

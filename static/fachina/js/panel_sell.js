@@ -98,7 +98,9 @@ handler.getFiveBets = function() {
       handler.limitdown = data.result.limitdown;
       handler.limitup = data.result.limitup;
 
-      $('#stkPrice').val(data.result.price);
+      if($('#stkPrice').data('status') !== 'Y'){
+        $('#stkPrice').val(data.result.price).data('status', 'Y');
+      }
 
       // 显示五档
       var ask = data.result.ask,
@@ -215,8 +217,8 @@ handler.clickSubmitBtn = function() {
     var data = {
       name : $('#searchInput').data('name'),
       asset : $('#searchInput').data('code'),
-      number : $('#stkQuantity').val(),
-      tPrice : $('#stkPrice').val()
+      number : $.trim($('#stkQuantity').val()),
+      tPrice : $.trim($('#stkPrice').val())
     };
 
     if(!data.asset){

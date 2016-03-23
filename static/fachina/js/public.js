@@ -21,7 +21,7 @@
 
   //需要配置的地方
   var devHost = 'http://192.168.1.19',
-    development = true; // 是否开发模式，开发时配置true，上线时为false
+    development = false; // 是否开发模式，开发时配置true，上线时为false
 
   //apis
   var apis = {
@@ -102,7 +102,7 @@
     fiveBets: (development ? devHost : host) + '/g_adviser_api/get_five_bets',
 
     //获取微信签名
-    fetchJssdk: (development ? devHost : host) + '/g_adviser_api/fetch_js_sdk_signature',
+    fetchJssdk: (development ? devHost : host) + '/gs_api/fetch_js_sdk_signature',
 
     //广告
     advert: (development ? devHost : host) + '/ad_api/fetch_ad_link_list_noapp'
@@ -473,10 +473,11 @@
       var options = {};
 
       var params = {
-        url: pageUrl
+        url: pageUrl,
+        src: 'GA'
       };
       /*获取签名*/
-      promotion.ajax(apis.fetchJssdk, params, function(data) {
+      J_app.ajaxa(apis.fetchJssdk, params, function(data) {
         options = {
           debug: false,
           appId: data.result.appId,
@@ -491,7 +492,7 @@
         };
         /*调用微信分享方法*/
         niuWebShare(options);
-      }, promotion.ajaxFail, {});
+      }, J_app.ajaxFail, {});
 
       /*微信分享样式自定义方法*/
       function niuWebShare(options) {
@@ -590,11 +591,22 @@
             J_app.loading(false);
 
             if (data.code === 0) {
-              J_app.alert('投票成功');
-              numberBox.html(++number);
 
               // 如果用户没关注微信，弹出二维码
+              if(isWeixin){
+                if(data.result.subscribe === 0){
+                  $('body').append(template('common/qszg'));
+                  $('.dialog-master').on('click', function(){
+                    $(this).closest('.dialog').remove();
+                  });
+                }else{
+                  J_app.alert('投票成功');
+                }
+              } else {
+                J_app.alert('投票成功');
+              }
 
+              numberBox.html(++number);
               if(data.result.voteCount === 0){
                 $('.J-vote').removeClass('btn-red J-vote').addClass('btn-orange J-invite').html('帮TA拉票');
               } else{
@@ -749,10 +761,15 @@
     },
 
     // 判断用户是否登录
-    checkSign: function(callback) {
+    checkSign: function(callback,tar) {
       if (!J_app.getCookie('id')) {
         if(isWeixin){
-          var src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
+          var src = '';
+          if(tar){
+            src = tar;
+          } else{
+            src = window.location.href.match(/\/\w+.html/)[0].slice(1,-5);
+          }
           window.location.href = links.weixin + src;
         } else if(isYiqiniu){
           window.location.href = './index.html';
@@ -778,7 +795,7 @@
       } else {
         if(!J_app.getCookie('status') || !J_app.getCookie('type')){
           // 重新请求用户数据并存在cookie
-
+          J_app.userInfo();
         } else{
           callback();
         }
@@ -809,7 +826,6 @@
       var id = data.result.cId,
           status = data.result.joinStatus,
           type = data.result.adviserStatus;
-
 
       // 存储用户cId
       if(id){
@@ -848,15 +864,20 @@
     },
 
     // 导航控制
-    navControl: function(link) {
+    navControl: function(link,tar) {
+
+      var target = tar;
 
       if(!link){
         return;
       }
+      if(!tar) {
+        target = 'index';
+      }
 
       J_app.checkSign(function(){
         window.location.href = link;
-      });
+      }, target);
     }
   };
 
@@ -975,6 +996,7 @@
     };
   })(jQuery);
 
+
   // 使用rem初始化页面,自执行
   (function() {
     var page = this;
@@ -1039,7 +1061,7 @@
     });
   })(jQuery);
 
-  //回到顶部
+  // 回到顶部
   (function($) {
     $(window).scroll(function() {
       if ($(this).scrollTop() > 400) {
@@ -1055,6 +1077,6 @@
     });
   })(jQuery);
 
-  //抛出对象
+  // 抛出对象
   factory && (global.J_app = J_app);
 });

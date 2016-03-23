@@ -8,10 +8,10 @@
   <!-- script -->
   @@include('_scripts.html')
   <script>
-    var cId = J_app.getUrlParam('cid');
+    var cId = J_app.getUrlParam('cId');
     var soure = J_app.getUrlParam('src');
 
-    $.cookie("fachinaId", cId, {expires:365,path:'/'});
+    J_app.setCookie('id', cId);
     window.location.href = soure ? soure + '.html' : './index.html';
   </script>
 </body>

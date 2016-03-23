@@ -232,7 +232,10 @@ handler.getFiveBets = function() {
       handler.limitdown = data.result.limitdown;
       handler.limitup = data.result.limitup;
 
-      $('#stkPrice').val(data.result.price);
+      if($('#stkPrice').data('status') !== 'Y'){
+        $('#stkPrice').val(data.result.price).data('status', 'Y');
+      }
+
       handler.ableQuantity();
 
       // 显示五档
@@ -325,7 +328,9 @@ handler.priceOper = function() {
   });
 
   // 手动填写价格
-  $('#stkPrice').on('blur', handler.ableQuantity);
+  $('#stkPrice').on('blur', function(){
+    handler.ableQuantity();
+  });
 };
 
 // 模拟长按事件
@@ -373,8 +378,8 @@ handler.clickSubmitBtn = function() {
     var data = {
       name : $('#searchInput').data('name'),
       asset : $('#searchInput').data('code'),
-      number : $('#stkQuantity').val(),
-      tPrice : $('#stkPrice').val()
+      number : $.trim($('#stkQuantity').val()),
+      tPrice : $.trim($('#stkPrice').val())
     };
 
     if(!data.asset){
