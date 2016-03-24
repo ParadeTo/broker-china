@@ -13,25 +13,21 @@ handler.init = function() {
 
     if(J_app.getCookie('type') === '2'){
       J_app.ajax(J_app.api.join, {}, function(data){
+
+        J_app.loading(false);
+
         if(data.code === 0){
-          J_app.ajax(J_app.api.joinDetail, {}, function(data){
-            J_app.loading(false);
-            if(data.code === 0){
-              J_app.saveCookie(data);
-              window.history.back();
-            } else {
-              J_app.alert(data.message);
-            }
-          });
+          window.history.back();
         }else{
           J_app.alert(data.message);
-          setTimeout(function(){
-            window.history.back();
-          },2000);
         }
+      }, function(){
+        J_app.loading(false);
+        J_app.alert('请求超时！');
       });
     } else{
       J_app.loading(false);
+
       // 显示参赛的页面
       $('#mainWrap').show();
     }

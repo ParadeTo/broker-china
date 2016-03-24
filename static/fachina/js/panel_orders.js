@@ -43,7 +43,7 @@ handler.loadTodayOrder = function() {
     $('#orderList').empty().append(trHtml);
   }, function(){
     J_app.loading(false);
-    J_app.alert('请求超时');
+    J_app.alert('请求超时！');
   });
 };
 
@@ -102,12 +102,21 @@ handler.loadHistoryOrder = function() {
 
 // 执行
 $(function() {
-  J_app.mustSign(function(){
-    if(J_app.getCookie('status') === '2'){
-      // 需要报名参赛
-      $('body').append(template('trade/notJoin'));
+  J_app.userInfoInit(function(){
+
+    // 没登录将进行登录
+    if(!J_app.getCookie('id')){
+      window.location.href = J_app.navControl('./trade.html', 'trade');
     } else{
-      handler.init();
+      if(J_app.getCookie('status') === '2'){
+        // 需要报名参赛
+        $('body').append(template('trade/notJoin'));
+      } else if(J_app.getCookie('status') === '3'){
+        // 审核中
+        $('body').append(template('trade/validing'));
+      } else{
+        handler.init();
+      }
     }
   });
 });

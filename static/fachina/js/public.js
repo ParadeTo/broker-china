@@ -267,7 +267,7 @@
           if (error) {
             error();
           } else {
-            console.log("请求超时");
+            console.log("请求超时！");
           }
         }
       });
@@ -288,7 +288,7 @@
           if (error) {
             error();
           } else {
-            console.log('请求超时');
+            console.log('请求超时！');
           }
         }
       });
@@ -782,41 +782,41 @@
     },
 
     // 用户登录状态
-    loginStatus: function() {
+    loginStatus: function(img) {
       var status = J_app.getCookie('status'),
-          className = 'status-' + (status ? status : '1');
-      $('#userStatus').addClass(className);
-    },
+          className = 'status-' + (status ? status : '1'),
+          imgUrl = img ? img : (J_app.host + '/static/fachina/images/icon_default_user.png'),
+          $obj = $('#golbalUserStatus');
 
-    // 必须登录才能访问的页面
-    mustSign: function(callback) {
-      if(!J_app.getCookie('id')){
-        window.location.href = './index.html';
-      } else {
-        if(!J_app.getCookie('status') || !J_app.getCookie('type')){
-          // 重新请求用户数据并存在cookie
-          J_app.userInfo();
-        } else{
-          callback();
-        }
+      if($obj){
+        $obj.append('<div class="ui-avatar"><img src="' + imgUrl + '"></div>').addClass(className);
       }
     },
 
     // 获取用户信息
-    userInfo: function(session) {
+    userInfo: function(callback, session) {
       var params = {};
 
       if(session){
         params['sessionId'] = session;
       }
 
+      if(typeof callback !== 'function'){
+        callback = function(){
+          return;
+        }
+      }
+
       J_app.ajax(J_app.api.joinDetail, params, function(data){
         if(data.code === 0){
           J_app.saveCookie(data);
-          J_app.loginStatus();
+          J_app.loginStatus(data.result.uImg);
+          callback();
         } else {
           J_app.alert(data.message);
         }
+      }, function(){
+        J_app.alert('请求超时！');
       });
     },
 
@@ -857,7 +857,7 @@
         }
       }
       else {
-        J_app.setCookie('status', 2);
+        J_app.setCookie('status', 1);
       }
 
       $('body').append(template('common/hidden', data));
@@ -878,6 +878,27 @@
       J_app.checkSign(function(){
         window.location.href = link;
       }, target);
+    },
+
+    // 初始化请求用户信息
+    userInfoInit: function(callback){
+
+      // 如果在一起牛，每次都去获取sessionid
+      if(J_app.agent.yiqiniu){
+        jYiqiniu.getSessionId(function(data){
+          J_app.userInfo(callback, data);
+        });
+      } else{
+        if(!J_app.getCookie('id')){
+          J_app.setCookie('status', 1);
+          J_app.setCookie('type', 1);
+          J_app.loginStatus();
+          callback();
+        } else{
+          // 如果有id，则请求用户信息
+          J_app.userInfo(callback);
+        }
+      }
     }
   };
 

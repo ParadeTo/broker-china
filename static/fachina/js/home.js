@@ -11,7 +11,6 @@ handler.readId = 0;
 // 初始化
 handler.init = function() {
 
-  J_app.loginStatus();
   handler.fetchUserInfo();
   handler.fetchVoteList();
   handler.fetchInviteList();
@@ -98,11 +97,13 @@ handler.moreInviteList = function() {
 };
 
 $(function() {
+  J_app.userInfoInit(function(){
 
-  // 没登录将跳转到首页
-  if(!J_app.getCookie('id')){
-    window.location.href = './index.html';
-  } else{
-    handler.init();
-  }
+    // 没登录将进行登录
+    if(!J_app.getCookie('id')){
+      window.location.href = J_app.navControl('./home.html', 'home');
+    } else{
+      handler.init();
+    }
+  });
 });

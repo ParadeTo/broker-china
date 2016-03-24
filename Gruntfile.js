@@ -27,6 +27,9 @@ module.exports = function(grunt) {
     clean: {
       dist: {
         src: ['dist']
+      },
+      tmodCache: {
+        src: ['<%= cfg.dist.js %>/.cache']
       }
     },
 
@@ -221,6 +224,6 @@ module.exports = function(grunt) {
 
   // 执行Grunt任务
   grunt.registerTask('default',
-    ['clean:dist', 'sass', 'cssmin', 'includereplace', 'tmod', 'jshint', 'uglify', 'copy', 'connect', 'watch']
+    ['clean:dist', 'sass', 'cssmin', 'includereplace', 'tmod', 'jshint', 'uglify', 'copy', 'clean:tmodCache','connect', 'watch']
   );
 };

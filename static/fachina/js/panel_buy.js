@@ -6,15 +6,20 @@
 // 搜索股票
 var stkComplete = {
 
+  timer: null,
+
   //输入参数
   inputChange : function(){
 
-    $('#searchInput').on('keyup focus',function(){
+    $('#searchInput').on('keyup',function(){
+      clearTimeout(stkComplete.timer);
 
       var txt = $(this).val();
       var $this = $(this);
 
-      stkComplete.searchData(txt,$this);
+      stkComplete.timer = setTimeout(function(){
+        stkComplete.searchData(txt,$this);
+      },150);
     });
 
     //兼容IOS输入中文
@@ -182,7 +187,7 @@ handler.loadPtfDetail = function() {
     $('#ptfDetail').empty().append(trHtml);
   }, function(){
     J_app.loading(false);
-    J_app.alert('请求超时');
+    J_app.alert('请求超时！');
   });
 };
 
@@ -191,6 +196,7 @@ handler.setKeywords = function() {
   clearInterval(handler.timer);
   handler.getFiveBets();
   $('#stkQuantity').val(0);
+  $('#stkPrice').val(0).data('status', 'N');
   handler.timer = setInterval(handler.getFiveBets, 10000);
 };
 
@@ -328,9 +334,7 @@ handler.priceOper = function() {
   });
 
   // 手动填写价格
-  $('#stkPrice').on('blur', function(){
-    handler.ableQuantity();
-  });
+  $('#stkPrice').on('blur', handler.ableQuantity);
 };
 
 // 模拟长按事件
@@ -367,6 +371,17 @@ handler.quantityOper = function() {
   $('#quantitySpace').on('click', 'li', function() {
     var cash = handler.cash/$(this).data('den');
     $('#stkQuantity').val(handler.count(cash));
+  });
+
+  //手动输入股数
+  $('#stkQuantity').on('blur', function(){
+    var abalNumber = parseInt($('#ableQuantity').html());
+    var setNumber = parseInt($(this).val());
+
+    if(setNumber > abalNumber){
+      J_app.alert('当前最多可买' + abalNumber + '股');
+      $(this).val(abalNumber);
+    }
   });
 };
 
@@ -447,7 +462,7 @@ handler.buySubmit = function() {
     }
   }, function(){
     J_app.loading(false);
-    J_app.alert('请求超时');
+    J_app.alert('请求超时！');
   });
 };
 
@@ -459,12 +474,21 @@ handler.resetInput = function() {
 
 // 执行
 $(function() {
-  J_app.mustSign(function(){
-    if(J_app.getCookie('status') === '2'){
-      // 需要报名参赛
-      $('body').append(template('trade/notJoin'));
+  J_app.userInfoInit(function(){
+
+    // 没登录将进行登录
+    if(!J_app.getCookie('id')){
+      window.location.href = J_app.navControl('./trade.html', 'trade');
     } else{
-      handler.init();
+      if(J_app.getCookie('status') === '2'){
+        // 需要报名参赛
+        $('body').append(template('trade/notJoin'));
+      } else if(J_app.getCookie('status') === '3'){
+        // 审核中
+        $('body').append(template('trade/validing'));
+      } else{
+        handler.init();
+      }
     }
   });
 });

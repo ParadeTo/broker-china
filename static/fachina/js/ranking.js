@@ -16,7 +16,6 @@ handler.init = function() {
   J_app.inviteOrg($('#rankOrg'));
 
   // 请求观点列表
-  handler.fetchUserInfo();
   handler.fetchEventDetail();
   handler.fetchEventRadio();
   handler.fetchGuestInfo();
@@ -25,27 +24,6 @@ handler.init = function() {
   handler.inviteVote();
   handler.inviteGuest();
   handler.voteGuest();
-};
-
-// 获取用户信息
-handler.fetchUserInfo = function() {
-
-  // 如果检测没有cId
-  if(!J_app.getCookie('id')){
-
-    // 如果在一起牛APP
-    if(J_app.agent.yiqiniu){
-      jYiqiniu.getSessionId(J_app.userInfo);
-    }
-    else{
-      J_app.setCookie('status', 1);
-      J_app.setCookie('type', 1);
-      J_app.loginStatus();
-    }
-  }
-  else{
-    J_app.userInfo();
-  }
 };
 
 // 获取赛事信息
@@ -157,7 +135,7 @@ handler.fetchRankList = function(obj,readId,more) {
     }
   }, function(){
     J_app.loading(false);
-    var errHtml = template('common/errorTable5', {message:'请求超时'});
+    var errHtml = template('common/errorTable5', {message:'请求超时！'});
     if(more){
       $('#' + viewId).append(errHtml);
     } else{
@@ -244,5 +222,5 @@ handler.voteGuest = function() {
 
 // 执行
 $(function() {
-  handler.init();
+  J_app.userInfoInit(handler.init);
 });

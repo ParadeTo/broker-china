@@ -9,10 +9,11 @@
   @@include('_scripts.html')
   <script>
     var cId = J_app.getUrlParam('cId');
-    var soure = J_app.getUrlParam('src');
+    var src = J_app.getUrlParam('src');
 
+    // 授权成功，保存cid
     J_app.setCookie('id', cId);
-    window.location.href = soure ? soure + '.html' : './index.html';
+    window.location.href = src ? src + '.html' : './index.html';
   </script>
 </body>
 </html>

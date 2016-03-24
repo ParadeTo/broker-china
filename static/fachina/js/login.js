@@ -57,9 +57,8 @@ handler.login = function(){
       J_app.loading(false);
 
       if(data.code === 0){
-
-        // 存储用户状态
-        J_app.saveCookie(data);
+        // 登录成功，设置cookie
+        J_app.setCookie('id', data.result.cId);
 
         var src = J_app.getUrlParam('src');
         if(!src){
