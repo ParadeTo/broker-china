@@ -7,7 +7,10 @@
         </li>
         <li>大侠，报名参赛<br>才能模拟交易哦</li>
         <li class="m-t-10">
-          <a href="./enroll_entry.html" class="btn btn-red btn-fixed-large">我要参赛</a>
+          <a href="./enroll_entry.html?src=trade" class="btn btn-red btn-fixed-large">我要参赛</a>
+        </li>
+        <li class="m-t-10">
+          <a href="javascript:window.history.back();" class="btn btn-link">返回</a>
         </li>
       </ul>
     </div>

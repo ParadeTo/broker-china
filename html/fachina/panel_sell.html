@@ -37,7 +37,7 @@
           <div class="panel-search-input">
             <input type="text" class="form-control text sell" id="searchInput" placeholder="股票名/代码" readonly>
           </div>
-          <ul class="ui-quantity-form sell m-t-6" id="quantityForm">
+          <ul class="ui-quantity-form sell m-t-6 ui-prevent-select" id="quantityForm" oncontextmenu="return false;">
             <li data-type="reduce" class="minus-btn J-touch">-</li>
             <li class="input">
               <input id="stkPrice" type="number" value="0"/>
@@ -143,5 +143,6 @@
   <!-- script -->
   @@include('_scripts.html')
   <script src="../../static/fachina/js/panel_sell.js?ver=@@pageVersion"></script>
+  <script type="text/javascript">document.oncontextmenu=function(e){return false;}</script>
 </body>
 </html>

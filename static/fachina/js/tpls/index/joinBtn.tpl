@@ -1,7 +1,7 @@
 {{if status === '1'}}
   <a href="javascript:J_app.checkSign();" class="index-join-event J-touch">我要参赛</a>
 {{else if status === '2'}}
-  <a href="./enroll_entry.html" class="index-join-event J-touch">我要参赛</a>
+  <a href="./enroll_entry.html?src=index" class="index-join-event J-touch">我要参赛</a>
 {{else if status === '3'}}
   <a href="javascript:;" class="btn btn-gray btn-fixed-large disabled" style="width:2.5rem;">审核中</a>
 {{else}}

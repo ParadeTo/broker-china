@@ -15,7 +15,7 @@
     </div>
     {{if result.joinStatus===0}}
     <div class="ranking-btn-box center">
-      <a href="./enroll_entry.html" class="btn btn-red btn-fixed-middle J-touch">我要参赛</a>
+      <a href="./enroll_entry.html?src=ranking" class="btn btn-red btn-fixed-middle J-touch">我要参赛</a>
       <a href="./rules.html" class="ranking-to-rules">查看规则</a>
     </div>
     {{else if result.joinStatus===1}}

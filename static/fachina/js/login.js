@@ -24,6 +24,7 @@ handler.login = function(){
     var $this = $(this);
     var phone = $('#login-body-phone').val();
     var password = $('#login-body-password').val();
+    var inviteUserId = J_app.getCookie('invite');
 
     // 验证手机号
     if(!J_app.validPhone(phone)) {
@@ -51,6 +52,12 @@ handler.login = function(){
     params['certType'] = '0';
     params['certCode'] = phone;
     params['pwd'] = password;
+
+    // 如果有邀请用户
+    if(inviteUserId){
+      params['invUserId'] = inviteUserId;
+    }
+
     J_app.ajax(J_app.api.login, params, function(data){
 
       $this.removeClass('locked');

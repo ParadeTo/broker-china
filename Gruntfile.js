@@ -196,9 +196,9 @@ module.exports = function(grunt) {
         files: ['static/fachina/scss/**/*.scss'],
         tasks: ['sass', 'cssmin']
       },
-      tomd: {
+      tmod: {
         files: ['<%= cfg.src.tpls %>/**/*.tpl'],
-        tasks: ['tmod']
+        tasks: ['tmod', 'clean:tmodCache']
       },
       uglify: {
         files: ['static/fachina/**/*.js'],

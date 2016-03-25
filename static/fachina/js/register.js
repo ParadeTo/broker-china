@@ -106,11 +106,7 @@ handler.register = function() {
   $('#register-btn-register').click(function() {
     var $this = $(this);
     var params = {};
-
-    // 获取邀请人id
-    if(J_app.getUrlParam('invUserId')) {
-      params['invUserId'] = J_app.getUrlParam('invUserId');
-    }
+    var inviteUserId = J_app.getCookie('invite');
 
     // 获取电话、验证码、密码
     params['certCode'] = $('#register-body-phone').val();
@@ -120,6 +116,11 @@ handler.register = function() {
     params['certType'] = 0;
     // 事件id
     params['eventId'] = handler.eventId;
+
+    // 如果有邀请用户
+    if(inviteUserId){
+      params['invUserId'] = inviteUserId;
+    }
 
     // 验证表单
     if(!validForm(params)) {

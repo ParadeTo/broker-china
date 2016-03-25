@@ -130,7 +130,8 @@
   var cookieText = {
     id : 'fachinaId',
     status: 'fachinaStatus',
-    type: 'fachinaType'
+    type: 'fachinaType',
+    invite: 'fachinaInvite'
   };
 
   //全局对象
@@ -818,7 +819,12 @@
           // 用户参赛是否异常
           J_app.errorMessage = data.result.errorStatus;
           callback();
-        } else {
+        }
+        else if(data.code === 100){
+          // 如果用户的cid无效，和后端特殊约定返回码100
+          J_app.setCookie('id', '');
+        }
+        else {
           J_app.alert(data.message);
         }
       }, function(){
@@ -829,9 +835,11 @@
     // 保存cookie
     saveCookie: function(data) {
 
-      var id = data.result.cId,
-          status = data.result.joinStatus,
-          type = data.result.adviserStatus;
+      if(data.result){
+        var id = data.result.cId,
+            status = data.result.joinStatus,
+            type = data.result.adviserStatus;
+      }
 
       // 存储用户cId
       if(id){

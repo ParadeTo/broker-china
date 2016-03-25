@@ -17,7 +17,11 @@ handler.init = function() {
         J_app.loading(false);
 
         if(data.code === 0){
-          window.history.back();
+          var src = J_app.getUrlParam('src');
+          if(!src){
+            src = 'index';
+          }
+          window.location.href = src + '.html';
         }else{
           J_app.alert(data.message);
         }
