@@ -101,60 +101,72 @@ handler.getCaptcha = function() {
   });
 };
 
+// 发送注册请求
+handler.registerReq = function(obj) {
+  var $this = obj ? $(obj) : $('#register-btn-register');
+  var params = {};
+  var inviteUserId = J_app.getCookie('invite');
+
+  // 获取电话、验证码、密码
+  params['certCode'] = $('#register-body-phone').val();
+  params['captcha'] = $('#register-body-identify-input').val();
+  params['pwd'] = $('#register-body-password').val();
+  // 凭证
+  params['certType'] = 0;
+  // 事件id
+  params['eventId'] = handler.eventId;
+
+  // 如果有邀请用户
+  if(inviteUserId){
+    params['invUserId'] = inviteUserId;
+  }
+
+  // 验证表单
+  if(!validForm(params)) {
+    return ;
+  }
+
+  // 防重发
+  if($this.hasClass('locked')){
+    return ;
+  }
+  $this.addClass('locked');
+
+  // 加载动画
+  J_app.loading(true);
+
+  // 注册
+  J_app.ajax(J_app.api.register, params, function(data) {
+
+    $this.removeClass('locked');
+    J_app.loading(false);
+
+    if(data.code === 0) {
+      // 注册成功，设置cookie
+      J_app.setCookie('id', data.result.cId);
+      window.location.href = './index.html';
+    } else {
+      J_app.alert(data.message);
+    }
+    iTime = 0;
+  },function() {
+    $this.removeClass('locked');
+    J_app.loading(false);
+    J_app.alert('请求超时！');
+  });
+}
+
 // 注册
 handler.register = function() {
   $('#register-btn-register').click(function() {
-    var $this = $(this);
-    var params = {};
-    var inviteUserId = J_app.getCookie('invite');
+    handler.registerReq($(this));
+  });
 
-    // 获取电话、验证码、密码
-    params['certCode'] = $('#register-body-phone').val();
-    params['captcha'] = $('#register-body-identify-input').val();
-    params['pwd'] = $('#register-body-password').val();
-    // 凭证
-    params['certType'] = 0;
-    // 事件id
-    params['eventId'] = handler.eventId;
-
-    // 如果有邀请用户
-    if(inviteUserId){
-      params['invUserId'] = inviteUserId;
+  // 软键盘注册
+  $(document).on('keydown', function(event){
+    if(event.keyCode === 13){
+      handler.registerReq();
     }
-
-    // 验证表单
-    if(!validForm(params)) {
-      return ;
-    }
-
-    // 防重发
-    if($this.hasClass('locked')){
-      return ;
-    }
-    $this.addClass('locked');
-
-    // 加载动画
-    J_app.loading(true);
-
-    // 注册
-    J_app.ajax(J_app.api.register, params, function(data) {
-
-      $this.removeClass('locked');
-      J_app.loading(false);
-
-      if(data.code === 0) {
-        // 注册成功，设置cookie
-        J_app.setCookie('id', data.result.cId);
-        window.location.href = './index.html';
-      } else {
-        J_app.alert(data.message);
-      }
-      iTime = 0;
-    },function() {
-      $this.removeClass('locked');
-      J_app.loading(false);
-      J_app.alert('请求超时！');
-    });
   });
 }
 
