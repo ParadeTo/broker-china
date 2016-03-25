@@ -32,10 +32,38 @@ handler.checkJoinBtn = function() {
 
 // 获取赛事信息
 handler.fetchEventDetail = function() {
+
+  function ENToCN(n) {
+    switch(n) {
+      case 0:
+        return '一';
+      case 1:
+        return '二';
+      case 2:
+        return '三';
+      case 3:
+        return '四';
+      default:
+        return '--';
+    }
+  }
+
   J_app.ajax(J_app.api.eventDetail, {}, function(data){
     if(data.code === 0){
       $('#indexBanner').append(template('common/eventDetail', data));
-      $('#eventDate').addClass('date-' + data.result.season);
+
+      if(data.result.eventTimes){
+        var times = data.result.eventTimes;
+
+        if(times.length > 0){
+          for(var i=0; i<times.length; i++){
+            times[i].eventSeason = ENToCN(i);
+          }
+        }
+        $('#eventDate')
+        .append(template('common/eventTimes', data.result))
+        .addClass('date-' + data.result.season);
+      }
     } else{
       $('#indexBanner').append(template('common/error', data));
     }

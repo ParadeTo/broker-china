@@ -19,15 +19,19 @@ var stkComplete = {
 
       stkComplete.timer = setTimeout(function(){
         stkComplete.searchData(txt,$this);
-      },150);
+      },300);
     });
 
     //兼容IOS输入中文
     document.getElementById('searchInput').addEventListener('input', function(e){
+      clearTimeout(stkComplete.timer);
+
       var txt = e.target.value;
       var $this = $(this);
 
-      stkComplete.searchData(txt,$this);
+      stkComplete.timer = setTimeout(function(){
+        stkComplete.searchData(txt,$this);
+      },300);
     });
   },
 
@@ -487,7 +491,11 @@ $(function() {
         // 审核中
         $('body').append(template('trade/validing'));
       } else{
-        handler.init();
+        if(J_app.errorMessage === 1){
+          J_app.joinError();
+        } else{
+          handler.init();
+        }
       }
     }
   });

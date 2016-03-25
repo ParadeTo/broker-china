@@ -103,7 +103,11 @@ $(function() {
     if(!J_app.getCookie('id')){
       window.location.href = J_app.navControl('./home.html', 'home');
     } else{
-      handler.init();
+      if(J_app.errorMessage === 1){
+        J_app.joinError();
+      } else{
+        handler.init();
+      }
     }
   });
 });

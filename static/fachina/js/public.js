@@ -148,6 +148,9 @@
     // 浏览器标识
     agent : uAgent,
 
+    // 用户参赛错误
+    errorMessage: 0,
+
     // 验证手机号
     validPhone: function(phone) {
       return /^\d{11}$/.test(phone);
@@ -811,6 +814,9 @@
         if(data.code === 0){
           J_app.saveCookie(data);
           J_app.loginStatus(data.result.uImg);
+
+          // 用户参赛是否异常
+          J_app.errorMessage = data.result.errorStatus;
           callback();
         } else {
           J_app.alert(data.message);
@@ -842,6 +848,9 @@
         if(status === 2){
           J_app.setCookie('status', 5);
         }
+        else if(status === 1){
+          J_app.setCookie('status', 3);
+        }
         else {
           J_app.setCookie('status', 2);
         }
@@ -850,9 +859,11 @@
       else if(type === 2){
         if(status === 1){
           J_app.setCookie('status', 3);
-        } else if(status === 2) {
+        }
+        else if(status === 2) {
           J_app.setCookie('status', 4);
-        } else {
+        }
+        else {
           J_app.setCookie('status', 2);
         }
       }
@@ -899,6 +910,11 @@
           J_app.userInfo(callback);
         }
       }
+    },
+
+    // 如果用户报名出现错误，弹出提示
+    joinError: function() {
+      $('body').append(template('common/joinError'));
     }
   };
 

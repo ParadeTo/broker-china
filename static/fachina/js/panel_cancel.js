@@ -128,7 +128,11 @@ $(function() {
         // 审核中
         $('body').append(template('trade/validing'));
       } else{
-        handler.init();
+        if(J_app.errorMessage === 1){
+          J_app.joinError();
+        } else{
+          handler.init();
+        }
       }
     }
   });
