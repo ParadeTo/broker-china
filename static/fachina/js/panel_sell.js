@@ -287,9 +287,11 @@ handler.sellSubmit = function() {
   J_app.ajax(J_app.api.simuOrder, params, function(data){
     if(data.code === 0){
       handler.loadPtfDetail();
+      clearInterval(handler.timer);
       $('#searchInput').val('').data('code', '');
       $('#stkQuantity').val(0);
-      clearInterval(handler.timer);
+      $('#ableQuantity').html(0);
+      $('#stkPrice').val(0).data('status', 'N');
     } else{
       J_app.alert(data.message);
     }

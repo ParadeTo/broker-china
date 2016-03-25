@@ -3,7 +3,7 @@
 <head lang="en">
   @@include('_metas.html')
 </head>
-<body class="fixed-header-body">
+<body class="fixed-header-body ui-prevent-select">
 
   <!-- header -->
   @@include('_back_refresh.html', {"title":"卖出", "src":"./trade.html"})
@@ -37,7 +37,7 @@
           <div class="panel-search-input">
             <input type="text" class="form-control text sell" id="searchInput" placeholder="股票名/代码" readonly>
           </div>
-          <ul class="ui-quantity-form sell m-t-6 ui-prevent-select" id="quantityForm" oncontextmenu="return false;">
+          <ul class="ui-quantity-form sell m-t-6" id="quantityForm" oncontextmenu="return false;">
             <li data-type="reduce" class="minus-btn J-touch">-</li>
             <li class="input">
               <input id="stkPrice" type="number" value="0"/>

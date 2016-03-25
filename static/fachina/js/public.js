@@ -682,7 +682,9 @@
         var $this = $(this);
 
         J_app.checkSign(function() {
-          var params = {};
+          var numberBox = $this.parent().find('.total-number'),
+              number = parseInt(numberBox.html()),
+              params = {};
 
           if ($this.hasClass('J-locked')) {
             return;
@@ -698,6 +700,7 @@
             if (data.code === 0) {
               J_app.alert('关注成功');
               $this.removeClass('btn-red J-fav').addClass('btn-gray disabled').html('已关注');
+              numberBox.html(++number);
             } else {
               J_app.alert(data.message);
             }

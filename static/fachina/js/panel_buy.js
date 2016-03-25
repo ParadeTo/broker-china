@@ -200,6 +200,7 @@ handler.setKeywords = function() {
   clearInterval(handler.timer);
   handler.getFiveBets();
   $('#stkQuantity').val(0);
+  $('#ableQuantity').html(0);
   $('#stkPrice').val(0).data('status', 'N');
   handler.timer = setInterval(handler.getFiveBets, 10000);
 };
@@ -345,7 +346,8 @@ handler.priceOper = function() {
 handler.insistTouch = function() {
 
   var timer = null;
-  $('#quantityForm li').on('touchstart mousedown', function(){
+  $('#quantityForm li').on('touchstart mousedown', function(e){
+    e.preventDefault();
     var $this = $(this);
     timer = setInterval(function(){
       $this.trigger('click');
