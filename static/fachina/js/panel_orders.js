@@ -37,7 +37,7 @@ handler.loadTodayOrder = function() {
         $('#orderMore').trigger('click');
       }
     } else{
-      J_app.alert(data.message);
+      $('body').append(template('trade/notStart'), data);
     }
 
     $('#orderList').empty().append(trHtml);

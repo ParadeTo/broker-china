@@ -84,6 +84,9 @@ handler.loadUserAssets = function() {
         $('#userAssets').empty().append(template('trade/userStatis', data));
       }
     }
+    else{
+      $('body').append(template('trade/notStart', data));
+    }
   }, function(){
     J_app.loading(false);
     J_app.alert('请求超时！');

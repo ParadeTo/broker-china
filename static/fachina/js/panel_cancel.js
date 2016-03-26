@@ -42,7 +42,7 @@ handler.loadOrderList = function() {
         $('.panel-cancel-list').after(template('common/noData', { message : '还没有数据'}));
       }
     } else{
-      J_app.alert(data.message);
+      $('body').append(template('trade/notStart'), data);
     }
 
     $('#cancelList').empty().append(trHtml);

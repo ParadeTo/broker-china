@@ -86,7 +86,7 @@ handler.fetchEventRadio = function() {
   var params = {};
 
   params['type'] = 'C';
-  params['count'] = 10;
+  params['count'] = 5;
   params['readId'] = 0;
 
   J_app.ajax(J_app.api.noteList, params, function(data){

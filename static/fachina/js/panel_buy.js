@@ -185,7 +185,7 @@ handler.loadPtfDetail = function() {
         trHtml = template('panel/panelTake', { stks: stks});
       }
     } else{
-      J_app.alert(data.message);
+      $('body').append(template('trade/notStart'), data);
     }
 
     $('#ptfDetail').empty().append(trHtml);
