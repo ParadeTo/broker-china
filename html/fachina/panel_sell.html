@@ -3,7 +3,7 @@
 <head lang="en">
   @@include('_metas.html')
 </head>
-<body class="fixed-header-body">
+<body class="fixed-header-body ui-prevent-select">
 
   <!-- header -->
   @@include('_back_refresh.html', {"title":"卖出", "src":"./trade.html"})
@@ -37,10 +37,10 @@
           <div class="panel-search-input">
             <input type="text" class="form-control text sell" id="searchInput" placeholder="股票名/代码" readonly>
           </div>
-          <ul class="ui-quantity-form sell m-t-6" id="quantityForm">
+          <ul class="ui-quantity-form sell m-t-6" id="quantityForm" oncontextmenu="return false;">
             <li data-type="reduce" class="minus-btn J-touch">-</li>
             <li class="input">
-              <input id="stkPrice" type="text" value="0"/>
+              <input id="stkPrice" type="number" value="0"/>
             </li>
             <li data-type="add" class="plus-btn J-touch">+</li>
           </ul>
@@ -53,7 +53,7 @@
             </li>
           </ul>
           <div class="m-t-6 panel-number-input">
-            <input type="text" class="form-control text sell" placeholder="数量(股)" id="stkQuantity">
+            <input type="number" class="form-control text-number sell" placeholder="数量(股)" id="stkQuantity">
             <div class="number">可卖：<span id="ableQuantity">0</span></div>
           </div>
           <ul class="m-t-6 ui-row panel-select-btn sell" id="quantitySpace">
@@ -143,5 +143,6 @@
   <!-- script -->
   @@include('_scripts.html')
   <script src="../../static/fachina/js/panel_sell.js?ver=@@pageVersion"></script>
+  <script type="text/javascript">document.oncontextmenu=function(e){return false;}</script>
 </body>
 </html>

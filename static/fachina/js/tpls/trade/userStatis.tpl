@@ -9,7 +9,7 @@
     <dl>
       <dt>可用资产</dt>
       <dd id="ableAssets" class="text-black">
-        <em class="icon-symbol-rmb">￥</em>{{ result.cash | money }}
+        <em class="icon-symbol-rmb">￥</em>{{ result.avlBal | money }}
       </dd>
     </dl>
   </div>

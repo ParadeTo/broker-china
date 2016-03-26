@@ -8,11 +8,12 @@
   <!-- script -->
   @@include('_scripts.html')
   <script>
-    var cId = J_app.getUrlParam('cid');
-    var soure = J_app.getUrlParam('src');
+    var cId = J_app.getUrlParam('cId');
+    var src = J_app.getUrlParam('src');
 
-    $.cookie("fachinaId", cId, {expires:365,path:'/'});
-    window.location.href = soure ? soure + '.html' : './index.html';
+    // 授权成功，保存cid
+    J_app.setCookie('id', cId);
+    window.location.href = src ? src + '.html' : './index.html';
   </script>
 </body>
 </html>

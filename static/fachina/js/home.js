@@ -30,8 +30,10 @@ handler.fetchUserInfo = function() {
         $('#statis').append(template('home/userStatis', data));
       }
     } else{
-      J_app.alert(data.message);
+      $('#statis').append(template('common/error', data));
     }
+  }, function(){
+    $('#statis').append(template('common/loadFail'));
   });
 };
 
@@ -95,5 +97,17 @@ handler.moreInviteList = function() {
 };
 
 $(function() {
-  handler.init();
+  J_app.userInfoInit(function(){
+
+    // 没登录将进行登录
+    if(!J_app.getCookie('id')){
+      window.location.href = J_app.navControl('./home.html', 'home');
+    } else{
+      if(J_app.errorMessage === 1){
+        J_app.joinError();
+      } else{
+        handler.init();
+      }
+    }
+  });
 });

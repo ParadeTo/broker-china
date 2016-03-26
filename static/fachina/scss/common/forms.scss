@@ -26,6 +26,7 @@
     opacity: 1;
   }
 
+  &.text-number,
   &.text {
     height: pxToRem(30px);
     line-height: pxToRem(30px);
@@ -37,5 +38,9 @@
     &.sell {
       border-color: $bg-blue;
     }
+  }
+
+  &.text-number {
+    line-height: pxToRem(15px);
   }
 }

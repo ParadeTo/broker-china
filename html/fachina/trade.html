@@ -47,10 +47,10 @@
         <a href="./index.html" class="nav-link">大赛首页</a>
       </li>
       <li class="ui-col">
-        <a href="javascript:;" class="nav-link" id="navHome">个人中心</a>
+        <a href="javascript:J_app.navControl('./home.html', 'home');" class="nav-link">个人中心</a>
       </li>
       <li class="ui-col">
-        <a href="javascript:;" class="nav-link active" id="navTrade">模拟交易</a>
+        <a href="javascript:J_app.navControl('./trade.html', 'trade');" class="nav-link active">模拟交易</a>
       </li>
       <li class="ui-col">
         <a href="./ranking.html" class="nav-link">排行榜</a>
@@ -117,9 +117,9 @@
         <thead>
           <tr>
             <th>股票名称<br/>当前市值</th>
-            <th>盈亏金额<br/>盈亏比例</th>
-            <th>持仓股数<br/>可用股数</th>
-            <th>成本价<br>现&nbsp;&nbsp;价</th>
+            <th class="right">盈亏金额<br/>盈亏比例</th>
+            <th class="right">持仓股数<br/>可用股数</th>
+            <th class="right">成本价<br>现&nbsp;&nbsp;价</th>
           </tr>
         </thead>
         <tbody id="stkList"></tbody>

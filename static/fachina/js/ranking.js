@@ -16,31 +16,14 @@ handler.init = function() {
   J_app.inviteOrg($('#rankOrg'));
 
   // 请求观点列表
-  handler.fetchUserInfo();
   handler.fetchEventDetail();
   handler.fetchEventRadio();
   handler.fetchGuestInfo();
   handler.fetchRankList();
   handler.moreRankList();
-};
-
-// 获取用户信息
-handler.fetchUserInfo = function() {
-  if(!$.cookie('fachinaId')){
-    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
-    $.cookie('fachinaType', 1, {expires:365,path:'/'});
-    $('#userStatus').addClass('status-1');
-    J_app.updateNavbar();
-  } else{
-    J_app.ajax(J_app.api.joinDetail, {}, function(data){
-      if(data.code === 0){
-        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        $.cookie('fachinaType', data.result.adviserStatus, {expires:365,path:'/'});
-        J_app.updateNavbar();
-        $('body').append(template('common/hidden', data));
-      }
-    });
-  }
+  handler.inviteVote();
+  handler.inviteGuest();
+  handler.voteGuest();
 };
 
 // 获取赛事信息
@@ -57,7 +40,7 @@ handler.fetchEventRadio = function() {
   var params = {};
 
   params['type'] = 'C';
-  params['count'] = 10;
+  params['count'] = 5;
   params['readId'] = 0;
 
   J_app.ajax(J_app.api.noteList, params, function(data){
@@ -152,7 +135,7 @@ handler.fetchRankList = function(obj,readId,more) {
     }
   }, function(){
     J_app.loading(false);
-    var errHtml = template('common/errorTable5', {message:'请求超时'});
+    var errHtml = template('common/errorTable5', {message:'请求超时！'});
     if(more){
       $('#' + viewId).append(errHtml);
     } else{
@@ -166,13 +149,13 @@ handler.moreRankList = function() {
   $('.ui-more').on('click', function(){
     var $this = $(this),
         readId = $this.data('readId');
-    handler.loadRankList($this, readId, true);
+    handler.fetchRankList($this, readId, true);
   });
 };
 
 // 给自己转发拉票
 handler.inviteVote = function() {
-  $('#guestInfo').on('click', '.J-invite-guest', function(){
+  $('#guestInfo').on('click', '.J-invite-alone', function(){
     var option = {};
 
     option['url'] = J_app.host + '/webstatic/fachina/ranking.html?joinId=' + $('#globalUserJoinId').val();
@@ -191,10 +174,10 @@ handler.inviteGuest = function() {
   $('#guestInfo').on('click', '.J-invite-guest', function(){
     var option = {};
 
-    option['url'] = J_app.host + '/webstatic/fachina/ranking.html?joinId=' + $('#globalUserJoinId').val();
-    option['title'] = $('#globalUserName').val() + '邀您参加投顾大赛';
+    option['url'] = J_app.host + '/webstatic/fachina/ranking.html?joinId=' + $(this).data('id');
+    option['title'] = $(this).data('name') + '邀您参加投顾大赛';
     option['desc'] = '我参加了投顾大赛，快来帮我投票吧！';
-    option['img'] = $('#globalUserImg').val();
+    option['img'] = $(this).data('img');
 
     J_app.inviteAction(option);
   });
@@ -203,20 +186,22 @@ handler.inviteGuest = function() {
 // 主屏用户投票
 handler.voteGuest = function() {
   $('#guestInfo').on('click', '.J-vote-guest', function(){
-    J_app.loading(true);
 
     var $this = $(this);
+
     J_app.checkSign(function () {
       var params = {};
       if ($this.hasClass('J-locked')) {
         return;
       }
       $this.addClass('J-locked');
+      J_app.loading(true);
 
       params['joinId'] = $this.data('id');
       J_app.ajax(J_app.api.vote, params, function (data) {
-        J_app.loading(false);
         $this.removeClass('J-locked');
+        J_app.loading(false);
+
         if (data.code === 0) {
           if(data.result.voteCount === 0){
             $this.removeClass('btn-red J-vote-guest').addClass('btn-orange J-invite-guest').html('帮TA拉票');
@@ -227,9 +212,9 @@ handler.voteGuest = function() {
           J_app.alert(data.message);
         }
       }, function () {
-        J_app.loading(false);
-        J_app.alert('请求失败！');
         $this.removeClass('J-locked');
+        J_app.loading(false);
+        J_app.alert('请求超时！');
       });
     });
   });
@@ -237,5 +222,5 @@ handler.voteGuest = function() {
 
 // 执行
 $(function() {
-  handler.init();
+  J_app.userInfoInit(handler.init);
 });

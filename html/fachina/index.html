@@ -32,13 +32,13 @@
     <!-- 导航 -->
     <ul class="ui-row ui-navbar">
       <li class="ui-col">
-        <a href="javascript:;" class="nav-link active">大赛首页</a>
+        <a href="./index.html" class="nav-link active">大赛首页</a>
       </li>
       <li class="ui-col">
-        <a href="javascript:;" class="nav-link" id="navHome">个人中心</a>
+        <a href="javascript:J_app.navControl('./home.html', 'home');" class="nav-link">个人中心</a>
       </li>
       <li class="ui-col">
-        <a href="javascript:;" class="nav-link" id="navTrade">模拟交易</a>
+        <a href="javascript:J_app.navControl('./trade.html', 'trade');" class="nav-link">模拟交易</a>
       </li>
       <li class="ui-col">
         <a href="./ranking.html" class="nav-link">排行榜</a>
@@ -68,32 +68,7 @@
         <a href="javascript:;" id="inviteEvent" class="index-invite-event J-touch">邀请好友参赛</a>
       </div>
 
-      <div class="index-event-date" id="eventDate">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>第一季</th>
-              <th>第二季</th>
-              <th>第三季</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>报名期</td>
-              <td>2月23日-3月8日</td>
-              <td>2月23日-3月8日</td>
-              <td>2月23日-3月8日</td>
-            </tr>
-            <tr>
-              <td>比赛期</td>
-              <td>2月23日-3月8日</td>
-              <td>2月23日-3月8日</td>
-              <td>2月23日-3月8日</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="index-event-date" id="eventDate"><!-- 赛事日期 --></div>
 
       <div class="ui-more large index-to-rules">
         <a href="./rules.html">查看规则详情 <em>&gt;</em></a>

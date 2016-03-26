@@ -40,7 +40,7 @@ handler.search = function(keyword) {
     }
   }, function() {
     J_app.loading(false);
-    $("#rankAdviser").append(template('common/errorTable5', {message:'请求超时'}));
+    $("#rankAdviser").append(template('common/errorTable5', {message:'请求超时！'}));
   });
 };
 

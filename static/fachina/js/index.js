@@ -16,43 +16,64 @@ handler.init = function() {
   J_app.inviteOrg($('#rankOrg'));
 
   // 请求观点列表
-  handler.fetchUserInfo();
+  handler.saveInviteUserId();
   handler.fetchEventDetail();
   handler.fetchEventRadio();
   handler.fetchRankList();
   handler.fetchViewpointList();
   handler.inviteJoin();
   handler.inviteVote();
+  handler.checkJoinBtn();
 };
 
-// 获取用户信息
-handler.fetchUserInfo = function() {
-  if(!$.cookie('fachinaId')){
-    $.cookie('fachinaStatus', 1, {expires:365,path:'/'});
-    $.cookie('fachinaType', 1, {expires:365,path:'/'});
-    $('#userStatus').addClass('status-1');
-    $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie('fachinaStatus')}));
-    J_app.updateNavbar();
-  } else{
-    J_app.ajax(J_app.api.joinDetail, {}, function(data){
-      if(data.code === 0){
-        J_app.fachinaStatus(data.result.joinStatus, data.result.adviserStatus);
-        $.cookie('fachinaType', data.result.adviserStatus, {expires:365,path:'/'});
-        $('#joinBtnBox').append(template('index/joinBtn', {status: $.cookie('fachinaStatus'), result: data.result}));
-        J_app.updateNavbar();
+// 如果是邀请链接，存储邀请id
+handler.saveInviteUserId = function(){
+  var inviteUserId = J_app.getUrlParam('inId');
 
-        $('body').append(template('common/hidden', data));
-      }
-    });
+  if(inviteUserId){
+    J_app.setCookie('invite', inviteUserId);
   }
+};
+
+// 赛事按钮
+handler.checkJoinBtn = function() {
+  $('#joinBtnBox').append(template('index/joinBtn', {status: J_app.getCookie('status')}));
 };
 
 // 获取赛事信息
 handler.fetchEventDetail = function() {
+
+  function ENToCN(n) {
+    switch(n) {
+      case 0:
+        return '一';
+      case 1:
+        return '二';
+      case 2:
+        return '三';
+      case 3:
+        return '四';
+      default:
+        return '--';
+    }
+  }
+
   J_app.ajax(J_app.api.eventDetail, {}, function(data){
     if(data.code === 0){
       $('#indexBanner').append(template('common/eventDetail', data));
-      $('#eventDate').addClass('date-' + data.result.season);
+
+      if(data.result.eventTimes){
+        var times = data.result.eventTimes;
+
+        if(times.length > 0){
+          for(var i=0; i<times.length; i++){
+            times[i].eventSeason = ENToCN(i);
+          }
+        }
+        $('#eventDate')
+        .append(template('common/eventTimes', data.result))
+        .addClass('date-' + data.result.season);
+      }
     } else{
       $('#indexBanner').append(template('common/error', data));
     }
@@ -65,7 +86,7 @@ handler.fetchEventRadio = function() {
   var params = {};
 
   params['type'] = 'C';
-  params['count'] = 10;
+  params['count'] = 5;
   params['readId'] = 0;
 
   J_app.ajax(J_app.api.noteList, params, function(data){
@@ -123,7 +144,7 @@ handler.fetchRankList = function(t) {
     $('#' + viewId).empty().append(trHtml);
   }, function(){
     J_app.loading(false);
-    $('#' + viewId).empty().append(template('common/errorTable5', {message:'请求超时'}));
+    $('#' + viewId).empty().append(template('common/errorTable5', {message:'请求超时！'}));
   });
 };
 
@@ -157,9 +178,16 @@ handler.inviteJoin = function() {
 
   //邀请好友参赛
   $('#inviteEvent').on('click', function(){
-    var option = {};
 
-    option['url'] = J_app.host + '/webstatic/fachina/index.html';
+    var cId = J_app.getCookie('id');
+    var option = {};
+    var inviteUrl = J_app.host + '/webstatic/fachina/index.html';
+
+    if(cId){
+      inviteUrl += ('?inId=' + cId);
+    }
+
+    option['url'] = inviteUrl;
     option['title'] = '参加投顾大赛，赢取万元奖金！';
     option['desc'] = '参加投顾大赛，赢取万元奖金！';
     option['img'] = J_app.host + '/static/fachina/images/pic_share.jpg';
@@ -185,5 +213,5 @@ handler.inviteVote = function() {
 };
 
 $(function() {
-  handler.init();
+  J_app.userInfoInit(handler.init);
 });

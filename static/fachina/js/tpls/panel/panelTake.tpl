@@ -1,5 +1,5 @@
 {{ each stks as item}}
-<tr data-id="{{ item.assetId }}" data-name="{{ item.stkName }}" data-aBal="{{ item.aBal ? item.aBal : 0 }}">
+<tr data-id="{{ item.assetId }}" data-name="{{ item.stkName }}" data-abal="{{ item.aBal ? item.aBal : 0 }}">
   <td>
     <span>{{ item.stkName }}</span>
     <span class="font-10 text-light">{{ item.mktVal | price }}</span>

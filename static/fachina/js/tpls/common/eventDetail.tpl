@@ -8,7 +8,7 @@
           距离开赛<span>{{result.betweenDay}}</span>天
         </div>
         <div class="number">
-          参赛投顾：<span>{{result.voteCount}}</span>人
+          参赛投顾：<span>{{result.advisertCount}}</span>人
         </div>
       {{else if result.eventStatus === 1}}
         <div class="status">

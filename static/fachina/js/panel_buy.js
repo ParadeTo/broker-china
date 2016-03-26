@@ -6,23 +6,32 @@
 // 搜索股票
 var stkComplete = {
 
+  timer: null,
+
   //输入参数
   inputChange : function(){
 
-    $('#searchInput').on('keyup focus',function(){
+    $('#searchInput').on('keyup',function(){
+      clearTimeout(stkComplete.timer);
 
       var txt = $(this).val();
       var $this = $(this);
 
-      stkComplete.searchData(txt,$this);
+      stkComplete.timer = setTimeout(function(){
+        stkComplete.searchData(txt,$this);
+      },300);
     });
 
     //兼容IOS输入中文
     document.getElementById('searchInput').addEventListener('input', function(e){
+      clearTimeout(stkComplete.timer);
+
       var txt = e.target.value;
       var $this = $(this);
 
-      stkComplete.searchData(txt,$this);
+      stkComplete.timer = setTimeout(function(){
+        stkComplete.searchData(txt,$this);
+      },300);
     });
   },
 
@@ -133,7 +142,7 @@ var handler = window.handler || {};
 // 价格变换基数
 handler.priceUnit = 0.01;
 
-// 测试现金
+// 现金
 handler.cash = 0;
 
 // 刷新五档定时器
@@ -171,18 +180,18 @@ handler.loadPtfDetail = function() {
         var stks = data.result.stks;
 
         // 取得现金
-        handler.cash = stks[stks.length-1].tBal;
+        handler.cash = data.result.avlBal;
         stks.pop();
         trHtml = template('panel/panelTake', { stks: stks});
       }
     } else{
-      J_app.alert(data.message);
+      $('body').append(template('trade/notStart'), data);
     }
 
     $('#ptfDetail').empty().append(trHtml);
   }, function(){
     J_app.loading(false);
-    J_app.alert('请求超时');
+    J_app.alert('请求超时！');
   });
 };
 
@@ -191,14 +200,18 @@ handler.setKeywords = function() {
   clearInterval(handler.timer);
   handler.getFiveBets();
   $('#stkQuantity').val(0);
+  $('#ableQuantity').html(0);
+  $('#stkPrice').val(0).data('status', 'N');
   handler.timer = setInterval(handler.getFiveBets, 10000);
 };
 
 // 选择持仓中的股票
 handler.selectPtfStks = function() {
   $('#ptfDetail').on('click', 'tr', function() {
-    var code = $(this).data('id').substr(0,6);
-    $('#searchInput').val(code).trigger('focus');
+    var code = $(this).data('id'),
+        name = $(this).data('name');
+    $('#searchInput').val(name + ' ' + code).data('code', code).data('name', name);
+    handler.setKeywords();
   });
 };
 
@@ -230,7 +243,10 @@ handler.getFiveBets = function() {
       handler.limitdown = data.result.limitdown;
       handler.limitup = data.result.limitup;
 
-      $('#stkPrice').val(data.result.price);
+      if($('#stkPrice').data('status') !== 'Y'){
+        $('#stkPrice').val(data.result.price).data('status', 'Y');
+      }
+
       handler.ableQuantity();
 
       // 显示五档
@@ -330,7 +346,8 @@ handler.priceOper = function() {
 handler.insistTouch = function() {
 
   var timer = null;
-  $('#quantityForm li').on('touchstart mousedown', function(){
+  $('#quantityForm li').on('touchstart mousedown', function(e){
+    e.preventDefault();
     var $this = $(this);
     timer = setInterval(function(){
       $this.trigger('click');
@@ -361,6 +378,17 @@ handler.quantityOper = function() {
     var cash = handler.cash/$(this).data('den');
     $('#stkQuantity').val(handler.count(cash));
   });
+
+  //手动输入股数
+  $('#stkQuantity').on('blur', function(){
+    var abalNumber = parseInt($('#ableQuantity').html());
+    var setNumber = parseInt($(this).val());
+
+    if(setNumber > abalNumber){
+      J_app.alert('当前最多可买' + abalNumber + '股');
+      $(this).val(abalNumber);
+    }
+  });
 };
 
 // 点击买入
@@ -371,8 +399,8 @@ handler.clickSubmitBtn = function() {
     var data = {
       name : $('#searchInput').data('name'),
       asset : $('#searchInput').data('code'),
-      number : $('#stkQuantity').val(),
-      tPrice : $('#stkPrice').val()
+      number : $.trim($('#stkQuantity').val()),
+      tPrice : $.trim($('#stkPrice').val())
     };
 
     if(!data.asset){
@@ -385,8 +413,13 @@ handler.clickSubmitBtn = function() {
       return false;
     }
 
-    if(!data.number){
+    if(data.number === '0' || data.number === ''){
       J_app.alert('请输入数量');
+      return false;
+    }
+
+    if(parseInt(data.number) < 0){
+      J_app.alert('数量不能为负数');
       return false;
     }
 
@@ -435,7 +468,7 @@ handler.buySubmit = function() {
     }
   }, function(){
     J_app.loading(false);
-    J_app.alert('请求超时');
+    J_app.alert('请求超时！');
   });
 };
 
@@ -447,5 +480,25 @@ handler.resetInput = function() {
 
 // 执行
 $(function() {
-  handler.init();
+  J_app.userInfoInit(function(){
+
+    // 没登录将进行登录
+    if(!J_app.getCookie('id')){
+      window.location.href = J_app.navControl('./trade.html', 'trade');
+    } else{
+      if(J_app.getCookie('status') === '2'){
+        // 需要报名参赛
+        $('body').append(template('trade/notJoin'));
+      } else if(J_app.getCookie('status') === '3'){
+        // 审核中
+        $('body').append(template('trade/validing'));
+      } else{
+        if(J_app.errorMessage === 1){
+          J_app.joinError();
+        } else{
+          handler.init();
+        }
+      }
+    }
+  });
 });

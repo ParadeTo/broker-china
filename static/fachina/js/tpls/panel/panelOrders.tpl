@@ -9,7 +9,7 @@
   </td>
   <td>
     <span>{{ item.stkName }}</span>
-    <span class="font-8 text-light">{{ item.ordTime | dateFormat:'hh:mm:ss'}}</span>
+    <span class="font-8 text-light">{{ item.ordTime | dateFormat:'yyyy.MM.dd'}}</span>
   </td>
   <td>
     <span class="right">{{ item.ordPrc | price }}</span>

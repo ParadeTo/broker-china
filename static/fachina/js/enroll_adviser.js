@@ -209,7 +209,7 @@ enrollAdviserHandler.apply = function () {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert("请求失败");
+      J_app.alert("请求超时！");
     });
   });
 }
@@ -277,7 +277,7 @@ enrollAdviserHandler.chooseOrg = function () {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('请求失败！');
+      J_app.alert('请求超时！');
     });
   });
 };
@@ -316,7 +316,7 @@ enrollAdviserHandler.chooseCity = function () {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('请求失败');
+      J_app.alert('请求超时！');
     });
   });
 };
@@ -416,7 +416,7 @@ enrollAdviserHandler.clickPro = function () {
     }, function () {
       $this.removeClass('locked');
       J_app.loading(false);
-      J_app.alert('请求失败');
+      J_app.alert('请求超时！');
     });
   });
 };

@@ -2,7 +2,7 @@
 <tr data-id="{{ item.assetId }}">
   <td>
     <span>{{ item.stkName }}</span>
-    <span>{{ item.mktVal }}</span>
+    <span class="font-10 text-light">{{ item.mktVal }}</span>
   </td>
   <td>
     <span class="right {{ item.incBal | color }}">{{ item.incBal }}</span>

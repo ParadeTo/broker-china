@@ -8,9 +8,6 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
-  // 赛事直播动画
-  $('#eventRadio').muSlideUp({time:3000});
-
   // 请求观点列表
   handler.loadUserInfo();
   handler.loadEventRadio();
@@ -61,6 +58,9 @@ handler.loadEventRadio = function() {
     }
 
     $('#eventRadio').empty().append(listHtml);
+
+    // 赛事直播动画
+    $('#eventRadio').muSlideUp({time:3000});
   },function(){
     $('#eventRadio').empty().append(template('common/loadFail'));
   });
@@ -78,21 +78,42 @@ handler.loadUserAssets = function() {
     if(data.code === 0){
       if(data.result) {
         var stks = data.result.stks;
-
-        data.result.cash = stks[stks.length-1].tBal;
         stks.pop();
 
         $('#stkList').append(template('trade/takeList', {stks:stks}));
         $('#userAssets').empty().append(template('trade/userStatis', data));
       }
     }
+    else{
+      $('body').append(template('trade/notStart', data));
+    }
   }, function(){
     J_app.loading(false);
-    J_app.alert('请求超时');
+    J_app.alert('请求超时！');
   });
 };
 
 // 执行
 $(function() {
-  handler.init();
+  J_app.userInfoInit(function(){
+
+    // 没登录将进行登录
+    if(!J_app.getCookie('id')){
+      J_app.navControl('./trade.html', 'trade');
+    } else{
+      if(J_app.getCookie('status') === '2'){
+        // 需要报名参赛
+        $('body').append(template('trade/notJoin'));
+      } else if(J_app.getCookie('status') === '3'){
+        // 审核中
+        $('body').append(template('trade/validing'));
+      } else{
+        if(J_app.errorMessage === 1){
+          J_app.joinError();
+        } else{
+          handler.init();
+        }
+      }
+    }
+  });
 });
