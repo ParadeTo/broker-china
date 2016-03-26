@@ -120,7 +120,7 @@ function sortOrg(orgs) {
 
 var enrollAdviserHandler = window.enrollAdviserHandler || {};
 // 上传头像大小限制,单位byte
-enrollAdviserHandler.imgSize = 2 * 1024 * 1024;
+enrollAdviserHandler.imgSize = 5 * 1024 * 1024;
 // 上传头像文件类型
 enrollAdviserHandler.imgExt = 'gif,jpg,jpeg,bmp,png';
 // 报名参赛跳转
@@ -454,6 +454,11 @@ enrollAdviserHandler.uploadAndroid = function () {
     allowedExtensions: enrollAdviserHandler.imgExt,
     maxSize: enrollAdviserHandler.imgSize, //单位是byte
     success: function () {
+      // 去掉验证信息
+      if (enrollAdviserHandler.errorType.img) {
+        enrollAdviserHandler.errorType.img = false;
+        $('#enroll-1-error').html("");
+      }
       $("#enroll-bar").css('width', 0);
       $("#enroll-1-img").val('');
       var fileObj = document.getElementById("enroll-upload-android-btn").files[0]; // 获取文件对象
@@ -476,19 +481,17 @@ enrollAdviserHandler.uploadAndroid = function () {
         },
         success: function (data) {
           if (data.code === 0) {
+            // 这个在android下不行呀
+            // $("#enroll-1-img").val(data.result.urls);
+            // 换成这个吧
+            document.getElementById("enroll-1-img").value = data.result.urls;
             $("#enroll-upload-preview").attr('src', data.result.urls);
-            $("#enroll-1-img").val(response.result.urls);
-            // 去掉验证信息
-            if (enrollAdviserHandler.errorType.img) {
-              enrollAdviserHandler.errorType.img = false;
-              $('#enroll-1-error').html("");
-            }
           } else {
             J_app.alert(data.message);
           }
         },
         error: function (error) {
-          J_app.alert(error);
+          J_app.alert(JSON.stringify(error));
         }
       });
     },
