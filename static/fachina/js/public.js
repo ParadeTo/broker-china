@@ -950,7 +950,7 @@
         })
       });
     };
-    /*checkFileTypeAndSize: 上传图片类型判断*/
+    /*checkFileTypeAndSize: 上传图片*/
     $.fn.checkFileTypeAndSize = function (options) {
       //默认设置
       var defaults = {
