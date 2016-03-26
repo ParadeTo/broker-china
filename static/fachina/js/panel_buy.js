@@ -484,7 +484,7 @@ $(function() {
 
     // 没登录将进行登录
     if(!J_app.getCookie('id')){
-      window.location.href = J_app.navControl('./trade.html', 'trade');
+      J_app.navControl('./trade.html', 'trade');
     } else{
       if(J_app.getCookie('status') === '2'){
         // 需要报名参赛
