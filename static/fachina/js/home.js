@@ -11,6 +11,9 @@ handler.readId = 0;
 // 初始化
 handler.init = function() {
 
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   handler.fetchUserInfo();
   handler.fetchVoteList();
   handler.fetchInviteList();
@@ -101,7 +104,7 @@ $(function() {
 
     // 没登录将进行登录
     if(!J_app.getCookie('id')){
-      window.location.href = J_app.navControl('./home.html', 'home');
+      J_app.navControl('./home.html', 'home');
     } else{
       if(J_app.errorMessage === 1){
         J_app.joinError();

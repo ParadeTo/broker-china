@@ -80,6 +80,9 @@ handler.searchBtnClick = function() {
 };
 
 $(function() {
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   // 获取url中的关键词搜索，只执行一次
   var keyword = J_app.getUrlParam("keyword");
   handler.keyword = keyword;

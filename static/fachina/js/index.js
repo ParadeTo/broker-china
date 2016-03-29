@@ -8,6 +8,9 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
+  // 微信默认分享
+  J_app.defaultShare();
+
   // tab切换
   $('#rankTab').muTabs($('#rankContent'),handler.fetchRankList);
 

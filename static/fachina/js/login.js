@@ -99,6 +99,9 @@ handler.login = function(){
 };
 
 $(function() {
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   handler.init();
   handler.login();
 });

@@ -18,6 +18,9 @@ handler.limitup = 0;
 // 初始化
 handler.init = function() {
 
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   // 委托查询
   handler.loadPtfDetail();
   handler.selectPtfStks();

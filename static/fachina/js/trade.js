@@ -8,6 +8,9 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   // 请求观点列表
   handler.loadUserInfo();
   handler.loadEventRadio();

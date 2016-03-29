@@ -585,6 +585,9 @@ enrollAdviserHandler.uploadIOS = function () {
 }
 
 $(function () {
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   J_app.checkSign(function () {
     enrollAdviserHandler.adviserInit();
     // 根据手机调用不同的上传图片的函数
