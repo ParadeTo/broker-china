@@ -40,7 +40,7 @@ handler.saveInviteUserId = function(){
 
 // 赛事按钮
 handler.checkJoinBtn = function() {
-  $('#joinBtnBox').append(template('index/joinBtn', {status: J_app.getCookie('status')}));
+  $('#joinBtnBox').append(template('index/joinBtn', {status: J_app.getCookie('status'), isForward:J_app.isForward}));
 };
 
 // 获取赛事信息

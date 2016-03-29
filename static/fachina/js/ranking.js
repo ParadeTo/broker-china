@@ -109,7 +109,7 @@ handler.fetchRankList = function(obj,readId,more) {
   };
 
   params['type'] = type;
-  params['count'] = 10;
+  params['count'] = 5;
   params['readId'] = readId;
 
   J_app.ajax(J_app.api.joinList, params, function(data){

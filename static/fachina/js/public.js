@@ -157,6 +157,9 @@
     // 用户参赛错误
     errorMessage: 0,
 
+    // 是否开赛
+    isForward : 1,
+
     // 验证手机号
     validPhone: function(phone) {
       return /^\d{11}$/.test(phone);
@@ -908,6 +911,7 @@
         if(data.code === 0){
           J_app.saveCookie(data);
           J_app.loginStatus(data.result.uImg);
+          J_app.isForward = data.result.isForward;
 
           // 用户参赛是否异常
           J_app.errorMessage = data.result.errorStatus;
