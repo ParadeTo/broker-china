@@ -349,7 +349,7 @@ handler.priceOper = function() {
 handler.insistTouch = function() {
 
   var timer = null;
-  $('#quantityForm li').on('touchstart mousedown', function(e){
+  $('#quantityForm .quantity-btn').on('touchstart mousedown', function(e){
     e.preventDefault();
     var $this = $(this);
     $this.trigger('click');

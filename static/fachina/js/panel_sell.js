@@ -214,7 +214,7 @@ handler.insistTouch = function() {
 
   var timer = null;
 
-  $('#quantityForm li').on('touchstart mousedown', function(){
+  $('#quantityForm .quantity-btn').on('touchstart mousedown', function(){
     var $this = $(this);
     timer = setInterval(function(){
       $this.trigger('click');

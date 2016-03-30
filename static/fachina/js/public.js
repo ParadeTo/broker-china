@@ -187,6 +187,26 @@
       }
     },
 
+    //更改url参数
+    setUrlParam: function(url, name, value) {
+      var pattern = name+'=([^&]*)';
+      var replaceText = name+'='+value;
+
+      if (url.match(pattern)) {
+        var tmp = '/\\'+name+'=[^&]*/';
+        tmp = url.replace(eval(tmp), replaceText);
+        return (tmp);
+      } else{
+        if (url.match('[\?]')) {
+          return url+'&'+ replaceText;
+        } else{
+          return url+'?'+replaceText;
+        }
+      }
+
+      return url+'\n'+name+'\n'+value;
+    },
+
     // 生成唯一数
     onlyNum: function() {
       var num = '',
