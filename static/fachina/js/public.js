@@ -108,6 +108,16 @@
     advert: (development ? devHost : host) + '/ad_api/fetch_ad_link_list_noapp'
   };
 
+  //一起牛app跳转
+  //安卓
+  var andriodAppLink = {
+    login: 'jqiniu://0/.main.user.activity.UserLoginActivity'
+  };
+  // 一起牛app跳转
+  var iosAppLink = {
+    login: 'jqiniu://2/QNWechatLoginViewController/QNWechatLoginViewController/m'
+  };
+
   //链接
   var links = {
     register: host + (development ? '/html/' : '/webstatic/') + 'fachina/register.html',
@@ -159,6 +169,9 @@
 
     // 是否开赛
     isForward : 1,
+
+    // 一起牛跳转链接
+    appLink: isAndroid ? andriodAppLink : (isIos ? iosAppLink : {}),
 
     // 验证手机号
     validPhone: function(phone) {
@@ -892,7 +905,7 @@
           }
           window.location.href = links.weixin + src;
         } else if(isYiqiniu){
-          window.location.href = './index.html';
+          window.location.href = J_app.appLink.login;
         } else {
           window.location.href = links.register;
         }
@@ -961,6 +974,8 @@
       // 存储用户cId
       if(id){
         J_app.setCookie('id', id);
+      }else{
+        J_app.setCookie('id', '');
       }
 
       // 存储用户类型
