@@ -14,7 +14,7 @@ function validName(name) {
 }
 // 验证身份证号
 function validIdNum(idNum) {
-  var re = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X|x)$/;
+  var re = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X|x)$/;
   if (re.test(idNum)) {
     return true;
   } else {
