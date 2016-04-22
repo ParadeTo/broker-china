@@ -8,6 +8,9 @@ var handler = window.handler || {};
 // 初始化
 handler.init = function() {
 
+  // 微信默认分享
+  J_app.defaultShare();
+
   // tab切换
   $('#rankTab').muTabs($('#rankContent'),handler.fetchRankList);
 
@@ -37,7 +40,7 @@ handler.saveInviteUserId = function(){
 
 // 赛事按钮
 handler.checkJoinBtn = function() {
-  $('#joinBtnBox').append(template('index/joinBtn', {status: J_app.getCookie('status')}));
+  $('#joinBtnBox').append(template('index/joinBtn', {status: J_app.getCookie('status'), isForward:J_app.isForward}));
 };
 
 // 获取赛事信息

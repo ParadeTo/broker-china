@@ -18,6 +18,9 @@ handler.limitup = 0;
 // 初始化
 handler.init = function() {
 
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   // 委托查询
   handler.loadPtfDetail();
   handler.selectPtfStks();
@@ -211,7 +214,7 @@ handler.insistTouch = function() {
 
   var timer = null;
 
-  $('#quantityForm li').on('touchstart mousedown', function(){
+  $('#quantityForm .quantity-btn').on('touchstart mousedown', function(){
     var $this = $(this);
     timer = setInterval(function(){
       $this.trigger('click');
@@ -304,7 +307,7 @@ $(function() {
 
     // 没登录将进行登录
     if(!J_app.getCookie('id')){
-      window.location.href = J_app.navControl('./trade.html', 'trade');
+      J_app.navControl('./trade.html', 'trade');
     } else{
       if(J_app.getCookie('status') === '2'){
         // 需要报名参赛

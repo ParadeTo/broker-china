@@ -3,7 +3,7 @@
 <head lang="en">
   @@include('_metas.html')
 </head>
-<body class="fixed-header-body ui-prevent-select">
+<body class="fixed-header-body">
 
   <!-- header -->
   @@include('_back_refresh.html', {"title":"买入", "src":"./trade.html"})
@@ -41,11 +41,11 @@
             </ul>
           </div>
           <ul class="ui-quantity-form buy m-t-6" id="quantityForm">
-            <li data-type="reduce" class="minus-btn J-touch">-</li>
+            <li data-type="reduce" class="minus-btn quantity-btn J-touch">-</li>
             <li class="input">
               <input id="stkPrice" type="number" value="0"/>
             </li>
-            <li data-type="add" class="plus-btn J-touch">+</li>
+            <li data-type="add" class="plus-btn quantity-btn J-touch">+</li>
           </ul>
           <ul class="ui-row m-t-2 panel-fall-rise">
             <li class="ui-col left">
@@ -146,6 +146,5 @@
   <!-- script -->
   @@include('_scripts.html')
   <script src="../../static/fachina/js/panel_buy.js?ver=@@pageVersion"></script>
-  <script type="text/javascript">document.oncontextmenu=function(e){return false;}</script>
 </body>
 </html>

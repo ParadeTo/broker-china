@@ -8,7 +8,7 @@ handler.lastId = 0;
 handler.keyword = "";
 
 // 搜索
-handler.search = function(keyword) {
+handler.search = function(keyword, more) {
   // 加载动画
   J_app.loading(true);
   // 请求数据
@@ -16,13 +16,21 @@ handler.search = function(keyword) {
   param['keyword'] = keyword;
   param['count'] = 10;
   param['readId'] = handler.lastId;
+
   J_app.ajax(J_app.api.searchJoin, param, function(data) {
+
     $("#search-more").removeClass("locked");
     J_app.loading(false);
-    var trHtml = "";
+
     if(data.code === 0) {
-      trHtml = template('search/rankAdviser', J_app.tmpData(data.result));
-      $("#rankAdviser").append(trHtml);
+
+      //如果初次加载
+      if(!more){
+        $("#listBox").empty().append(template('search/dataTable'));
+      }
+
+      //填充列表
+      $("#rankAdviser").append(template('search/rankAdviser', J_app.tmpData(data.result)));
       if(data.result.hasNext === 0) {
         $("#search-more").hide();
         $("#search-more").unbind("click");
@@ -54,13 +62,14 @@ handler.more = function() {
     }
     $this.addClass('locked');
 
-    handler.search(handler.keyword);
+    handler.search(handler.keyword, true);
   });
 };
 
 // 绑定点击搜索事件，不刷新页面
 handler.searchBtnClick = function() {
   $("#searchBtn").on("click", function() {
+    var url = window.location.href;
     // 获取关键词
     var  keyword = $("#searchKeyword").val();
     // 检查关键词
@@ -76,10 +85,14 @@ handler.searchBtnClick = function() {
 
     handler.keyword = keyword;
     handler.search(keyword);
+    //window.location.href = J_app.setUrlParam(url, 'keyword', keyword);
   });
 };
 
 $(function() {
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   // 获取url中的关键词搜索，只执行一次
   var keyword = J_app.getUrlParam("keyword");
   handler.keyword = keyword;

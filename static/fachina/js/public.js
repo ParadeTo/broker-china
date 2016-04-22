@@ -102,10 +102,20 @@
     fiveBets: (development ? devHost : host) + '/g_adviser_api/get_five_bets',
 
     //获取微信签名
-    fetchJssdk: (development ? devHost : host) + '/gs_api/fetch_js_sdk_signature',
+    fetchJssdk: (development ? devHost : host) + '/g_adviser_api/fetch_js_sdk_signature',
 
     //广告
     advert: (development ? devHost : host) + '/ad_api/fetch_ad_link_list_noapp'
+  };
+
+  //一起牛app跳转
+  //安卓
+  var andriodAppLink = {
+    login: 'jqiniu://0/.main.user.activity.UserLoginActivity'
+  };
+  // 一起牛app跳转
+  var iosAppLink = {
+    login: 'jqiniu://2/QNWechatLoginViewController/QNWechatLoginViewController/m'
   };
 
   //链接
@@ -124,6 +134,11 @@
     ios : isIos,
     yiqiniu : isYiqiniu,
     weixin : isWeixin
+  };
+
+  //微信JSSDK参数
+  wxConfig = {
+
   };
 
   //cookie配置
@@ -152,6 +167,12 @@
     // 用户参赛错误
     errorMessage: 0,
 
+    // 是否开赛
+    isForward : 1,
+
+    // 一起牛跳转链接
+    appLink: isAndroid ? andriodAppLink : (isIos ? iosAppLink : {}),
+
     // 验证手机号
     validPhone: function(phone) {
       return /^\d{11}$/.test(phone);
@@ -177,6 +198,26 @@
       } else {
         return null;
       }
+    },
+
+    //更改url参数
+    setUrlParam: function(url, name, value) {
+      var pattern = name+'=([^&]*)';
+      var replaceText = name+'='+value;
+
+      if (url.match(pattern)) {
+        var tmp = '/\\'+name+'=[^&]*/';
+        tmp = url.replace(eval(tmp), replaceText);
+        return (tmp);
+      } else{
+        if (url.match('[\?]')) {
+          return url+'&'+ replaceText;
+        } else{
+          return url+'?'+replaceText;
+        }
+      }
+
+      return url+'\n'+name+'\n'+value;
     },
 
     // 生成唯一数
@@ -572,6 +613,91 @@
       };
     },
 
+    // 微信分享
+    // 暂时没用
+    weixinConfig: function(type) {
+
+      var pageUrl = window.location.href;
+      var params = {};
+
+      params['url'] = pageUrl;
+      params['src'] = 'GA';
+
+      /*获取签名*/
+      J_app.ajaxa(apis.fetchJssdk, params, function(data) {
+        wx.config({
+          // 是否开启调试模式
+          debug: false,
+          // 必填，公众号的唯一标识
+          appId: data.result.appId,
+          // 必填，生成签名的时间戳
+          timestamp: data.result.timestamp,
+          // 必填，生成签名的随机串
+          nonceStr: data.result.noncestr,
+          // 必填，签名
+          signature: data.result.signature,
+          // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ']
+        });
+
+        if(type === 'hide'){
+          wx.ready(function() {
+            wx.hideOptionMenu();
+          });
+        }
+      });
+    },
+
+    // 重置微信分享
+    // 暂时没用
+    weixinOption: function(title, desc, link, imgUrl) {
+      wx.ready(function() {
+
+        /*---分享给朋友---*/
+        wx.onMenuShareAppMessage({
+          title: title,
+          desc: desc,
+          link: link,
+          imgUrl: imgUrl,
+          type: '',
+          dataUrl: '',
+          success: function() {
+            console.log("----朋友分享成功的------");
+          },
+          cancel: function() {
+            console.log("----朋友点击了取消------");
+          }
+        });
+
+        /*---分享到朋友圈---*/
+        wx.onMenuShareTimeline({
+          title: title,
+          link: link,
+          imgUrl: imgUrl,
+          success: function() {
+            console.log("----朋友圈分享成功的------");
+          },
+          cancel: function() {
+            console.log("----朋友圈点击了取消------");
+          }
+        });
+
+        /*---分享到QQ---*/
+        wx.onMenuShareQQ({
+          title: title,
+          desc: desc,
+          link: link,
+          imgUrl: imgUrl,
+          success: function() {
+            console.log("----qq分享成功的------");
+          },
+          cancel: function() {
+            console.log("----qq点击了取消------");
+          }
+        });
+      });
+    },
+
     // 投票
     voteAction: function() {
       $(document).on('click', '.J-vote', function() {
@@ -779,7 +905,7 @@
           }
           window.location.href = links.weixin + src;
         } else if(isYiqiniu){
-          window.location.href = './index.html';
+          window.location.href = J_app.appLink.login;
         } else {
           window.location.href = links.register;
         }
@@ -818,6 +944,7 @@
         if(data.code === 0){
           J_app.saveCookie(data);
           J_app.loginStatus(data.result.uImg);
+          J_app.isForward = data.result.isForward;
 
           // 用户参赛是否异常
           J_app.errorMessage = data.result.errorStatus;
@@ -847,6 +974,8 @@
       // 存储用户cId
       if(id){
         J_app.setCookie('id', id);
+      }else{
+        J_app.setCookie('id', '');
       }
 
       // 存储用户类型
@@ -926,6 +1055,21 @@
     // 如果用户报名出现错误，弹出提示
     joinError: function() {
       $('body').append(template('common/joinError'));
+    },
+
+    // 默认分享
+    defaultShare: function() {
+
+      var option = {};
+
+      option['url'] = J_app.host + '/webstatic/fachina/index.html';
+      option['title'] = '参加投顾大赛，赢取万元奖金！';
+      option['desc'] = '参加投顾大赛，赢取万元奖金！';
+      option['img'] = J_app.host + '/static/fachina/images/pic_share.jpg';
+
+      if(isWeixin){
+        J_app.shareByWeixin(false, option.title, option.desc, option.url, option.img);
+      }
     }
   };
 

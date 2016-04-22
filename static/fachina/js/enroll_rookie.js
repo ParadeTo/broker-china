@@ -64,6 +64,9 @@ enrollRookieHandler.rookieInit = function () {
 };
 
 $(function () {
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   J_app.checkSign(function() {
     enrollRookieHandler.rookieInit();
   });

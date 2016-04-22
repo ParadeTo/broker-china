@@ -155,6 +155,9 @@ handler.limitup = 0;
 // 初始化
 handler.init = function() {
 
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   // 委托查询
   handler.loadPtfDetail();
   handler.selectPtfStks();
@@ -346,12 +349,13 @@ handler.priceOper = function() {
 handler.insistTouch = function() {
 
   var timer = null;
-  $('#quantityForm li').on('touchstart mousedown', function(e){
+  $('#quantityForm .quantity-btn').on('touchstart mousedown', function(e){
     e.preventDefault();
     var $this = $(this);
+    $this.trigger('click');
     timer = setInterval(function(){
       $this.trigger('click');
-    },250);
+    },200);
   }).on('touchend mouseup', function(){
     clearInterval(timer);
   });
@@ -413,7 +417,7 @@ handler.clickSubmitBtn = function() {
       return false;
     }
 
-    if(data.number === '0' || data.number === ''){
+    if(data.number === '0' || data.number === '' || parseFloat(data.number) === 0){
       J_app.alert('请输入数量');
       return false;
     }
@@ -484,7 +488,7 @@ $(function() {
 
     // 没登录将进行登录
     if(!J_app.getCookie('id')){
-      window.location.href = J_app.navControl('./trade.html', 'trade');
+      J_app.navControl('./trade.html', 'trade');
     } else{
       if(J_app.getCookie('status') === '2'){
         // 需要报名参赛

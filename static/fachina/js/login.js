@@ -26,12 +26,6 @@ handler.loginReq = function(obj){
   var password = $('#login-body-password').val();
   var inviteUserId = J_app.getCookie('invite');
 
-  // 防重发
-  if($this.hasClass('locked')){
-    return ;
-  }
-  $this.addClass('locked');
-
   // 验证手机号
   if(!J_app.validPhone(phone)) {
     $('#validError').html('<p>请输入11位手机号</p>');
@@ -39,10 +33,16 @@ handler.loginReq = function(obj){
   }
 
   // 验证密码
-  if(!J_app.validPw(password)) {
+  if(!$.trim(password)) {
     $('#validError').html('<p>请输入密码</p>');
     return ;
   }
+
+  // 防重发
+  if($this.hasClass('locked')){
+    return ;
+  }
+  $this.addClass('locked');
 
   // 加载动画
   J_app.loading(true);
@@ -99,6 +99,9 @@ handler.login = function(){
 };
 
 $(function() {
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   handler.init();
   handler.login();
 });

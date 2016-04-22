@@ -69,6 +69,9 @@ handler.getMore = function() {
 
 // 初始化
 handler.init = function() {
+  // 屏蔽微信分享
+  J_app.shareByWeixin(true);
+
   // 清空观点列表
   $('.page').html('')
   // 数据加载前点击查看更多不显示
